@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.SpriteManager;
 
+/** A class managing most elements of the board, namely tiles and drawing them */
+
 public class BoardManager {
 
     private OrthographicCamera camera;
@@ -21,6 +23,8 @@ public class BoardManager {
 
     private Tile[][] board;
 
+    private int[] hoveredPosition = new int[2];
+
     public BoardManager(OrthographicCamera camera) {
         highlighter = new ShapeRenderer();
         this.camera = camera;
@@ -28,6 +32,14 @@ public class BoardManager {
 
     public Tile[][] getBoard() {
         return board;
+    }
+
+    /** Sets the board position of the currently selected tile
+     * @param x x position on the board
+     * @param y y position on the board */
+    public void setHoveredPosition(int x, int y) {
+        hoveredPosition[0] = x;
+        hoveredPosition[1] = y;
     }
 
     public void init() {
@@ -57,20 +69,25 @@ public class BoardManager {
         highlighter.setProjectionMatrix(camera.combined);
         int mousex = Gdx.input.getX();
         int mousey = Gdx.input.getY();
+
+        batch.begin();
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                 board[x][y].render(batch);
             }
         }
-        int x = (int)(mousex + camera.position.x - camOriginX) / Constants.TILE_SIZE;
-        int y = (int)(Gdx.graphics.getHeight() - mousey + camera.position.y - camOriginY) / Constants.TILE_SIZE;
+        batch.end();
 
-        if(x >= 0 && x < Constants.BOARD_WIDTH && y >= 0 && y < Constants.BOARD_HEIGHT) {
+        int selectx = (int)(mousex + camera.position.x - camOriginX) / Constants.TILE_SIZE;
+        int selecty = (int)(Gdx.graphics.getHeight() - mousey + camera.position.y - camOriginY) / Constants.TILE_SIZE;
+
+        if(selectx >= 0 && selectx < Constants.BOARD_WIDTH && selecty >= 0 && selecty < Constants.BOARD_HEIGHT) {
+            setHoveredPosition(selectx, selecty);
             Gdx.gl20.glEnable(GL20.GL_BLEND);
             Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             highlighter.begin(ShapeType.Filled);
             highlighter.setColor(0, 0, 1, 0.5f);
-            highlighter.rect(board[x][y].getSprite().getX(), board[x][y].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
+            highlighter.rect(board[selectx][selecty].getSprite().getX(), board[selectx][selecty].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
             highlighter.end();
             Gdx.gl20.glDisable(GL20.GL_BLEND);
         }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.game.GameState;
 import com.mygdx.game.game.Player;
+import com.mygdx.game.game.gameunits.unitfiles.BaseUnit;
 import com.mygdx.game.util.Constants;
 
 public class Unit {
@@ -42,15 +43,12 @@ public class Unit {
 
         this.position = position;
 
-        sprite = baseunit.getSprite();
+        sprite = new Sprite(baseunit.getTexture());
         Sprite tile = GameState.instance.boardManager.getBoard()[position[0]][position[1]].getSprite();
         float size = Constants.TILE_SIZE * Constants.UNIT_SIZE_RATIO;
         sprite.setSize(size, size);
-        sprite.setPosition(tile.getX(), tile.getY());
-        System.out.println("xpos" + sprite.getX());
-        System.out.println("ypos" + sprite.getY());
-        System.out.println("width" + sprite.getWidth());
-        System.out.println("height" + sprite.getHeight());
+        float spriteoffset = (Constants.TILE_SIZE - size) / 2;
+        sprite.setPosition(tile.getX() + spriteoffset, tile.getY() + spriteoffset);
     }
 
     public void render(Batch batch) {
@@ -59,6 +57,10 @@ public class Unit {
 
     public void takeDamage(int amount) {
         currentHealth -= amount;
+    }
+
+    public int[] getPosition() {
+        return position;
     }
 
     public int getCurrentHealth() {

@@ -3,11 +3,13 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.game.GameState;
 import com.mygdx.game.game.Input;
+import com.mygdx.game.game.gameunits.AllUnits;
 import com.mygdx.game.util.SpriteManager;
 
 public class Main extends Game {
@@ -27,7 +29,7 @@ public class Main extends Game {
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		GameState.instance.render(batch);
 	}
 
@@ -40,6 +42,7 @@ public class Main extends Game {
 	public void dispose () {
 		batch.dispose();
 		SpriteManager.dispose();
+		AllUnits.dispose();
 		GameState.instance.dispose();
 	}
 }

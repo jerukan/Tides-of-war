@@ -1,9 +1,8 @@
 package com.mygdx.game.game.gameunits;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.game.Player;
-import com.mygdx.game.game.gameunits.Unit;
+import com.mygdx.game.game.gameunits.unitfiles.BaseUnit;
 
 import java.util.ArrayList;
 
@@ -26,8 +25,10 @@ public class UnitManager {
     }
 
     public void render(Batch batch) {
+        batch.begin();
         for(Unit unit : unitlist) {
             unit.render(batch);
         }
+        batch.end();
     }
 }

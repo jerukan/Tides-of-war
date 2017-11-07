@@ -49,6 +49,8 @@ public class GameState {
         unitManager.clearUnits();
         int[] pos = {1,1};
         unitManager.addUnit(AllUnits.getUnit("test"), null, pos);
+        int[] pos2 = {3,5};
+        unitManager.addUnit(AllUnits.getUnit("test"), null, pos2);
     }
 
     public void resize(int width, int height) {
@@ -61,10 +63,8 @@ public class GameState {
         boardCam.update();
         batch.setProjectionMatrix(boardCam.combined);
 
-        batch.begin();
         boardManager.render(batch);
         unitManager.render(batch);
-        batch.end();
         uiManager.render();
     }
 
