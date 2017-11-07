@@ -6,8 +6,8 @@ package com.mygdx.game.game.gameunits;
 * */
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.util.Constants;
 
 public abstract class BaseUnit {
 
@@ -17,29 +17,41 @@ public abstract class BaseUnit {
     public final int baseSpeed;
     public final int baseRange;
 
+    public final Type type;
+
     private Sprite sprite;
 
-    public BaseUnit(String name, int baseHealth, int baseAttack, int baseSpeed, int baseRange) {
+    public BaseUnit(String name, int baseHealth, int baseAttack, int baseSpeed, int baseRange, Type type) {
         this.name = name;
         this.baseHealth = baseHealth;
         this.baseAttack = baseAttack;
         this.baseSpeed = baseSpeed;
         this.baseRange = baseRange;
+
+        this.type = type;
+
+        sprite = new Sprite();
     }
 
-    public void setSprite(Texture texture) {
-        sprite.setTexture(texture);
+    protected void setSprite(Texture texture) {
+        this.sprite.setTexture(texture);
     }
 
-    public void render(Batch batch) {
-        sprite.draw(batch);
+    public Sprite getSprite() {
+        return sprite;
     }
 
-    public abstract void onTargetAction(Unit target);
+    public void onTargetAction(Unit self, Unit target) {
+        target.takeDamage(self.getCurrentAttack());
+    };
 
-    public abstract void onCreation();
-    public abstract void onDeath();
+    public abstract void onCreation(Unit self);
+    public abstract void onDeath(Unit self);
 
-    public abstract void onTurnStart();
-    public abstract void onTurnEnd();
+    public abstract void onTurnStart(Unit self);
+    public abstract void onTurnEnd(Unit self);
+
+    public enum Type {
+        BUILDING, SOLDIER
+    }
 }

@@ -1,38 +1,33 @@
 package com.mygdx.game.game.gameunits.unitfiles;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.game.gameunits.BaseUnit;
 import com.mygdx.game.game.gameunits.Unit;
+import com.mygdx.game.util.SpriteManager;
 
 public class TestUnit extends BaseUnit {
 
     public TestUnit() {
-        super("cool test unit", 2, 2, 2, 2);
-        setSprite(new Texture("units/spearman.bmp"));
+        super("test", 2, 2, 2, 2, Type.SOLDIER);
+        setSprite(SpriteManager.assetManager.get(SpriteManager.spearman));
     }
 
     @Override
-    public void onTargetAction(Unit target) {
-
-    }
-
-    @Override
-    public void onCreation() {
+    public void onCreation(Unit self) {
 
     }
 
     @Override
-    public void onDeath() {
+    public void onDeath(Unit self) {
 
     }
 
     @Override
-    public void onTurnStart() {
+    public void onTurnStart(Unit self) {
 
     }
 
     @Override
-    public void onTurnEnd() {
+    public void onTurnEnd(Unit self) {
 
     }
 }

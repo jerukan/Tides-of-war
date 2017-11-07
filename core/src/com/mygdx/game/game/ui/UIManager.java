@@ -10,8 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.game.GameState;
 
 public class UIManager {
 
@@ -19,12 +21,15 @@ public class UIManager {
     private Skin skin;
     private Table table;
 
+    public ScreenViewport viewport;
+
     private OrthographicCamera camera;
 
     public UIManager(OrthographicCamera camera) {
+        viewport = new ScreenViewport();
         this.camera = camera;
         table = new Table();
-        stage = new Stage();
+        stage = new Stage(viewport);
     }
 
     public void init() {
@@ -48,8 +53,9 @@ public class UIManager {
         stage.addActor(table);
     }
 
-    public Stage getStage() {
-        return stage;
+    public void resize(int width, int height) {
+        camera.setToOrtho(false, width , height);
+        viewport.update(width, height, true);
     }
 
     public void render() {
@@ -59,5 +65,9 @@ public class UIManager {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

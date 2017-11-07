@@ -6,7 +6,11 @@ package com.mygdx.game.game.gameunits;
 * Ok that was bad
 * */
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.game.GameState;
 import com.mygdx.game.game.Player;
+import com.mygdx.game.util.Constants;
 
 public class Unit {
 
@@ -18,6 +22,8 @@ public class Unit {
     private int currentRange;
 
     private int[] position;
+
+    private Sprite sprite;
 
     private int[][] availableMoves;
     private int[][] availableAttacks;
@@ -35,5 +41,39 @@ public class Unit {
         this.owner = owner;
 
         this.position = position;
+
+        sprite = baseunit.getSprite();
+        Sprite tile = GameState.instance.boardManager.getBoard()[position[0]][position[1]].getSprite();
+        float size = Constants.TILE_SIZE * Constants.UNIT_SIZE_RATIO;
+        sprite.setSize(size, size);
+        sprite.setPosition(tile.getX(), tile.getY());
+        System.out.println("xpos" + sprite.getX());
+        System.out.println("ypos" + sprite.getY());
+        System.out.println("width" + sprite.getWidth());
+        System.out.println("height" + sprite.getHeight());
+    }
+
+    public void render(Batch batch) {
+        batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+    }
+
+    public void takeDamage(int amount) {
+        currentHealth -= amount;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public int getCurrentAttack() {
+        return currentAttack;
+    }
+
+    public int getCurrentSpeed() {
+        return currentSpeed;
+    }
+
+    public int getCurrentRange() {
+        return currentRange;
     }
 }

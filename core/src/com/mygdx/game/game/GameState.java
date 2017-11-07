@@ -5,11 +5,14 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.game.board.BoardManager;
+import com.mygdx.game.game.gameunits.AllUnits;
 import com.mygdx.game.game.gameunits.UnitManager;
 import com.mygdx.game.game.ui.UIManager;
 import com.mygdx.game.util.SpriteManager;
 
 public class GameState {
+
+    public static GameState instance;
 
     public BoardManager boardManager;
     public UIManager uiManager;
@@ -30,6 +33,9 @@ public class GameState {
         uiManager = new UIManager(uiCam);
         unitManager = new UnitManager();
 
+        SpriteManager.load();
+        SpriteManager.assetManager.finishLoading();
+
         inputs = new InputMultiplexer();
     }
 
@@ -40,6 +46,14 @@ public class GameState {
 
     public void reset() {
         boardManager.resetBoard();
+        unitManager.clearUnits();
+        int[] pos = {1,1};
+        unitManager.addUnit(AllUnits.getUnit("test"), null, pos);
+    }
+
+    public void resize(int width, int height) {
+        boardManager.resize(width, height);
+        uiManager.resize(width, height);
     }
 
     public void render(Batch batch) {
@@ -49,6 +63,7 @@ public class GameState {
 
         batch.begin();
         boardManager.render(batch);
+        unitManager.render(batch);
         batch.end();
         uiManager.render();
     }

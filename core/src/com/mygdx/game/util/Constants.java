@@ -13,5 +13,9 @@ public class Constants {
 
     public static final int TILE_SIZE = 60;
 
-    public static final float CAMERA_SPEED = 7; //in pixels for now
+    public static final float UNIT_SIZE_RATIO = 0.7f;   // multiplied by tile size for sprite size
+
+    public static final float UNIT_SIZE = TILE_SIZE * UNIT_SIZE_RATIO;
+
+    public static final float CAMERA_SPEED = 5; // in pixels for now
 }
