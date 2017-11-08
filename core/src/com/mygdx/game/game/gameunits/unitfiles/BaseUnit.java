@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.game.gameunits.Unit;
 import com.mygdx.game.util.Constants;
 
-/** A base class for all the stats and actions of a single type of unit
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/** A base class for all the stats and available actions of a single type of unit
  * Not actually the object that gets placed on the board */
 
 public abstract class BaseUnit {
@@ -47,8 +50,48 @@ public abstract class BaseUnit {
         return texture;
     }
 
-    public int[][] generateMoves() {
-        return new int[1][1];
+    /** The recursive method containing the algorithm for generating board positions the unit can move to
+     * Can be changed into some more interesting move schemes
+     * @param startpos the starting position of the selected unit
+     * @param checkedpos continuously changing position being checked to see if it's a valid move position
+     * @param moves the aggregate ArrayList of all the valid move positions of the unit
+     * @param movesleft number of moves left to determine when the max range of the moves is reached */
+    public void generateMoves(Integer[] startpos, Integer[] checkedpos, ArrayList<Integer[]> moves, int movesleft) {
+        if(Arrays.equals(startpos, checkedpos)) {
+            return;
+        }
+        if(!moves.contains(checkedpos)) {
+            moves.add(checkedpos);
+        }
+
+        movesleft -= 1;
+
+        if(checkedpos[0] + 1 < Constants.BOARD_WIDTH) {
+            checkedpos[0] += 1;
+            generateMoves(startpos, checkedpos, moves, movesleft);
+        }
+        if(checkedpos[0] - 1 >= 0) {
+            checkedpos[0] -= 1;
+            generateMoves(startpos, checkedpos, moves, movesleft);
+        }
+        if(checkedpos[1] + 1 < Constants.BOARD_HEIGHT) {
+            checkedpos[1] += 1;
+            generateMoves(startpos, checkedpos, moves, movesleft);
+        }
+        if(checkedpos[1] - 1 >= 0) {
+            checkedpos[1] -= 1;
+            generateMoves(startpos, checkedpos, moves, movesleft);
+        }
+    }
+
+    /** Called by the actual units to retrieve unit moves
+     * Uses generateMoves to get the moves
+     * @param self the existing selected unit
+     * @return ArrayList of valid move positions of the unit */
+    public ArrayList<Integer[]> getMoves(Unit self) {
+        ArrayList<Integer[]> moves = new ArrayList<Integer[]>();
+        generateMoves(self.getPosition(), self.getPosition(), moves, self.getCurrentSpeed());
+        return moves;
     }
 
     /** Determines what happens when the unit performs an action on a specified target
