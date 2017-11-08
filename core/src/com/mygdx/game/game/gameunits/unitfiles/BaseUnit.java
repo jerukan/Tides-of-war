@@ -56,8 +56,11 @@ public abstract class BaseUnit {
      * @param checkedpos continuously changing position being checked to see if it's a valid move position
      * @param moves the aggregate ArrayList of all the valid move positions of the unit
      * @param movesleft number of moves left to determine when the max range of the moves is reached */
-    public void generateMoves(Integer[] startpos, Integer[] checkedpos, ArrayList<Integer[]> moves, int movesleft) {
+    protected void generateMoves(Integer[] startpos, Integer[] checkedpos, ArrayList<Integer[]> moves, int movesleft) {
         if(Arrays.equals(startpos, checkedpos)) {
+            return;
+        }
+        if(movesleft <= 0) {
             return;
         }
         if(!moves.contains(checkedpos)) {
@@ -90,7 +93,8 @@ public abstract class BaseUnit {
      * @return ArrayList of valid move positions of the unit */
     public ArrayList<Integer[]> getMoves(Unit self) {
         ArrayList<Integer[]> moves = new ArrayList<Integer[]>();
-        generateMoves(self.getPosition(), self.getPosition(), moves, self.getCurrentSpeed());
+        Integer[] unitpos = {Integer.valueOf(self.getPosition()[0]), Integer.valueOf(self.getPosition()[1])};
+        generateMoves(unitpos, unitpos, moves, self.getCurrentSpeed());
         return moves;
     }
 
