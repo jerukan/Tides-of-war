@@ -37,7 +37,9 @@ public abstract class BaseUnit {
         this.type = type;
     }
 
-    protected void setTexture(Texture texture) {
+    /** Call this in the constructor of the custom unit
+     * @param texture specified texture of the unit, size (usually) doesn't matter */
+    void setTexture(Texture texture) {
         this.texture = texture;
     }
 
@@ -45,18 +47,34 @@ public abstract class BaseUnit {
         return texture;
     }
 
+    public int[][] generateMoves() {
+        return new int[1][1];
+    }
+
     /** Determines what happens when the unit performs an action on a specified target
-     * Can perform actions other than dealing damage to a single unit
+     * Can perform actions other than only dealing damage to a single unit
      * @param self the existing selected unit
      * @param target the existing targeted unit */
     public void onTargetAction(Unit self, Unit target) {
         target.takeDamage(self.getCurrentAttack());
-    };
+    }
 
+    /** Action that is performed when a unit is added to the board
+     * @param self the unit being created */
     public abstract void onCreation(Unit self);
+
+    /** Action that is performed when a unit is killed
+     * @param self the unit being killed */
     public abstract void onDeath(Unit self);
 
+    /** Action that is performed on the start of the player's turn
+     * Only called on the owner's turn start
+     * @param self the existing selected unit */
     public abstract void onTurnStart(Unit self);
+
+    /** Action that is performed on the end of the player's turn
+     * Only called on the owner's turn end
+     * @param self the existing selected unit */
     public abstract void onTurnEnd(Unit self);
 
     public void dispose() {

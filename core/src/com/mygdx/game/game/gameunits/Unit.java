@@ -1,11 +1,5 @@
 package com.mygdx.game.game.gameunits;
 
-/*
-* The unit that is actually placed on the board and handled
-* Not to be confused with the higher pH version of itself
-* Ok that was bad
-* */
-
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.game.GameState;
@@ -13,9 +7,12 @@ import com.mygdx.game.game.Player;
 import com.mygdx.game.game.gameunits.unitfiles.BaseUnit;
 import com.mygdx.game.util.Constants;
 
+/** The unit that is actually placed on the board and handled
+* Not to be confused with the higher pH version of itself */
+
 public class Unit {
 
-    private BaseUnit baseunit;
+    public final BaseUnit baseunit;
 
     private int currentHealth;
     private int currentAttack;
@@ -31,6 +28,10 @@ public class Unit {
 
     private Player owner;
 
+    /** Creates the real unit on the board
+     * @param unit the reference unit
+     * @param owner player that owns the unit
+     * @param position xy position on the board */
     public Unit(BaseUnit unit, Player owner, int[] position) {
         baseunit = unit;
 
@@ -55,8 +56,20 @@ public class Unit {
         batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
+    public boolean isDead() {
+        return currentHealth <= 0;
+    }
+
     public void takeDamage(int amount) {
         currentHealth -= amount;
+    }
+
+    public void generateMoves() {
+
+    }
+
+    public void generateAttacks() {
+
     }
 
     public int[] getPosition() {

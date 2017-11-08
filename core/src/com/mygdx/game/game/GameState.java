@@ -58,6 +58,10 @@ public class GameState {
         uiManager.resize(width, height);
     }
 
+    public void update() {
+
+    }
+
     public void render(Batch batch) {
         boardCam.translate(boardCamX, boardCamY);
         boardCam.update();

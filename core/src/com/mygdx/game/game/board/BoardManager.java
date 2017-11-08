@@ -2,7 +2,7 @@ package com.mygdx.game.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,12 +34,22 @@ public class BoardManager {
         return board;
     }
 
-    /** Sets the board position of the currently selected tile
+    /** Sets the board position of the currently hovered tile
      * @param x x position on the board
      * @param y y position on the board */
     public void setHoveredPosition(int x, int y) {
-        hoveredPosition[0] = x;
-        hoveredPosition[1] = y;
+        if(x >= 0 && x < Constants.BOARD_WIDTH && y >= 0 && y < Constants.BOARD_HEIGHT) {
+            hoveredPosition[0] = x;
+            hoveredPosition[1] = y;
+        }
+        else {
+            hoveredPosition[0] = -1;
+            hoveredPosition[1] = -1;
+        }
+    }
+
+    public int[] getHoveredPosition() {
+        return hoveredPosition;
     }
 
     public void init() {
@@ -81,15 +91,16 @@ public class BoardManager {
         int selectx = (int)(mousex + camera.position.x - camOriginX) / Constants.TILE_SIZE;
         int selecty = (int)(Gdx.graphics.getHeight() - mousey + camera.position.y - camOriginY) / Constants.TILE_SIZE;
 
+        setHoveredPosition(selectx, selecty);
+
         if(selectx >= 0 && selectx < Constants.BOARD_WIDTH && selecty >= 0 && selecty < Constants.BOARD_HEIGHT) {
-            setHoveredPosition(selectx, selecty);
-            Gdx.gl20.glEnable(GL20.GL_BLEND);
-            Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            Gdx.gl30.glEnable(GL30.GL_BLEND);
+            Gdx.gl30.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             highlighter.begin(ShapeType.Filled);
             highlighter.setColor(0, 0, 1, 0.5f);
             highlighter.rect(board[selectx][selecty].getSprite().getX(), board[selectx][selecty].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
             highlighter.end();
-            Gdx.gl20.glDisable(GL20.GL_BLEND);
+            Gdx.gl30.glDisable(GL30.GL_BLEND);
         }
     }
 

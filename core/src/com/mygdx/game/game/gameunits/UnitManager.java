@@ -20,6 +20,25 @@ public class UnitManager {
         unitlist.add(unit);
     }
 
+    public Unit unitFromPosition(int x, int y) {
+        for(Unit unit : unitlist) {
+            int[] pos = unit.getPosition();
+            if(pos[0] == x && pos[1] == y) {
+                return unit;
+            }
+        }
+        return null;
+    }
+
+    /** Removes the corpses from the field */
+    public void killUnits() {
+        for(Unit unit : unitlist) {
+            if(unit.isDead()) {
+                unitlist.remove(unit);
+            }
+        }
+    }
+
     public void clearUnits() {
         unitlist.clear();
     }
