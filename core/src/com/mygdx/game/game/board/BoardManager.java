@@ -2,7 +2,7 @@ package com.mygdx.game.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -52,6 +52,27 @@ public class BoardManager {
         return hoveredPosition;
     }
 
+    public void resetBoard() {
+        board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
+        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                int[] pos = {x, y};
+                board[x][y] = new Tile(pos, new Sprite(SpriteManager.assetManager.get(SpriteManager.grass1)));
+                board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
+            }
+        }
+    }
+
+    public void highlightPosition(int[] position) {
+        Gdx.gl20.glEnable(GL20.GL_BLEND);
+        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        highlighter.begin(ShapeType.Filled);
+        highlighter.setColor(0, 0, 1, 0.5f);
+        highlighter.rect(board[position[0]][position[1]].getSprite().getX(), board[position[0]][position[1]].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
+        highlighter.end();
+        Gdx.gl20.glDisable(GL20.GL_BLEND);
+    }
+
     public void init() {
         highlighter.setProjectionMatrix(camera.combined);
         camOriginX = Gdx.graphics.getWidth() / 2;
@@ -62,17 +83,6 @@ public class BoardManager {
         camOriginX = Gdx.graphics.getWidth() / 2;
         camOriginY = Gdx.graphics.getHeight() / 2;
         camera.setToOrtho(false, width, height);
-    }
-
-    public void resetBoard() {
-        board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
-        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
-            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                int[] pos = {x, y};
-                board[x][y] = new Tile(pos, new Sprite(SpriteManager.assetManager.get(SpriteManager.grass1)));
-                board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
-            }
-        }
     }
 
     public void render(Batch batch) {
@@ -94,13 +104,13 @@ public class BoardManager {
         setHoveredPosition(selectx, selecty);
 
         if(selectx >= 0 && selectx < Constants.BOARD_WIDTH && selecty >= 0 && selecty < Constants.BOARD_HEIGHT) {
-            Gdx.gl30.glEnable(GL30.GL_BLEND);
-            Gdx.gl30.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+            Gdx.gl20.glEnable(GL20.GL_BLEND);
+            Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             highlighter.begin(ShapeType.Filled);
             highlighter.setColor(0, 0, 1, 0.5f);
             highlighter.rect(board[selectx][selecty].getSprite().getX(), board[selectx][selecty].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
             highlighter.end();
-            Gdx.gl30.glDisable(GL30.GL_BLEND);
+            Gdx.gl20.glDisable(GL20.GL_BLEND);
         }
     }
 

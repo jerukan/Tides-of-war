@@ -87,15 +87,63 @@ public abstract class BaseUnit {
         }
     }
 
+    /** The recursive method containing the algorithm for generating board positions the unit can move to
+     * Can be changed into some more interesting attack schemes
+     * @param startpos the starting position of the selected unit
+     * @param checkedpos continuously changing position being checked to see if it's a valid attack position
+     * @param attacks the aggregate ArrayList of all the valid attack positions of the unit
+     * @param attacksleft number of moves left to determine when the max range of the attacks is reached */
+    protected void generateAttacks(Integer[] startpos, Integer[] checkedpos, ArrayList<Integer[]> attacks, int attacksleft) {
+        if(Arrays.equals(startpos, checkedpos)) {
+            return;
+        }
+        if(attacksleft <= 0) {
+            return;
+        }
+        if(!attacks.contains(checkedpos)) {
+            attacks.add(checkedpos);
+        }
+
+        attacksleft -= 1;
+
+        if(checkedpos[0] + 1 < Constants.BOARD_WIDTH) {
+            checkedpos[0] += 1;
+            generateMoves(startpos, checkedpos, attacks, attacksleft);
+        }
+        if(checkedpos[0] - 1 >= 0) {
+            checkedpos[0] -= 1;
+            generateMoves(startpos, checkedpos, attacks, attacksleft);
+        }
+        if(checkedpos[1] + 1 < Constants.BOARD_HEIGHT) {
+            checkedpos[1] += 1;
+            generateMoves(startpos, checkedpos, attacks, attacksleft);
+        }
+        if(checkedpos[1] - 1 >= 0) {
+            checkedpos[1] -= 1;
+            generateMoves(startpos, checkedpos, attacks, attacksleft);
+        }
+    }
+
     /** Called by the actual units to retrieve unit moves
      * Uses generateMoves to get the moves
      * @param self the existing selected unit
      * @return ArrayList of valid move positions of the unit */
     public ArrayList<Integer[]> getMoves(Unit self) {
         ArrayList<Integer[]> moves = new ArrayList<Integer[]>();
-        Integer[] unitpos = {Integer.valueOf(self.getPosition()[0]), Integer.valueOf(self.getPosition()[1])};
+        Integer[] unitpos = {self.getPosition()[0], self.getPosition()[1]};
         generateMoves(unitpos, unitpos, moves, self.getCurrentSpeed());
         return moves;
+    }
+
+    /** Called by the actual units to retrieve unit attacks
+     * Uses generateAttacks to get the moves
+     * @param self the existing selected unit
+     * @return ArrayList of valid attack positions of the unit */
+    public ArrayList<Integer[]> getAttacks(Unit self) {
+        ArrayList<Integer[]> attacks = new ArrayList<Integer[]>();
+        Integer[] unitpos = {self.getPosition()[0], self.getPosition()[1]};
+        generateAttacks(unitpos, unitpos, attacks, self.getCurrentRange());
+        return attacks;
     }
 
     /** Determines what happens when the unit performs an action on a specified target

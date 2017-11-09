@@ -7,6 +7,8 @@ import com.mygdx.game.game.Player;
 import com.mygdx.game.game.gameunits.unitfiles.BaseUnit;
 import com.mygdx.game.util.Constants;
 
+import java.util.ArrayList;
+
 /** The unit that is actually placed on the board and handled
 * Not to be confused with the higher pH version of itself */
 
@@ -23,8 +25,8 @@ public class Unit {
 
     private Sprite sprite;
 
-    private int[][] availableMoves;
-    private int[][] availableAttacks;
+    private ArrayList<Integer[]> availableMoves;
+    private ArrayList<Integer[]> availableAttacks;
 
     private Player owner;
 
@@ -64,12 +66,14 @@ public class Unit {
         currentHealth -= amount;
     }
 
-    public void generateMoves() {
-
+    public void generateMovesAndAttacks() {
+        availableMoves = baseunit.getMoves(this);
+        availableAttacks = baseunit.getAttacks(this);
     }
 
-    public void generateAttacks() {
-
+    public void clearMoves() {
+        availableMoves.clear();
+        availableAttacks.clear();
     }
 
     public int[] getPosition() {

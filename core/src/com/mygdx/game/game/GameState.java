@@ -47,8 +47,6 @@ public class GameState {
     public void reset() {
         boardManager.resetBoard();
         unitManager.clearUnits();
-        int[] pos = {1,1};
-        unitManager.addUnit(AllUnits.getUnit("test"), null, pos);
         int[] pos2 = {3,5};
         unitManager.addUnit(AllUnits.getUnit("test"), null, pos2);
     }

@@ -1,19 +1,16 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.game.GameState;
 import com.mygdx.game.game.Input;
 import com.mygdx.game.game.gameunits.AllUnits;
 import com.mygdx.game.util.SpriteManager;
 
 public class Main extends Game {
-	SpriteBatch batch;
+	private SpriteBatch batch;
 
 	@Override
 	public void create () {

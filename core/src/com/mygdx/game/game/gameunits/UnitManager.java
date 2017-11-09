@@ -43,6 +43,12 @@ public class UnitManager {
         unitlist.clear();
     }
 
+    public void generateUnitMoves() {
+        for(Unit unit : unitlist) {
+            unit.generateMovesAndAttacks();
+        }
+    }
+
     public void render(Batch batch) {
         batch.begin();
         for(Unit unit : unitlist) {
