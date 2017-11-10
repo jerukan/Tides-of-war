@@ -9,7 +9,7 @@ import com.mygdx.game.game.gameunits.AllUnits;
 import com.mygdx.game.game.gameunits.UnitManager;
 import com.mygdx.game.game.ui.UIManager;
 import com.mygdx.game.util.Position;
-import com.mygdx.game.util.SpriteManager;
+import com.mygdx.game.util.Assets;
 
 public class GameState {
 
@@ -34,8 +34,8 @@ public class GameState {
         uiManager = new UIManager(uiCam);
         unitManager = new UnitManager();
 
-        SpriteManager.load();
-        SpriteManager.assetManager.finishLoading();
+        Assets.load();
+        Assets.assetManager.finishLoading();
 
         inputs = new InputMultiplexer();
     }

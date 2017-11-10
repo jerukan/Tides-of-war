@@ -1,13 +1,13 @@
 package com.mygdx.game.game.gameunits.unitfiles;
 
 import com.mygdx.game.game.gameunits.Unit;
-import com.mygdx.game.util.SpriteManager;
+import com.mygdx.game.util.Assets;
 
 public class TestUnit extends BaseUnit {
 
     public TestUnit() {
         super("test", 2, 2, 2, 2, Type.SOLDIER);
-        setTexture(SpriteManager.assetManager.get(SpriteManager.spearman));
+        setTexture(Assets.assetManager.get(Assets.spearman));
     }
 
     @Override

@@ -7,12 +7,18 @@ import com.mygdx.game.util.Position;
 
 import java.util.ArrayList;
 
+/** A class that organizes the units into an aggregate list
+ * Manages the logistics of the units instead of having the board do everything */
 public class UnitManager {
 
     private ArrayList<Unit> unitlist = new ArrayList<Unit>();
 
     public UnitManager() {}
 
+    /** Adds a unit by feeding information and constructing a new unit
+     * @param unit the base unit, the one with all the stats and information
+     * @param player the owner of the unit
+     * @param position the xy coordinate the unit will go */
     public void addUnit(BaseUnit unit, Player player, Position position) {
         unitlist.add(new Unit(unit, player, position));
     }
@@ -21,10 +27,10 @@ public class UnitManager {
         unitlist.add(unit);
     }
 
-    public Unit unitFromPosition(int x, int y) {
+    public Unit unitFromPosition(Position pos) {
         for(Unit unit : unitlist) {
-            Position pos = unit.getPosition();
-            if(pos.equals(new Position(x, y))) {
+            Position unitpos = unit.getPosition();
+            if(unitpos.equals(new Position(pos.getPos()))) {
                 return unit;
             }
         }
@@ -44,6 +50,7 @@ public class UnitManager {
         unitlist.clear();
     }
 
+    /** Also generates attacks, I just didn't feel like putting that in the name */
     public void generateUnitMoves() {
         for(Unit unit : unitlist) {
             unit.generateMovesAndAttacks();

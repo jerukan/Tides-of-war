@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.game.GameState;
 import com.mygdx.game.game.Input;
 import com.mygdx.game.game.gameunits.AllUnits;
-import com.mygdx.game.util.SpriteManager;
+import com.mygdx.game.util.Assets;
 
 public class Main extends Game {
 	private SpriteBatch batch;
@@ -38,7 +38,7 @@ public class Main extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		SpriteManager.dispose();
+		Assets.dispose();
 		AllUnits.dispose();
 		GameState.instance.dispose();
 	}

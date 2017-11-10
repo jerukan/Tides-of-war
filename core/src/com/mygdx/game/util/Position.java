@@ -25,6 +25,17 @@ public class Position {
         y = pos[1];
     }
 
+    /** @return (x, y) */
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+
+    public boolean equals(Position pos) {
+        return pos.getX() == x && pos.getY() == y;
+    }
+
+    // mutators
+
     public void setX(int x) {
         this.x = x;
     }
@@ -43,14 +54,7 @@ public class Position {
         this.y += y;
     }
 
-    /** @return (x, y) */
-    public String toString() {
-        return "(" + x + ", " + y + ")";
-    }
-
-    public boolean equals(Position pos) {
-        return pos.getX() == x && pos.getY() == y;
-    }
+    // accessors
 
     public int getX() {
         return x;

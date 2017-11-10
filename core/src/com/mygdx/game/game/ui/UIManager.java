@@ -14,11 +14,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.game.GameState;
+import com.mygdx.game.util.Assets;
 
 public class UIManager {
 
     private Stage stage;
-    private Skin skin;
     private Table table;
 
     public ScreenViewport viewport;
@@ -34,9 +34,8 @@ public class UIManager {
 
     public void init() {
         table = new Table();
-        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
-        final TextButton button = new TextButton("Click me", skin, "default");
+        final TextButton button = new TextButton("Click me", Assets.uiskin, "default");
         table.setWidth(stage.getWidth());
         table.align(Align.center|Align.top);
         table.setPosition(0, Gdx.graphics.getHeight());
@@ -64,7 +63,6 @@ public class UIManager {
 
     public void dispose() {
         stage.dispose();
-        skin.dispose();
     }
 
     public Stage getStage() {

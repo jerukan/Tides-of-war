@@ -1,14 +1,12 @@
 package com.mygdx.game.game.gameunits.unitfiles;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.game.gameunits.Unit;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.Position;
 import com.mygdx.game.util.Util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /** A base class for all the stats and available actions of a single type of unit
  * Not actually the object that gets placed on the board */
@@ -59,18 +57,9 @@ public abstract class BaseUnit {
      * @param moves the aggregate ArrayList of all the valid move positions of the unit
      * @param movesleft number of moves left to determine when the max range of the moves is reached */
     protected void generateMoves(Position startpos, Position checkedpos, ArrayList<Position> moves, int movesleft) {
-        System.out.println("startpos: " + startpos.toString());
-        System.out.println("checkedpos: " + checkedpos.toString());
-        System.out.println("contained: " + moves.contains(checkedpos));
-        System.out.println("equals: " + startpos.equals(checkedpos));
-        if(!Util.positionInArray(checkedpos, moves) && !startpos.equals(checkedpos)) {
+        if(!Util.arrayContainsPosition(checkedpos, moves) && !startpos.equals(checkedpos)) {
             moves.add(checkedpos);
-            System.out.println("\nadded position");
         }
-        for(Position pos : moves) {
-            System.out.print(pos.toString());
-        }
-        System.out.println("\nmoves left " + movesleft + "\n---");
         if(movesleft <= 0) {
             return;
         }
@@ -101,14 +90,11 @@ public abstract class BaseUnit {
      * @param attacks the aggregate ArrayList of all the valid attack positions of the unit
      * @param attacksleft number of moves left to determine when the max range of the attacks is reached */
     protected void generateAttacks(Position startpos, Position checkedpos, ArrayList<Position> attacks, int attacksleft) {
-        if(startpos.equals(checkedpos)) {
-            return;
+        if(!Util.arrayContainsPosition(checkedpos, attacks) && !startpos.equals(checkedpos)) {
+            attacks.add(checkedpos);
         }
         if(attacksleft <= 0) {
             return;
-        }
-        if(!attacks.contains(checkedpos)) {
-            attacks.add(checkedpos);
         }
 
         attacksleft -= 1;
@@ -140,9 +126,6 @@ public abstract class BaseUnit {
         Position unitpos = new Position(self.getPosition().getPos());
         Position startpos = new Position(self.getPosition().getPos());
         generateMoves(startpos, unitpos, moves, self.getCurrentSpeed());
-        for(Position pos : moves) {
-            System.out.println(pos.toString());
-        }
         return moves;
     }
 

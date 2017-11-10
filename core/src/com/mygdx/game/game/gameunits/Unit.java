@@ -31,7 +31,7 @@ public class Unit {
 
     private Player owner;
 
-    /** Creates the real unit on the board
+    /** Creates the real unit that should belong to the board
      * @param unit the reference unit
      * @param owner player that owns the unit
      * @param position xy position on the board */
@@ -76,6 +76,8 @@ public class Unit {
         availableMoves.clear();
         availableAttacks.clear();
     }
+
+    // accessors
 
     public ArrayList<Position> getAvailableMoves() {
         return availableMoves;

@@ -1,7 +1,6 @@
 package com.mygdx.game.game.board;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -12,9 +11,9 @@ import com.mygdx.game.game.GameState;
 import com.mygdx.game.game.gameunits.Unit;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.Position;
-import com.mygdx.game.util.SpriteManager;
+import com.mygdx.game.util.Assets;
 
-/** A class managing most elements of the board, namely tiles and drawing them */
+/** A class managing most elements of the board, namely tiles */
 
 public class BoardManager {
 
@@ -59,7 +58,7 @@ public class BoardManager {
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                 Position pos = new Position(x, y);
-                board[x][y] = new Tile(pos, new Sprite(SpriteManager.assetManager.get(SpriteManager.grass1)));
+                board[x][y] = new Tile(pos, new Sprite(Assets.assetManager.get(Assets.grass1)));
                 board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
             }
         }
@@ -107,10 +106,14 @@ public class BoardManager {
 
         if(selectx >= 0 && selectx < Constants.BOARD_WIDTH && selecty >= 0 && selecty < Constants.BOARD_HEIGHT) {
             highlightPosition(hoveredPosition);
-        }
-        Unit dude = GameState.instance.unitManager.unitFromPosition(3, 5);
-        for(Position pos : dude.getAvailableMoves()) {
-            highlightPosition(pos);
+            Unit dude = GameState.instance.unitManager.unitFromPosition(hoveredPosition);
+
+            // highlighting moves
+            if(dude != null) {
+                for(Position pos : dude.getAvailableMoves()) {
+                    highlightPosition(pos);
+                }
+            }
         }
     }
 
