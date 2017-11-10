@@ -8,7 +8,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.mygdx.game.game.GameState;
+import com.mygdx.game.game.gameunits.Unit;
 import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.Position;
 import com.mygdx.game.util.SpriteManager;
 
 /** A class managing most elements of the board, namely tiles and drawing them */
@@ -23,10 +26,11 @@ public class BoardManager {
 
     private Tile[][] board;
 
-    private int[] hoveredPosition = new int[2];
+    private Position hoveredPosition;
 
     public BoardManager(OrthographicCamera camera) {
         highlighter = new ShapeRenderer();
+        hoveredPosition = new Position();
         this.camera = camera;
     }
 
@@ -39,16 +43,14 @@ public class BoardManager {
      * @param y y position on the board */
     public void setHoveredPosition(int x, int y) {
         if(x >= 0 && x < Constants.BOARD_WIDTH && y >= 0 && y < Constants.BOARD_HEIGHT) {
-            hoveredPosition[0] = x;
-            hoveredPosition[1] = y;
+            hoveredPosition.setPos(x, y);
         }
         else {
-            hoveredPosition[0] = -1;
-            hoveredPosition[1] = -1;
+            hoveredPosition.setPos(-1, -1);
         }
     }
 
-    public int[] getHoveredPosition() {
+    public Position getHoveredPosition() {
         return hoveredPosition;
     }
 
@@ -56,19 +58,19 @@ public class BoardManager {
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                int[] pos = {x, y};
+                Position pos = new Position(x, y);
                 board[x][y] = new Tile(pos, new Sprite(SpriteManager.assetManager.get(SpriteManager.grass1)));
                 board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
             }
         }
     }
 
-    public void highlightPosition(int[] position) {
+    public void highlightPosition(Position position) {
         Gdx.gl20.glEnable(GL20.GL_BLEND);
         Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         highlighter.begin(ShapeType.Filled);
-        highlighter.setColor(0, 0, 1, 0.5f);
-        highlighter.rect(board[position[0]][position[1]].getSprite().getX(), board[position[0]][position[1]].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
+        highlighter.setColor(0.2f, 0.2f, 1, 0.4f);
+        highlighter.rect(board[position.getX()][position.getY()].getSprite().getX(), board[position.getX()][position.getY()].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
         highlighter.end();
         Gdx.gl20.glDisable(GL20.GL_BLEND);
     }
@@ -104,13 +106,11 @@ public class BoardManager {
         setHoveredPosition(selectx, selecty);
 
         if(selectx >= 0 && selectx < Constants.BOARD_WIDTH && selecty >= 0 && selecty < Constants.BOARD_HEIGHT) {
-            Gdx.gl20.glEnable(GL20.GL_BLEND);
-            Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            highlighter.begin(ShapeType.Filled);
-            highlighter.setColor(0, 0, 1, 0.5f);
-            highlighter.rect(board[selectx][selecty].getSprite().getX(), board[selectx][selecty].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
-            highlighter.end();
-            Gdx.gl20.glDisable(GL20.GL_BLEND);
+            highlightPosition(hoveredPosition);
+        }
+        Unit dude = GameState.instance.unitManager.unitFromPosition(3, 5);
+        for(Position pos : dude.getAvailableMoves()) {
+            highlightPosition(pos);
         }
     }
 

@@ -7,14 +7,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.Position;
 
 public class Tile {
 
-    private int[] position;
+    private Position position;
     private Sprite sprite;
     private Texture rect;
 
-    public Tile(int[] position, Sprite sprite) {
+    public Tile(Position position, Sprite sprite) {
         this.position = position;
         this.sprite = sprite;
         sprite.setSize(Constants.TILE_SIZE, Constants.TILE_SIZE);

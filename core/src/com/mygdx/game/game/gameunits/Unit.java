@@ -6,6 +6,7 @@ import com.mygdx.game.game.GameState;
 import com.mygdx.game.game.Player;
 import com.mygdx.game.game.gameunits.unitfiles.BaseUnit;
 import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.Position;
 
 import java.util.ArrayList;
 
@@ -21,12 +22,12 @@ public class Unit {
     private int currentSpeed;
     private int currentRange;
 
-    private int[] position;
+    private Position position;
 
     private Sprite sprite;
 
-    private ArrayList<Integer[]> availableMoves;
-    private ArrayList<Integer[]> availableAttacks;
+    private ArrayList<Position> availableMoves;
+    private ArrayList<Position> availableAttacks;
 
     private Player owner;
 
@@ -34,7 +35,7 @@ public class Unit {
      * @param unit the reference unit
      * @param owner player that owns the unit
      * @param position xy position on the board */
-    public Unit(BaseUnit unit, Player owner, int[] position) {
+    public Unit(BaseUnit unit, Player owner, Position position) {
         baseunit = unit;
 
         currentHealth = unit.baseHealth;
@@ -47,7 +48,7 @@ public class Unit {
         this.position = position;
 
         sprite = new Sprite(baseunit.getTexture());
-        Sprite tile = GameState.instance.boardManager.getBoard()[position[0]][position[1]].getSprite();
+        Sprite tile = GameState.instance.boardManager.getBoard()[position.getX()][position.getY()].getSprite();
         float size = Constants.TILE_SIZE * Constants.UNIT_SIZE_RATIO;
         sprite.setSize(size, size);
         float spriteoffset = (Constants.TILE_SIZE - size) / 2;
@@ -76,7 +77,15 @@ public class Unit {
         availableAttacks.clear();
     }
 
-    public int[] getPosition() {
+    public ArrayList<Position> getAvailableMoves() {
+        return availableMoves;
+    }
+
+    public ArrayList<Position> getAvailableAttacks() {
+        return availableAttacks;
+    }
+
+    public Position getPosition() {
         return position;
     }
 

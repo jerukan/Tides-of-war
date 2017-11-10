@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.game.gameunits.Unit;
 import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.Position;
+import com.mygdx.game.util.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,34 +58,39 @@ public abstract class BaseUnit {
      * @param checkedpos continuously changing position being checked to see if it's a valid move position
      * @param moves the aggregate ArrayList of all the valid move positions of the unit
      * @param movesleft number of moves left to determine when the max range of the moves is reached */
-    protected void generateMoves(Integer[] startpos, Integer[] checkedpos, ArrayList<Integer[]> moves, int movesleft) {
-        if(Arrays.equals(startpos, checkedpos)) {
-            return;
+    protected void generateMoves(Position startpos, Position checkedpos, ArrayList<Position> moves, int movesleft) {
+        System.out.println("startpos: " + startpos.toString());
+        System.out.println("checkedpos: " + checkedpos.toString());
+        System.out.println("contained: " + moves.contains(checkedpos));
+        System.out.println("equals: " + startpos.equals(checkedpos));
+        if(!Util.positionInArray(checkedpos, moves) && !startpos.equals(checkedpos)) {
+            moves.add(checkedpos);
+            System.out.println("\nadded position");
         }
+        for(Position pos : moves) {
+            System.out.print(pos.toString());
+        }
+        System.out.println("\nmoves left " + movesleft + "\n---");
         if(movesleft <= 0) {
             return;
         }
-        if(!moves.contains(checkedpos)) {
-            moves.add(checkedpos);
-        }
-
         movesleft -= 1;
 
-        if(checkedpos[0] + 1 < Constants.BOARD_WIDTH) {
-            checkedpos[0] += 1;
-            generateMoves(startpos, checkedpos, moves, movesleft);
+        if(checkedpos.getX() + 1 < Constants.BOARD_WIDTH) {
+            Position newpos = new Position(checkedpos.getX() + 1, checkedpos.getY());
+            generateMoves(startpos, newpos, moves, movesleft);
         }
-        if(checkedpos[0] - 1 >= 0) {
-            checkedpos[0] -= 1;
-            generateMoves(startpos, checkedpos, moves, movesleft);
+        if(checkedpos.getX() - 1 >= 0) {
+            Position newpos = new Position(checkedpos.getX() - 1, checkedpos.getY());
+            generateMoves(startpos, newpos, moves, movesleft);
         }
-        if(checkedpos[1] + 1 < Constants.BOARD_HEIGHT) {
-            checkedpos[1] += 1;
-            generateMoves(startpos, checkedpos, moves, movesleft);
+        if(checkedpos.getY() + 1 < Constants.BOARD_HEIGHT) {
+            Position newpos = new Position(checkedpos.getX(), checkedpos.getY() + 1);
+            generateMoves(startpos, newpos, moves, movesleft);
         }
-        if(checkedpos[1] - 1 >= 0) {
-            checkedpos[1] -= 1;
-            generateMoves(startpos, checkedpos, moves, movesleft);
+        if(checkedpos.getY() - 1 < Constants.BOARD_HEIGHT) {
+            Position newpos = new Position(checkedpos.getX(), checkedpos.getY() - 1);
+            generateMoves(startpos, newpos, moves, movesleft);
         }
     }
 
@@ -93,8 +100,8 @@ public abstract class BaseUnit {
      * @param checkedpos continuously changing position being checked to see if it's a valid attack position
      * @param attacks the aggregate ArrayList of all the valid attack positions of the unit
      * @param attacksleft number of moves left to determine when the max range of the attacks is reached */
-    protected void generateAttacks(Integer[] startpos, Integer[] checkedpos, ArrayList<Integer[]> attacks, int attacksleft) {
-        if(Arrays.equals(startpos, checkedpos)) {
+    protected void generateAttacks(Position startpos, Position checkedpos, ArrayList<Position> attacks, int attacksleft) {
+        if(startpos.equals(checkedpos)) {
             return;
         }
         if(attacksleft <= 0) {
@@ -106,21 +113,21 @@ public abstract class BaseUnit {
 
         attacksleft -= 1;
 
-        if(checkedpos[0] + 1 < Constants.BOARD_WIDTH) {
-            checkedpos[0] += 1;
-            generateMoves(startpos, checkedpos, attacks, attacksleft);
+        if(checkedpos.getX() + 1 < Constants.BOARD_WIDTH) {
+            Position newpos = new Position(checkedpos.getX() + 1, checkedpos.getY());
+            generateMoves(startpos, newpos, attacks, attacksleft);
         }
-        if(checkedpos[0] - 1 >= 0) {
-            checkedpos[0] -= 1;
-            generateMoves(startpos, checkedpos, attacks, attacksleft);
+        if(checkedpos.getX() - 1 >= 0) {
+            Position newpos = new Position(checkedpos.getX() - 1, checkedpos.getY());
+            generateMoves(startpos, newpos, attacks, attacksleft);
         }
-        if(checkedpos[1] + 1 < Constants.BOARD_HEIGHT) {
-            checkedpos[1] += 1;
-            generateMoves(startpos, checkedpos, attacks, attacksleft);
+        if(checkedpos.getY() + 1 < Constants.BOARD_HEIGHT) {
+            Position newpos = new Position(checkedpos.getX(), checkedpos.getY() + 1);
+            generateMoves(startpos, newpos, attacks, attacksleft);
         }
-        if(checkedpos[1] - 1 >= 0) {
-            checkedpos[1] -= 1;
-            generateMoves(startpos, checkedpos, attacks, attacksleft);
+        if(checkedpos.getY() - 1 < Constants.BOARD_HEIGHT) {
+            Position newpos = new Position(checkedpos.getX(), checkedpos.getY() - 1);
+            generateMoves(startpos, newpos, attacks, attacksleft);
         }
     }
 
@@ -128,10 +135,14 @@ public abstract class BaseUnit {
      * Uses generateMoves to get the moves
      * @param self the existing selected unit
      * @return ArrayList of valid move positions of the unit */
-    public ArrayList<Integer[]> getMoves(Unit self) {
-        ArrayList<Integer[]> moves = new ArrayList<Integer[]>();
-        Integer[] unitpos = {self.getPosition()[0], self.getPosition()[1]};
-        generateMoves(unitpos, unitpos, moves, self.getCurrentSpeed());
+    public ArrayList<Position> getMoves(Unit self) {
+        ArrayList<Position> moves = new ArrayList<Position>();
+        Position unitpos = new Position(self.getPosition().getPos());
+        Position startpos = new Position(self.getPosition().getPos());
+        generateMoves(startpos, unitpos, moves, self.getCurrentSpeed());
+        for(Position pos : moves) {
+            System.out.println(pos.toString());
+        }
         return moves;
     }
 
@@ -139,10 +150,11 @@ public abstract class BaseUnit {
      * Uses generateAttacks to get the moves
      * @param self the existing selected unit
      * @return ArrayList of valid attack positions of the unit */
-    public ArrayList<Integer[]> getAttacks(Unit self) {
-        ArrayList<Integer[]> attacks = new ArrayList<Integer[]>();
-        Integer[] unitpos = {self.getPosition()[0], self.getPosition()[1]};
-        generateAttacks(unitpos, unitpos, attacks, self.getCurrentRange());
+    public ArrayList<Position> getAttacks(Unit self) {
+        ArrayList<Position> attacks = new ArrayList<Position>();
+        Position unitpos = new Position(self.getPosition().getPos());
+        Position startpos = new Position(self.getPosition().getPos());
+        generateAttacks(unitpos, startpos, attacks, self.getCurrentRange());
         return attacks;
     }
 

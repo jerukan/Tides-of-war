@@ -8,6 +8,7 @@ import com.mygdx.game.game.board.BoardManager;
 import com.mygdx.game.game.gameunits.AllUnits;
 import com.mygdx.game.game.gameunits.UnitManager;
 import com.mygdx.game.game.ui.UIManager;
+import com.mygdx.game.util.Position;
 import com.mygdx.game.util.SpriteManager;
 
 public class GameState {
@@ -47,8 +48,8 @@ public class GameState {
     public void reset() {
         boardManager.resetBoard();
         unitManager.clearUnits();
-        int[] pos2 = {3,5};
-        unitManager.addUnit(AllUnits.getUnit("test"), null, pos2);
+        unitManager.addUnit(AllUnits.getUnit("test"), null, new Position(3, 5));
+        unitManager.generateUnitMoves();
     }
 
     public void resize(int width, int height) {
