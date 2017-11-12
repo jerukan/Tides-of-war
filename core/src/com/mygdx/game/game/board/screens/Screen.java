@@ -24,6 +24,11 @@ public abstract class Screen {
         }
     }
 
+    public abstract void init();
+
+    /** Called to determine which tables are visible under conditions */
+    public abstract void updateVisibility();
+
     public void render() {
         stage.draw();
     }

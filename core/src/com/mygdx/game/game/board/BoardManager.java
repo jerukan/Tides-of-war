@@ -24,6 +24,8 @@ public class BoardManager {
 
     private float camOriginX, camOriginY;
 
+    public float camOffsetX, camOffsetY;
+
     private Tile[][] board;
 
     private Position hoveredPosition;
@@ -64,6 +66,15 @@ public class BoardManager {
         return selectedPosition;
     }
 
+    public Tile tileFromPosition(Position pos) {
+        if(pos.isValid()) {
+            return board[pos.getX()][pos.getY()];
+        }
+        else {
+            return null;
+        }
+    }
+
     public void resetBoard() {
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
@@ -73,10 +84,6 @@ public class BoardManager {
                 board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
             }
         }
-    }
-
-    public void update() {
-        System.out.println(selectedPosition.toString());
     }
 
     public void highlightPosition(Position position, Color color) {
@@ -95,6 +102,11 @@ public class BoardManager {
         highlighter.setProjectionMatrix(camera.combined);
         camOriginX = Gdx.graphics.getWidth() / 2;
         camOriginY = Gdx.graphics.getHeight() / 2;
+    }
+
+    public void update() {
+        camOffsetX = camera.position.x - camOriginX;
+        camOffsetY = camera.position.y - camOriginY;
     }
 
     public void resize(int width, int height) {

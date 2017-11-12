@@ -10,11 +10,9 @@ import com.mygdx.game.game.gameunits.AllUnits;
 import com.mygdx.game.util.Assets;
 
 public class Main extends Game {
-	private SpriteBatch batch;
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
 		GameState.instance = new GameState();
 		GameState.instance.init();
 		GameState.instance.reset();
@@ -27,7 +25,7 @@ public class Main extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-		GameState.instance.render(batch);
+		GameState.instance.render();
 	}
 
 	@Override
@@ -37,7 +35,6 @@ public class Main extends Game {
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
 		Assets.dispose();
 		AllUnits.dispose();
 		GameState.instance.dispose();

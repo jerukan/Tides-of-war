@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.game.board.screens.Screen;
 
-/** Class that displays a wanted screen */
+/** Class that displays a single screen */
 public class UIManager {
 
     private Stage stage;
@@ -19,7 +19,14 @@ public class UIManager {
     }
 
     public void init() {
+        currentScreen.init();
+    }
 
+    public void update() {
+    }
+
+    public void updateVisibility() {
+        currentScreen.updateVisibility();
     }
 
     public void resize(int width, int height) {

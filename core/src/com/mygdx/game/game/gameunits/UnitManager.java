@@ -20,11 +20,15 @@ public class UnitManager {
      * @param player the owner of the unit
      * @param position the xy coordinate the unit will go */
     public void addUnit(BaseUnit unit, Player player, Position position) {
-        unitlist.add(new Unit(unit, player, position));
+        if(positionAvailable(position)) {
+            unitlist.add(new Unit(unit, player, position));
+        }
     }
 
     public void addUnit(Unit unit) {
-        unitlist.add(unit);
+        if(positionAvailable(unit.getPosition())) {
+            unitlist.add(unit);
+        }
     }
 
     public Unit unitFromPosition(Position pos) {
@@ -35,6 +39,15 @@ public class UnitManager {
             }
         }
         return null;
+    }
+
+    public boolean positionAvailable(Position pos) {
+        for(Unit unit : unitlist) {
+            if(pos.equals(unit.getPosition())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /** Removes the corpses from the field */
@@ -54,7 +67,6 @@ public class UnitManager {
     public void generateUnitMoves() {
         for(Unit unit : unitlist) {
             unit.generateMovesAndAttacks();
-            System.out.println("got moves for: " + unit.baseunit.name);
         }
     }
 
