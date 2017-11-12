@@ -25,6 +25,11 @@ public class Position {
         y = pos[1];
     }
 
+    public Position(Position pos) {
+        x = pos.getX();
+        y = pos.getY();
+    }
+
     /** @return (x, y) */
     public String toString() {
         return "(" + x + ", " + y + ")";
@@ -32,6 +37,10 @@ public class Position {
 
     public boolean equals(Position pos) {
         return pos.getX() == x && pos.getY() == y;
+    }
+
+    public boolean isValid() {
+        return x > -1 || y > -1;
     }
 
     // mutators

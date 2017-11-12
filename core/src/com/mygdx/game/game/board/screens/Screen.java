@@ -1,20 +1,30 @@
 package com.mygdx.game.game.board.screens;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.util.HashMap;
+
+/** Bare minimum for all the UI screens */
 public abstract class Screen {
 
-    private Table table;
-    private Button[] buttons;
+    private Stage stage;
+    HashMap<String, Table> tables = new HashMap<String, Table>();
 
-    public Screen() {
-
+    /** Classes that extend Screen have their buttons and tables initialized in the constructor
+     * @param stage retrieved from UIManager */
+    public Screen(Stage stage) {
+        this.stage = stage;
     }
 
-    public void initListeners() {
+    /** Called at the end of the constructors */
+    public void addTablesToStage() {
+        for(Table table : tables.values()) {
+            stage.addActor(table);
+        }
+    }
 
+    public void render() {
+        stage.draw();
     }
 }

@@ -1,6 +1,7 @@
 package com.mygdx.game.game.board;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -26,10 +27,12 @@ public class BoardManager {
     private Tile[][] board;
 
     private Position hoveredPosition;
+    private Position selectedPosition;
 
     public BoardManager(OrthographicCamera camera) {
         highlighter = new ShapeRenderer();
         hoveredPosition = new Position();
+        selectedPosition = new Position();
         this.camera = camera;
     }
 
@@ -53,6 +56,14 @@ public class BoardManager {
         return hoveredPosition;
     }
 
+    public void setSelectedPosition() {
+        selectedPosition = new Position(hoveredPosition);
+    }
+
+    public Position getSelectedPosition() {
+        return selectedPosition;
+    }
+
     public void resetBoard() {
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
@@ -64,14 +75,20 @@ public class BoardManager {
         }
     }
 
-    public void highlightPosition(Position position) {
-        Gdx.gl20.glEnable(GL20.GL_BLEND);
-        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        highlighter.begin(ShapeType.Filled);
-        highlighter.setColor(0.2f, 0.2f, 1, 0.4f);
-        highlighter.rect(board[position.getX()][position.getY()].getSprite().getX(), board[position.getX()][position.getY()].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
-        highlighter.end();
-        Gdx.gl20.glDisable(GL20.GL_BLEND);
+    public void update() {
+        System.out.println(selectedPosition.toString());
+    }
+
+    public void highlightPosition(Position position, Color color) {
+        if(position.isValid()) {
+            Gdx.gl20.glEnable(GL20.GL_BLEND);
+            Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            highlighter.begin(ShapeType.Filled);
+            highlighter.setColor(color);
+            highlighter.rect(board[position.getX()][position.getY()].getSprite().getX(), board[position.getX()][position.getY()].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
+            highlighter.end();
+            Gdx.gl20.glDisable(GL20.GL_BLEND);
+        }
     }
 
     public void init() {
@@ -99,19 +116,21 @@ public class BoardManager {
         }
         batch.end();
 
+        highlightPosition(selectedPosition, new Color(0.2f, 0.2f, 1, 0.4f));
+
         int selectx = (int)(mousex + camera.position.x - camOriginX) / Constants.TILE_SIZE;
         int selecty = (int)(Gdx.graphics.getHeight() - mousey + camera.position.y - camOriginY) / Constants.TILE_SIZE;
 
         setHoveredPosition(selectx, selecty);
 
         if(selectx >= 0 && selectx < Constants.BOARD_WIDTH && selecty >= 0 && selecty < Constants.BOARD_HEIGHT) {
-            highlightPosition(hoveredPosition);
+            highlightPosition(hoveredPosition, new Color(0.2f, 0.2f, 1, 0.4f));
             Unit dude = GameState.instance.unitManager.unitFromPosition(hoveredPosition);
 
             // highlighting moves
             if(dude != null) {
                 for(Position pos : dude.getAvailableMoves()) {
-                    highlightPosition(pos);
+                    highlightPosition(pos, new Color(1, 0.2f, 0.2f, 0.4f));
                 }
             }
         }

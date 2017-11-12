@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input.Buttons;
 import com.mygdx.game.util.Constants;
 
 public class Input implements InputProcessor {
@@ -49,6 +50,9 @@ public class Input implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if(button == Buttons.LEFT) {
+            GameState.instance.boardManager.setSelectedPosition();
+        }
         return false;
     }
 
