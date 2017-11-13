@@ -9,17 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.game.GameState;
-import com.mygdx.game.game.board.Tile;
+import com.mygdx.game.game.board.BoardManager;
 import com.mygdx.game.game.gameunits.AllUnits;
-import com.mygdx.game.game.gameunits.unitfiles.TestUnit;
 import com.mygdx.game.util.Assets;
 import com.mygdx.game.util.Constants;
-import com.mygdx.game.util.Position;
 
 public class GameScreen extends Screen {
 
     public GameScreen(Stage stage) {
         super(stage);
+
+        //-----------------------------------------------------//
 
         Table testTable = new Table();
         final TextButton button = new TextButton("Click me", Assets.uiskin, "default");
@@ -51,7 +51,12 @@ public class GameScreen extends Screen {
         moveButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-
+                if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()) != null) {
+                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.MOVE);
+                }
+                else {
+                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.SELECT);
+                }
             }
         });
         tileSelectionTable.align(Align.bottomLeft);
@@ -75,6 +80,7 @@ public class GameScreen extends Screen {
     @Override
     public void updateVisibility() {
         if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
+            GameState.instance.boardManager.updateOffsets();
             Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
             Table t = tables.get("tileSelectionTable");
             t.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - GameState.instance.boardManager.camOffsetX, s.getY() - GameState.instance.boardManager.camOffsetY);

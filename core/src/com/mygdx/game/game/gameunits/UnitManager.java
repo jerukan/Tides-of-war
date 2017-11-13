@@ -11,9 +11,14 @@ import java.util.ArrayList;
  * Manages the logistics of the units instead of having the board do everything */
 public class UnitManager {
 
-    private ArrayList<Unit> unitlist = new ArrayList<Unit>();
+    private ArrayList<Unit> unitlist;
 
-    public UnitManager() {}
+    private Unit selectedUnit;
+
+    public UnitManager() {
+        unitlist = new ArrayList<Unit>();
+        selectedUnit = null;
+    }
 
     /** Adds a unit by feeding information and constructing a new unit
      * @param unit the base unit, the one with all the stats and information
@@ -29,6 +34,14 @@ public class UnitManager {
         if(positionAvailable(unit.getPosition())) {
             unitlist.add(unit);
         }
+    }
+
+    public void setSelectedUnit(Unit selectedUnit) {
+        this.selectedUnit = selectedUnit;
+    }
+
+    public Unit getSelectedUnit() {
+        return selectedUnit;
     }
 
     public Unit unitFromPosition(Position pos) {

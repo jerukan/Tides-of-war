@@ -7,6 +7,7 @@ import com.mygdx.game.game.Player;
 import com.mygdx.game.game.gameunits.unitfiles.BaseUnit;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.Position;
+import com.mygdx.game.util.Util;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,14 @@ public class Unit {
         this.position = position;
 
         sprite = new Sprite(baseunit.getTexture());
+        moveSprite(position);
+    }
+
+    public void render(Batch batch) {
+        batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+    }
+
+    public void moveSprite(Position position) {
         Sprite tile = GameState.instance.boardManager.getBoard()[position.getX()][position.getY()].getSprite();
         float size = Constants.TILE_SIZE * Constants.UNIT_SIZE_RATIO;
         sprite.setSize(size, size);
@@ -55,8 +64,16 @@ public class Unit {
         sprite.setPosition(tile.getX() + spriteoffset, tile.getY() + spriteoffset);
     }
 
-    public void render(Batch batch) {
-        batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+    public void move(Position pos) {
+        if(pos.isValid()) {
+            if(Util.arrayContainsPosition(pos, availableMoves)) {
+                if(GameState.instance.unitManager.positionAvailable(pos)) {
+                    position = pos;
+                    moveSprite(position);
+                    generateMovesAndAttacks();
+                }
+            }
+        }
     }
 
     public boolean isDead() {
