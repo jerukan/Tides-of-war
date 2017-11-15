@@ -48,14 +48,13 @@ public class BoardManager {
     }
 
     /** Sets the board position of the currently hovered tile
-     * @param x x position on the board
-     * @param y y position on the board */
-    public void setHoveredPosition(int x, int y) {
-        if(x >= 0 && x < Constants.BOARD_WIDTH && y >= 0 && y < Constants.BOARD_HEIGHT) {
-            hoveredPosition.setPos(x, y);
+     * @param pos desired position to set */
+    public void setHoveredPosition(Position pos) {
+        if(pos.getX() >= 0 && pos.getX() < Constants.BOARD_WIDTH && pos.getY() >= 0 && pos.getY() < Constants.BOARD_HEIGHT) {
+            hoveredPosition.setPos(pos);
         }
         else {
-            hoveredPosition.setPos(-1, -1);
+            hoveredPosition.reset();
         }
     }
 
@@ -63,15 +62,22 @@ public class BoardManager {
         return hoveredPosition;
     }
 
+    /** Determines what happens on the next tile selection */
     public void selectedPositionAction() {
         selectedPosition = new Position(hoveredPosition);
-        if(selectType == SelectType.SELECT) {
-            GameState.instance.unitManager.setSelectedUnit(GameState.instance.unitManager.unitFromPosition(selectedPosition));
-        }
-        else if(selectType == SelectType.MOVE) {
-            GameState.instance.unitManager.getSelectedUnit().move(selectedPosition);
-            selectType = SelectType.SELECT;
-            //selectedPosition.setPos(-1, -1);
+        switch (selectType) {
+            case SELECT:
+                GameState.instance.unitManager.setSelectedUnit(GameState.instance.unitManager.unitFromPosition(selectedPosition));
+                break;
+            case MOVE:
+                GameState.instance.unitManager.getSelectedUnit().move(selectedPosition);
+                selectType = SelectType.SELECT;
+                selectedPosition.reset();
+                break;
+            case ATTACK:
+                selectType = SelectType.SELECT;
+                selectedPosition.reset();
+                break;
         }
     }
 
@@ -81,6 +87,10 @@ public class BoardManager {
 
     public void setSelectType(SelectType selectType) {
         this.selectType = selectType;
+    }
+
+    public SelectType getSelectType() {
+        return selectType;
     }
 
     public Tile tileFromPosition(Position pos) {
@@ -164,7 +174,7 @@ public class BoardManager {
         int selectx = (int)(mousex + camera.position.x - camOriginX) / Constants.TILE_SIZE;
         int selecty = (int)(Gdx.graphics.getHeight() - mousey + camera.position.y - camOriginY) / Constants.TILE_SIZE;
 
-        setHoveredPosition(selectx, selecty);
+        setHoveredPosition(new Position(selectx, selecty));
 
         if(selectx >= 0 && selectx < Constants.BOARD_WIDTH && selecty >= 0 && selecty < Constants.BOARD_HEIGHT) {
             highlightPosition(hoveredPosition, new Color(0.2f, 0.2f, 1, 0.4f));
@@ -176,8 +186,13 @@ public class BoardManager {
             }
         }
 
-        if(GameState.instance.unitManager.getSelectedUnit() != null && selectType == SelectType.MOVE) {
-            highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), new Color(0.2f, 0.2f, 1, 0.4f));
+        if(GameState.instance.unitManager.getSelectedUnit() != null) {
+            if(selectType == SelectType.MOVE) {
+                highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), new Color(0.2f, 0.2f, 1, 0.4f));
+            }
+            else if(selectType == SelectType.ATTACK) {
+                highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableAttacks(), new Color(1, 0.2f, 0.2f, 0.4f));
+            }
         }
     }
 

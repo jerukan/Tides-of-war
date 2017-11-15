@@ -15,16 +15,16 @@ public class Input implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if(keycode == Keys.LEFT) {
+        if(keycode == Keys.LEFT || keycode == Keys.A) {
             gameState.setCameraX(-Constants.CAMERA_SPEED);
         }
-        if(keycode == Keys.RIGHT) {
+        if(keycode == Keys.RIGHT || keycode == Keys.D) {
             gameState.setCameraX(Constants.CAMERA_SPEED);
         }
-        if(keycode == Keys.UP) {
+        if(keycode == Keys.UP || keycode == Keys.W) {
             gameState.setCameraY(Constants.CAMERA_SPEED);
         }
-        if(keycode == Keys.DOWN) {
+        if(keycode == Keys.DOWN || keycode == Keys.S) {
             gameState.setCameraY(-Constants.CAMERA_SPEED);
         }
         return false;
@@ -32,10 +32,10 @@ public class Input implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        if(keycode == Keys.LEFT || keycode == Keys.RIGHT) {
+        if(keycode == Keys.LEFT || keycode == Keys.RIGHT || keycode == Keys.A || keycode == Keys.D) {
             gameState.setCameraX(0);
         }
-        if(keycode == Keys.UP || keycode == Keys.DOWN) {
+        if(keycode == Keys.UP || keycode == Keys.DOWN || keycode == Keys.W || keycode == Keys.S) {
             gameState.setCameraY(0);
         }
         return false;

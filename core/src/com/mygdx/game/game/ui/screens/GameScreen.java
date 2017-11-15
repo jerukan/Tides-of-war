@@ -13,8 +13,15 @@ import com.mygdx.game.game.board.BoardManager;
 import com.mygdx.game.game.gameunits.AllUnits;
 import com.mygdx.game.util.Assets;
 import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.Position;
 
 public class GameScreen extends Screen {
+
+    private final TextButton button;
+
+    private final TextButton buildButton;
+    private final TextButton moveButton;
+    private final TextButton attackButton;
 
     public GameScreen(Stage stage) {
         super(stage);
@@ -22,7 +29,7 @@ public class GameScreen extends Screen {
         //-----------------------------------------------------//
 
         Table testTable = new Table();
-        final TextButton button = new TextButton("Click me", Assets.uiskin, "default");
+        button = new TextButton("Click me", Assets.uiskin, "default");
         button.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -39,15 +46,16 @@ public class GameScreen extends Screen {
         //-----------------------------------------------------//
 
         Table tileSelectionTable = new Table();
-        final TextButton buildButton = new TextButton("Build", Assets.uiskin, "default");
+        buildButton = new TextButton("Build", Assets.uiskin, "default");
         buildButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                GameState.instance.unitManager.addUnit(AllUnits.getUnit("test"), null, GameState.instance.boardManager.getSelectedPosition());
+                GameState.instance.unitManager.addUnit(AllUnits.getUnit("test"), null, new Position(GameState.instance.boardManager.getSelectedPosition()));
+                GameState.instance.unitManager.setSelectedToLast();
                 GameState.instance.unitManager.generateUnitMoves();
             }
         });
-        final TextButton moveButton = new TextButton("Move", Assets.uiskin, "default");
+        moveButton = new TextButton("Move", Assets.uiskin, "default");
         moveButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -59,11 +67,25 @@ public class GameScreen extends Screen {
                 }
             }
         });
-        tileSelectionTable.align(Align.bottomLeft);
+        attackButton = new TextButton("Attack", Assets.uiskin, "default");
+        attackButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()) != null) {
+                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.ATTACK);
+                }
+                else {
+                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.SELECT);
+                }
+            }
+        });
+        tileSelectionTable.align(Align.left);
 
-        tileSelectionTable.add(buildButton).pad(10);
-        tileSelectionTable.row();
+        tileSelectionTable.add(buildButton);
+        tileSelectionTable.row().pad(10);
         tileSelectionTable.add(moveButton);
+        tileSelectionTable.row();
+        tileSelectionTable.add(attackButton);
 
         tables.put("tileSelectionTable", tileSelectionTable);
 

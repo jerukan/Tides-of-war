@@ -58,6 +58,15 @@ public class Position {
         setY(y);
     }
 
+    public void setPos(Position pos) {
+        setX(pos.getX());
+        setY(pos.getY());
+    }
+
+    public void reset() {
+        setPos(-1, -1);
+    }
+
     public void translate(int x, int y) {
         this.x += x;
         this.y += y;

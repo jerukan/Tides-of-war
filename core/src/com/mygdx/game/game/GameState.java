@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.game.board.BoardManager;
-import com.mygdx.game.game.board.screens.GameScreen;
+import com.mygdx.game.game.ui.screens.GameScreen;
 import com.mygdx.game.game.gameunits.AllUnits;
 import com.mygdx.game.game.gameunits.UnitManager;
 import com.mygdx.game.game.ui.UIManager;

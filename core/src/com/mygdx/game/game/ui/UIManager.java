@@ -2,7 +2,7 @@ package com.mygdx.game.game.ui;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.game.board.screens.Screen;
+import com.mygdx.game.game.ui.screens.Screen;
 
 /** Class that displays a single screen */
 public class UIManager {

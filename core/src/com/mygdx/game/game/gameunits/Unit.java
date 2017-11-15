@@ -68,7 +68,7 @@ public class Unit {
         if(pos.isValid()) {
             if(Util.arrayContainsPosition(pos, availableMoves)) {
                 if(GameState.instance.unitManager.positionAvailable(pos)) {
-                    position = pos;
+                    position = new Position(pos);
                     moveSprite(position);
                     generateMovesAndAttacks();
                 }

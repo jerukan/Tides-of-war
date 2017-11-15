@@ -6,7 +6,7 @@ import com.mygdx.game.util.Assets;
 public class TestUnit extends BaseUnit {
 
     public TestUnit() {
-        super("test", 2, 2, 2, 2, Type.SOLDIER);
+        super("test", 2, 2, 2, 1, Type.SOLDIER);
         setTexture(Assets.assetManager.get(Assets.spearman));
     }
 
