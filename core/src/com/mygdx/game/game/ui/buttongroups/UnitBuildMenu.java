@@ -1,4 +1,10 @@
 package com.mygdx.game.game.ui.buttongroups;
 
-public class UnitBuildMenu {
+import com.mygdx.game.game.gameunits.AllUnits;
+
+public class UnitBuildMenu extends ButtonGroup {
+
+    public UnitBuildMenu() {
+        table = AllUnits.getUnitTable();
+    }
 }
