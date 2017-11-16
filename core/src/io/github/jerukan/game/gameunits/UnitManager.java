@@ -88,14 +88,6 @@ public class UnitManager implements Manager {
         }
     }
 
-    public void render(Batch batch) {
-        batch.begin();
-        for(Unit unit : unitlist) {
-            unit.render(batch);
-        }
-        batch.end();
-    }
-
     @Override
     public void init() {
         clearUnits();
@@ -104,5 +96,9 @@ public class UnitManager implements Manager {
     @Override
     public void update() {
 
+    }
+
+    public ArrayList<Unit> getUnitlist() {
+        return unitlist;
     }
 }

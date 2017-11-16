@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.jerukan.game.board.BoardRenderer;
+import io.github.jerukan.game.gameunits.UnitRenderer;
 import io.github.jerukan.game.ui.UIRenderer;
 import io.github.jerukan.game.ui.screens.GameScreen;
 
@@ -28,6 +29,7 @@ public class WorldRenderer {
 
     public static BoardRenderer boardRenderer = new BoardRenderer(GameState.instance.boardManager, boardCam);
     public static UIRenderer uiRenderer = new UIRenderer(uiCam, uiStage);
+    public static UnitRenderer unitRenderer = new UnitRenderer(GameState.instance.unitManager);
 
     public static void init() {
         inputs.addProcessor(uiRenderer.getStage());
@@ -52,8 +54,8 @@ public class WorldRenderer {
         uiRenderer.updateVisibility();
 
         boardRenderer.render(batch);
-        GameState.instance.unitManager.render(batch);
-        uiRenderer.render();
+        unitRenderer.render(batch);
+        uiRenderer.render(batch);
     }
 
     public static void setCameraVelX(float x) {

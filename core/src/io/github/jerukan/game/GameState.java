@@ -20,6 +20,7 @@ public class GameState {
 
     public void init() {
         boardManager.init();
+        unitManager.init();
     }
 
     public void reset() {

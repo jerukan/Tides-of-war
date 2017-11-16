@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import io.github.jerukan.game.GameState;
+import io.github.jerukan.game.Renderer;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 
 import java.util.ArrayList;
 
-public class BoardRenderer {
+public class BoardRenderer implements Renderer {
 
     private BoardManager boardManager;
 
@@ -57,6 +58,7 @@ public class BoardRenderer {
         Gdx.gl20.glDisable(GL20.GL_BLEND);
     }
 
+    @Override
     public void render(Batch batch) {
         highlighter.setProjectionMatrix(camera.combined);
         int mousex = Gdx.input.getX();
@@ -97,6 +99,7 @@ public class BoardRenderer {
         }
     }
 
+    @Override
     public void init() {
         highlighter.setProjectionMatrix(camera.combined);
         camOriginX = Gdx.graphics.getWidth() / 2;
@@ -108,6 +111,7 @@ public class BoardRenderer {
         camOffsetY = camera.position.y - camOriginY;
     }
 
+    @Override
     public void resize(int width, int height) {
         camOriginX = Gdx.graphics.getWidth() / 2;
         camOriginY = Gdx.graphics.getHeight() / 2;
