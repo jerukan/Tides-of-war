@@ -10,7 +10,7 @@ public abstract class ButtonGroup {
         table = new Table();
     }
 
-    public abstract void setVisibility();
+    public abstract void updateVisibility();
 
     public Table getTable() {
         return table;

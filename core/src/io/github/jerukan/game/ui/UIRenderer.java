@@ -2,10 +2,12 @@ package io.github.jerukan.game.ui;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.ui.screens.Screen;
 
-/** Class that displays a single screen */
-public class UIManager {
+/** Class that manages different game screens
+ * Also handles displaying them for now */
+public class UIRenderer {
 
     private Stage stage;
 
@@ -13,16 +15,13 @@ public class UIManager {
 
     private Screen currentScreen;
 
-    public UIManager(OrthographicCamera camera, Stage stage) {
+    public UIRenderer(OrthographicCamera camera, Stage stage) {
         this.camera = camera;
         this.stage = stage;
     }
 
     public void init() {
         currentScreen.init();
-    }
-
-    public void update() {
     }
 
     public void updateVisibility() {

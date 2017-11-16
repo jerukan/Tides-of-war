@@ -29,7 +29,7 @@ public abstract class BaseUnit {
      * @param baseAttack default attack of a unit
      * @param baseSpeed default speed of a unit
      * @param baseRange default range of a unit
-     * @param type determines if the unit is a BUILDING or SOLDIER */
+     * @param type determines if the unit is a BUILDING or SOLDIER, or... something else */
     public BaseUnit(String name, int baseHealth, int baseAttack, int baseSpeed, int baseRange, Type type) {
         this.name = name;
         this.baseHealth = baseHealth;

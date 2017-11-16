@@ -12,7 +12,7 @@ public abstract class Screen {
     HashMap<String, Table> tables = new HashMap<String, Table>();
 
     /** Classes that extend Screen have their buttons and tables initialized in the constructor
-     * @param stage retrieved from UIManager */
+     * @param stage retrieved from UIRenderer */
     public Screen(Stage stage) {
         this.stage = stage;
     }

@@ -16,16 +16,16 @@ public class Input implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Keys.LEFT || keycode == Keys.A) {
-            World.setCameraVelX(-Constants.CAMERA_SPEED);
+            WorldRenderer.setCameraVelX(-Constants.CAMERA_SPEED);
         }
         if(keycode == Keys.RIGHT || keycode == Keys.D) {
-            World.setCameraVelX(Constants.CAMERA_SPEED);
+            WorldRenderer.setCameraVelX(Constants.CAMERA_SPEED);
         }
         if(keycode == Keys.UP || keycode == Keys.W) {
-            World.setCameraVelY(Constants.CAMERA_SPEED);
+            WorldRenderer.setCameraVelY(Constants.CAMERA_SPEED);
         }
         if(keycode == Keys.DOWN || keycode == Keys.S) {
-            World.setCameraVelY(-Constants.CAMERA_SPEED);
+            WorldRenderer.setCameraVelY(-Constants.CAMERA_SPEED);
         }
         return false;
     }
@@ -33,10 +33,10 @@ public class Input implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         if(keycode == Keys.LEFT || keycode == Keys.RIGHT || keycode == Keys.A || keycode == Keys.D) {
-            World.setCameraVelX(0);
+            WorldRenderer.setCameraVelX(0);
         }
         if(keycode == Keys.UP || keycode == Keys.DOWN || keycode == Keys.W || keycode == Keys.S) {
-            World.setCameraVelY(0);
+            WorldRenderer.setCameraVelY(0);
         }
         return false;
     }

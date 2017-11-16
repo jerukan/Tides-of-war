@@ -16,7 +16,7 @@ public class UnitBuildMenu extends ButtonGroup {
     }
 
     @Override
-    public void setVisibility() {
+    public void updateVisibility() {
 
     }
 }

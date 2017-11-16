@@ -1,6 +1,7 @@
 package io.github.jerukan.game.gameunits;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.unitfiles.BaseUnit;
 import io.github.jerukan.util.Position;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 /** A class that organizes the units into an aggregate list
  * Manages the logistics of the units instead of having the board do everything */
-public class UnitManager {
+public class UnitManager implements Manager {
 
     private ArrayList<Unit> unitlist;
 
@@ -93,5 +94,15 @@ public class UnitManager {
             unit.render(batch);
         }
         batch.end();
+    }
+
+    @Override
+    public void init() {
+        clearUnits();
+    }
+
+    @Override
+    public void update() {
+
     }
 }
