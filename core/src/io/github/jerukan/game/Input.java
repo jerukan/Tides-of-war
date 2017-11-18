@@ -48,8 +48,12 @@ public class Input implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if(button == Buttons.RIGHT) {
+            GameState.instance.boardManager.selectedPositionActionRight();
+        }
         if(button == Buttons.LEFT) {
-            GameState.instance.boardManager.selectedPositionAction();
+            GameState.instance.boardManager.selectedPositionActionLeft();
+            WorldRenderer.uiRenderer.getCurrentScreen().clearWindows();
         }
         return false;
     }

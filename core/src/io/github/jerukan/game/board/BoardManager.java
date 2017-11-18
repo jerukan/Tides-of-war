@@ -43,23 +43,37 @@ public class BoardManager implements Manager {
         return hoveredPosition;
     }
 
-    /** Determines what happens on the next tile selection */
-    public void selectedPositionAction() {
+    /** Determines what happens on the next tile selection with the left mouse button */
+    public void selectedPositionActionLeft() {
+        switch (selectType) {
+            case MOVE:
+                GameState.instance.unitManager.getSelectedUnit().move(hoveredPosition);
+                selectType = SelectType.SELECT;
+                selectedPosition.reset();
+                break;
+            case ATTACK:
+                if(GameState.instance.unitManager.unitFromPosition(hoveredPosition) != null) {
+                    GameState.instance.unitManager.unitFromPosition(selectedPosition).targetAction(GameState.instance.unitManager.unitFromPosition(hoveredPosition));
+                    GameState.instance.unitManager.killUnits();
+                }
+                selectType = SelectType.SELECT;
+                selectedPosition.reset();
+                break;
+        }
+    }
+
+    /** Determines what happens on the next tile selection with the right mouse button */
+    public void selectedPositionActionRight() {
         selectedPosition = new Position(hoveredPosition);
         switch (selectType) {
             case SELECT:
                 GameState.instance.unitManager.setSelectedUnit(GameState.instance.unitManager.unitFromPosition(selectedPosition));
                 break;
-            case MOVE:
-                GameState.instance.unitManager.getSelectedUnit().move(selectedPosition);
-                selectType = SelectType.SELECT;
-                selectedPosition.reset();
-                break;
-            case ATTACK:
-                selectType = SelectType.SELECT;
-                selectedPosition.reset();
-                break;
         }
+    }
+
+    public void setSelectedPosition(Position selectedPosition) {
+        this.selectedPosition = selectedPosition;
     }
 
     public Position getSelectedPosition() {

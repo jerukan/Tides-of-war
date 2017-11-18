@@ -29,6 +29,10 @@ public abstract class Screen {
     /** Called to determine which tables are visible under conditions */
     public abstract void updateVisibility();
 
+    /** Called to clear windows that aren't visible by default
+     * For example, pop up windows and such */
+    public abstract void clearWindows();
+
     public void render() {
         stage.draw();
     }

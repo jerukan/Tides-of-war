@@ -52,6 +52,11 @@ public class UIRenderer implements Renderer {
 
     // accessors
 
+
+    public Screen getCurrentScreen() {
+        return currentScreen;
+    }
+
     public Stage getStage() {
         return stage;
     }
