@@ -1,8 +1,10 @@
-package io.github.jerukan.game;
+package io.github.jerukan.util;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import io.github.jerukan.game.GameState;
+import io.github.jerukan.game.WorldRenderer;
 import io.github.jerukan.util.Constants;
 
 public class Input implements InputProcessor {
@@ -27,6 +29,12 @@ public class Input implements InputProcessor {
         if(keycode == Keys.DOWN || keycode == Keys.S) {
             WorldRenderer.setCameraVelY(-Constants.CAMERA_SPEED);
         }
+        if(keycode == Keys.EQUALS) {
+            WorldRenderer.setBoardCamZoom(-Constants.CAMERA_ZOOM_SPEED);
+        }
+        if(keycode == Keys.MINUS) {
+            WorldRenderer.setBoardCamZoom(Constants.CAMERA_ZOOM_SPEED);
+        }
         return false;
     }
 
@@ -37,6 +45,9 @@ public class Input implements InputProcessor {
         }
         if(keycode == Keys.UP || keycode == Keys.DOWN || keycode == Keys.W || keycode == Keys.S) {
             WorldRenderer.setCameraVelY(0);
+        }
+        if(keycode == Keys.EQUALS || keycode == Keys.MINUS) {
+            WorldRenderer.setBoardCamZoom(0);
         }
         return false;
     }

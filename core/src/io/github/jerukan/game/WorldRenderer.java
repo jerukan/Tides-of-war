@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.jerukan.game.board.BoardRenderer;
 import io.github.jerukan.game.gameunits.UnitRenderer;
 import io.github.jerukan.game.ui.UIRenderer;
 import io.github.jerukan.game.ui.screens.GameScreen;
+import io.github.jerukan.util.Input;
 
 /** Handles all the renderers and graphics related objects */
 
@@ -28,6 +30,8 @@ public class WorldRenderer {
 
     private static float boardCamVelX = 0;
     private static float boardCamVelY = 0;
+
+    private static float boardCamZoom = 0;
 
     public static BoardRenderer boardRenderer = new BoardRenderer(GameState.instance.boardManager, boardCam);
     public static UIRenderer uiRenderer = new UIRenderer(uiCam, uiStage);
@@ -50,6 +54,8 @@ public class WorldRenderer {
 
     public static void render() {
         boardCam.translate(boardCamVelX, boardCamVelY);
+        boardCam.zoom += boardCamZoom;
+
         boardCam.update();
         boardRenderer.updateOffsets();
         batch.setProjectionMatrix(boardCam.combined);
@@ -66,6 +72,10 @@ public class WorldRenderer {
 
     public static void setCameraVelY(float y) {
         boardCamVelY = y;
+    }
+
+    public static void setBoardCamZoom(float vel) {
+        boardCamZoom = vel;
     }
 
     public static void dispose() {

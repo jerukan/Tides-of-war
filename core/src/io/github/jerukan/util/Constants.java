@@ -20,6 +20,7 @@ public class Constants {
     public static final float UNIT_SIZE = TILE_SIZE * UNIT_SIZE_RATIO;
 
     public static final float CAMERA_SPEED = 5; // in pixels for now
+    public static final float CAMERA_ZOOM_SPEED = 0.02f;
 
     public static final double CHRIS_CONSTANT = 4.2 * Math.pow(10, 2);  // a mysterious number, what could it mean?
 }

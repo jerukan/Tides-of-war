@@ -1,5 +1,7 @@
 package io.github.jerukan.util;
 
+/** Class that basically assigns a boolean to a name  */
+
 public class BooleanFlag {
 
     private String name;
