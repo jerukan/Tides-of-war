@@ -1,21 +1,11 @@
 package io.github.jerukan.game.board;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Manager;
-import io.github.jerukan.game.gameunits.Unit;
+import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
-import io.github.jerukan.util.Assets;
-
-import java.util.ArrayList;
 
 /** A class managing most elements of the board, namely tiles */
 

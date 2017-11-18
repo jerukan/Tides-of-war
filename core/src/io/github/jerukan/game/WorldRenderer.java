@@ -11,6 +11,8 @@ import io.github.jerukan.game.gameunits.UnitRenderer;
 import io.github.jerukan.game.ui.UIRenderer;
 import io.github.jerukan.game.ui.screens.GameScreen;
 
+/** Handles all the renderers and graphics related objects */
+
 public class WorldRenderer {
 
     public static SpriteBatch batch = new SpriteBatch();

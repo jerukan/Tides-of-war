@@ -3,16 +3,11 @@ package io.github.jerukan.game.gameunits.unitfiles;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.util.Assets;
 
-public class TestUnit extends BaseUnit {
+public class TestUnit3 extends BaseUnit {
 
-    public TestUnit() {
-        super("test",
-                2,
-                2,
-                2,
-                1,
-                Type.SOLDIER);
-        setTexture(Assets.getTexture(Assets.spearman));
+    public TestUnit3() {
+        super("test3", 15, 5, 4, 3, Type.BUILDING);
+        setTexture(Assets.getTexture(Assets.wall));
     }
 
     @Override

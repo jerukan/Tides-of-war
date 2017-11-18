@@ -1,6 +1,5 @@
 package io.github.jerukan.game.gameunits;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.unitfiles.BaseUnit;
@@ -72,6 +71,7 @@ public class UnitManager implements Manager {
     public void killUnits() {
         for(Unit unit : unitlist) {
             if(unit.isDead()) {
+                unit.baseunit.onDeath(unit);
                 unitlist.remove(unit);
             }
         }
