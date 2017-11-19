@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
-import io.github.jerukan.util.Constants;
 
 public class Input implements InputProcessor {
 
@@ -18,22 +17,26 @@ public class Input implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Keys.LEFT || keycode == Keys.A) {
-            WorldRenderer.setCameraVelX(-Constants.CAMERA_SPEED);
+            WorldRenderer.setBoardCamAccelX(-Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.boardCamSlowingX = false;
         }
         if(keycode == Keys.RIGHT || keycode == Keys.D) {
-            WorldRenderer.setCameraVelX(Constants.CAMERA_SPEED);
+            WorldRenderer.setBoardCamAccelX(Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.boardCamSlowingX = false;
         }
         if(keycode == Keys.UP || keycode == Keys.W) {
-            WorldRenderer.setCameraVelY(Constants.CAMERA_SPEED);
+            WorldRenderer.setBoardCamAccelY(Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.boardCamSlowingY = false;
         }
         if(keycode == Keys.DOWN || keycode == Keys.S) {
-            WorldRenderer.setCameraVelY(-Constants.CAMERA_SPEED);
+            WorldRenderer.setBoardCamAccelY(-Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.boardCamSlowingY = false;
         }
         if(keycode == Keys.EQUALS) {
-            WorldRenderer.setBoardCamZoom(-Constants.CAMERA_ZOOM_SPEED);
+            WorldRenderer.setBoardCamZoom(-Constants.CAMERA_SPEED_ACCEL);
         }
         if(keycode == Keys.MINUS) {
-            WorldRenderer.setBoardCamZoom(Constants.CAMERA_ZOOM_SPEED);
+            WorldRenderer.setBoardCamZoom(Constants.CAMERA_SPEED_ACCEL);
         }
         return false;
     }
@@ -41,10 +44,12 @@ public class Input implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         if(keycode == Keys.LEFT || keycode == Keys.RIGHT || keycode == Keys.A || keycode == Keys.D) {
-            WorldRenderer.setCameraVelX(0);
+            WorldRenderer.setBoardCamAccelX(0);
+            WorldRenderer.boardCamSlowingX = true;
         }
         if(keycode == Keys.UP || keycode == Keys.DOWN || keycode == Keys.W || keycode == Keys.S) {
-            WorldRenderer.setCameraVelY(0);
+            WorldRenderer.setBoardCamAccelY(0);
+            WorldRenderer.boardCamSlowingY = true;
         }
         if(keycode == Keys.EQUALS || keycode == Keys.MINUS) {
             WorldRenderer.setBoardCamZoom(0);

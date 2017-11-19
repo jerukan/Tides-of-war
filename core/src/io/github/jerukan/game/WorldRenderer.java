@@ -11,6 +11,7 @@ import io.github.jerukan.game.board.BoardRenderer;
 import io.github.jerukan.game.gameunits.UnitRenderer;
 import io.github.jerukan.game.ui.UIRenderer;
 import io.github.jerukan.game.ui.screens.GameScreen;
+import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Input;
 
 /** Handles all the renderers and graphics related objects */
@@ -30,6 +31,12 @@ public class WorldRenderer {
 
     private static float boardCamVelX = 0;
     private static float boardCamVelY = 0;
+
+    private static float boardCamAccelX = 0;
+    private static float boardCamAccelY = 0;
+
+    public static boolean boardCamSlowingX = false;
+    public static boolean boardCamSlowingY = false;
 
     private static float boardCamZoom = 0;
 
@@ -53,6 +60,7 @@ public class WorldRenderer {
     }
 
     public static void render() {
+        boardCamUpdate();
         boardCam.translate(boardCamVelX, boardCamVelY);
         boardCam.zoom += boardCamZoom;
 
@@ -66,12 +74,66 @@ public class WorldRenderer {
         uiRenderer.render(batch);
     }
 
-    public static void setCameraVelX(float x) {
-        boardCamVelX = x;
+    public static void boardCamUpdate() {
+        if(boardCamSlowingX || boardCamSlowingY) {
+            slowCamera();
+        }
+        setCameraVelX();
+        setCameraVelY();
     }
 
-    public static void setCameraVelY(float y) {
-        boardCamVelY = y;
+    public static void setCameraVelX() {
+        if(boardCamVelX > Constants.CAMERA_SPEED_MAX) {
+            boardCamVelX = Constants.CAMERA_SPEED_MAX;
+        }
+        else if(boardCamVelX < -Constants.CAMERA_SPEED_MAX) {
+            boardCamVelX = -Constants.CAMERA_SPEED_MAX;
+        }
+        else {
+            boardCamVelX += boardCamAccelX;
+        }
+    }
+
+
+    public static void setCameraVelY() {
+        if(boardCamVelY > Constants.CAMERA_SPEED_MAX) {
+            boardCamVelY = Constants.CAMERA_SPEED_MAX;
+        }
+        else if(boardCamVelY < -Constants.CAMERA_SPEED_MAX) {
+            boardCamVelY = -Constants.CAMERA_SPEED_MAX;
+        }
+        else {
+            boardCamVelY += boardCamAccelY;
+        }
+    }
+
+    public static void setBoardCamAccelX(float x) {
+        boardCamAccelX = x;
+    }
+
+    public static void setBoardCamAccelY(float y) {
+        boardCamAccelY = y;
+    }
+
+    public static void slowCamera() {
+        float xdir = Math.abs(boardCamVelX) / boardCamVelX;
+        float ydir = Math.abs(boardCamVelY) / boardCamVelY;
+        if(boardCamAccelX == 0) {
+            if (!(Math.abs(boardCamVelX) < Constants.CAMERA_ZERO_THRESHOLD)) {
+                boardCamVelX -= Constants.CAMERA_SPEED_ACCEL * xdir;
+            }
+            else {
+                boardCamVelX = 0;
+            }
+        }
+        if(boardCamAccelY == 0) {
+            if (!(Math.abs(boardCamVelY) < Constants.CAMERA_ZERO_THRESHOLD)) {
+                boardCamVelY -= Constants.CAMERA_SPEED_ACCEL * ydir;
+            }
+            else {
+                boardCamVelY = 0;
+            }
+        }
     }
 
     public static void setBoardCamZoom(float vel) {
