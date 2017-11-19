@@ -32,12 +32,12 @@ public class Input implements InputProcessor {
             WorldRenderer.setBoardCamAccelY(-Constants.CAMERA_SPEED_ACCEL);
             WorldRenderer.boardCamSlowingY = false;
         }
-        if(keycode == Keys.EQUALS) {
-            WorldRenderer.setBoardCamZoom(-Constants.CAMERA_ZOOM_SPEED_MAX);
-        }
-        if(keycode == Keys.MINUS) {
-            WorldRenderer.setBoardCamZoom(Constants.CAMERA_ZOOM_SPEED_MAX);
-        }
+//        if(keycode == Keys.EQUALS) {
+//            WorldRenderer.setBoardCamZoom(-Constants.CAMERA_ZOOM_SPEED_MAX);
+//        }
+//        if(keycode == Keys.MINUS) {
+//            WorldRenderer.setBoardCamZoom(Constants.CAMERA_ZOOM_SPEED_MAX);
+//        }
         return false;
     }
 
@@ -51,9 +51,9 @@ public class Input implements InputProcessor {
             WorldRenderer.setBoardCamAccelY(0);
             WorldRenderer.boardCamSlowingY = true;
         }
-        if(keycode == Keys.EQUALS || keycode == Keys.MINUS) {
-            WorldRenderer.setBoardCamZoom(0);
-        }
+//        if(keycode == Keys.EQUALS || keycode == Keys.MINUS) {
+//            WorldRenderer.setBoardCamZoom(0);
+//        }
         return false;
     }
 
@@ -87,6 +87,12 @@ public class Input implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
+        if(amount == 1) {
+            WorldRenderer.setBoardCamTargetZoom(Constants.CAMERA_ZOOM_SPEED_MAX);
+        }
+        else if(amount == -1) {
+            WorldRenderer.setBoardCamTargetZoom(-Constants.CAMERA_ZOOM_SPEED_MAX);
+        }
         return false;
     }
 }
