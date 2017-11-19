@@ -23,7 +23,6 @@ public class WorldRenderer {
     public static ScreenViewport uiViewport = new ScreenViewport();
     public static Stage uiStage = new Stage();
 
-
     public static InputMultiplexer inputs = new InputMultiplexer();
 
     private static float boardCamVelX = 0;

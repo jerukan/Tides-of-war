@@ -2,6 +2,7 @@ package io.github.jerukan.game.ui.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import io.github.jerukan.game.ui.buttongroups.ButtonGroup;
 
 import java.util.HashMap;
 
@@ -10,6 +11,7 @@ public abstract class Screen {
 
     private Stage stage;
     HashMap<String, Table> tables = new HashMap<String, Table>();
+    ButtonGroup[] menus;
 
     /** Classes that extend Screen have their buttons and tables initialized in the constructor
      * @param stage retrieved from UIRenderer */
@@ -17,10 +19,17 @@ public abstract class Screen {
         this.stage = stage;
     }
 
-    /** Called at the end of the constructors */
+    public void addMenus(ButtonGroup... in) {
+        menus = new ButtonGroup[in.length];
+        for(int i = 0; i < in.length; i++) {
+            menus[i] = in[i];
+        }
+        addTablesToStage();
+    }
+
     public void addTablesToStage() {
-        for(Table table : tables.values()) {
-            stage.addActor(table);
+        for(ButtonGroup menu : menus) {
+            stage.addActor(menu.getTable());
         }
     }
 

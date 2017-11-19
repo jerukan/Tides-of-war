@@ -26,7 +26,7 @@ public class GameScreen extends Screen {
         unitBuildMenu = new UnitBuildMenu(this, buildMenuListeners);
         tables.put("unitsTable", unitBuildMenu.getTable());
 
-        addTablesToStage();
+        addMenus(tileSelectMenu, unitBuildMenu);
     }
 
     @Override

@@ -34,6 +34,12 @@ public abstract class ButtonGroup {
         return table;
     }
 
+    public void resetFlags() {
+        for(BooleanFlag flag : visibilityFlags) {
+            flag.reset();
+        }
+    }
+
     /** Searches for a flag of a given name
      * @param name the flag's hardcoded name
      * @return the BooleanFlag with the matching name */
