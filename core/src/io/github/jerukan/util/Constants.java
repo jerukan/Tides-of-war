@@ -22,7 +22,9 @@ public class Constants {
     public static final float CAMERA_SPEED_MAX = 5; // in pixels for now
     public static final float CAMERA_SPEED_ACCEL = 0.2f;
     public static final float CAMERA_ZERO_THRESHOLD = 0.3f;
-    public static final float CAMERA_ZOOM_SPEED = 0.02f;
+
+    public static final float CAMERA_ZOOM_SPEED_MAX = 0.02f;
+    public static final float CAMERA_ZOOM_ACCEL = 0.004f;
 
     public static final double CHRIS_CONSTANT = 4.2 * Math.pow(10, 2);  // a mysterious number, what could it mean?
 }

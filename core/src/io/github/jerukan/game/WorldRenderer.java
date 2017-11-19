@@ -64,6 +64,15 @@ public class WorldRenderer {
         boardCam.translate(boardCamVelX, boardCamVelY);
         boardCam.zoom += boardCamZoom;
 
+        boardCam.zoom = MathUtils.clamp(boardCam.zoom, 0.3f, 1);
+/*
+        float effectiveViewportWidth = boardCam.viewportWidth * boardCam.zoom;
+        float effectiveViewportHeight = boardCam.viewportHeight * boardCam.zoom;
+
+        boardCam.position.x = MathUtils.clamp(boardCam.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
+        boardCam.position.y = MathUtils.clamp(boardCam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+        */
+
         boardCam.update();
         boardRenderer.updateOffsets();
         batch.setProjectionMatrix(boardCam.combined);
@@ -74,6 +83,8 @@ public class WorldRenderer {
         uiRenderer.render(batch);
     }
 
+    //BOARD CAMERA SHIT THAT SHOULD PROBABLY BE PUT SOMEWHERE ELSE
+    //----------------------------------------------------------------//
     public static void boardCamUpdate() {
         if(boardCamSlowingX || boardCamSlowingY) {
             slowCamera();
@@ -83,11 +94,8 @@ public class WorldRenderer {
     }
 
     public static void setCameraVelX() {
-        if(boardCamVelX > Constants.CAMERA_SPEED_MAX) {
-            boardCamVelX = Constants.CAMERA_SPEED_MAX;
-        }
-        else if(boardCamVelX < -Constants.CAMERA_SPEED_MAX) {
-            boardCamVelX = -Constants.CAMERA_SPEED_MAX;
+        if(Math.abs(boardCamVelX) > Constants.CAMERA_SPEED_MAX) {
+            MathUtils.clamp(boardCamVelX, -Constants.CAMERA_SPEED_MAX, Constants.CAMERA_SPEED_MAX);
         }
         else {
             boardCamVelX += boardCamAccelX;
@@ -96,11 +104,8 @@ public class WorldRenderer {
 
 
     public static void setCameraVelY() {
-        if(boardCamVelY > Constants.CAMERA_SPEED_MAX) {
-            boardCamVelY = Constants.CAMERA_SPEED_MAX;
-        }
-        else if(boardCamVelY < -Constants.CAMERA_SPEED_MAX) {
-            boardCamVelY = -Constants.CAMERA_SPEED_MAX;
+        if(Math.abs(boardCamVelY) > Constants.CAMERA_SPEED_MAX) {
+            MathUtils.clamp(boardCamVelY, -Constants.CAMERA_SPEED_MAX, Constants.CAMERA_SPEED_MAX);
         }
         else {
             boardCamVelY += boardCamAccelY;
@@ -139,6 +144,8 @@ public class WorldRenderer {
     public static void setBoardCamZoom(float vel) {
         boardCamZoom = vel;
     }
+
+    //------------------------------------------------------------------//
 
     public static void dispose() {
         batch.dispose();

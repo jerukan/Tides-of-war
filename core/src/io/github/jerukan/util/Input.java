@@ -33,10 +33,10 @@ public class Input implements InputProcessor {
             WorldRenderer.boardCamSlowingY = false;
         }
         if(keycode == Keys.EQUALS) {
-            WorldRenderer.setBoardCamZoom(-Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.setBoardCamZoom(-Constants.CAMERA_ZOOM_SPEED_MAX);
         }
         if(keycode == Keys.MINUS) {
-            WorldRenderer.setBoardCamZoom(Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.setBoardCamZoom(Constants.CAMERA_ZOOM_SPEED_MAX);
         }
         return false;
     }

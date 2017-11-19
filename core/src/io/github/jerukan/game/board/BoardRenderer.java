@@ -74,8 +74,10 @@ public class BoardRenderer implements Renderer {
 
         highlightPosition(boardManager.getSelectedPosition(), new Color(0.2f, 0.2f, 1, 0.4f));
 
-        int selectx = (int)(mousex + camera.position.x - camOriginX) / Constants.TILE_SIZE;
-        int selecty = (int)(Gdx.graphics.getHeight() - mousey + camera.position.y - camOriginY) / Constants.TILE_SIZE;
+        float mouseposboardx = camera.zoom * (mousex - camOriginX) + camera.position.x;
+        float mouseposboardy = camera.zoom * (Gdx.graphics.getHeight() - mousey - camOriginY) + camera.position.y;
+        int selectx = (int)(mouseposboardx / (float)Constants.TILE_SIZE);
+        int selecty = (int)(mouseposboardy / (float)Constants.TILE_SIZE);
 
         boardManager.setHoveredPosition(new Position(selectx, selecty));
 
