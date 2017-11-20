@@ -12,7 +12,6 @@ import io.github.jerukan.game.gameunits.UnitRenderer;
 import io.github.jerukan.game.ui.UIRenderer;
 import io.github.jerukan.game.ui.screens.GameScreen;
 import io.github.jerukan.util.Constants;
-import io.github.jerukan.util.Input;
 
 /** Handles all the renderers and graphics related objects */
 
@@ -20,26 +19,14 @@ public class WorldRenderer {
 
     public static SpriteBatch batch = new SpriteBatch();
 
-    public static OrthographicCamera boardCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     public static OrthographicCamera uiCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+    public static BoardCamera boardCam = new BoardCamera(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
     public static ScreenViewport uiViewport = new ScreenViewport();
     public static Stage uiStage = new Stage();
 
-
     public static InputMultiplexer inputs = new InputMultiplexer();
-
-    private static float boardCamVelX = 0;
-    private static float boardCamVelY = 0;
-
-    private static float boardCamAccelX = 0;
-    private static float boardCamAccelY = 0;
-
-    public static boolean boardCamSlowingX = false;
-    public static boolean boardCamSlowingY = false;
-
-    private static float boardCamZoom = 1;
-    private static float boardCamTargetZoom = 1;
 
     public static BoardRenderer boardRenderer = new BoardRenderer(GameState.instance.boardManager, boardCam);
     public static UIRenderer uiRenderer = new UIRenderer(uiCam, uiStage);
@@ -61,94 +48,15 @@ public class WorldRenderer {
     }
 
     public static void render() {
-        boardCamUpdate();
-        boardCam.translate(boardCamVelX, boardCamVelY);
-
-        boardCam.zoom = MathUtils.clamp(boardCamZoom, Constants.CAMERA_ZOOM_MAX, 1);
-
         boardCam.update();
-        boardRenderer.updateOffsets();
-        batch.setProjectionMatrix(boardCam.combined);
+
+        batch.setProjectionMatrix(boardCam.getCamera().combined);
         uiRenderer.updateVisibility();
 
         boardRenderer.render(batch);
         unitRenderer.render(batch);
         uiRenderer.render(batch);
     }
-
-    //BOARD CAMERA SHIT THAT SHOULD PROBABLY BE PUT SOMEWHERE ELSE
-    //----------------------------------------------------------------//
-    public static void boardCamUpdate() {
-        if(boardCamSlowingX || boardCamSlowingY) {
-            slowCamera();
-        }
-        setCameraVelX();
-        setCameraVelY();
-        zoomBoardCamera();
-    }
-
-    public static void setCameraVelX() {
-        if(Math.abs(boardCamVelX) > Constants.CAMERA_SPEED_MAX) {
-            boardCamVelX = MathUtils.clamp(boardCamVelX, -Constants.CAMERA_SPEED_MAX, Constants.CAMERA_SPEED_MAX);
-        }
-        else {
-            boardCamVelX += boardCamAccelX;
-        }
-    }
-
-
-    public static void setCameraVelY() {
-        if(Math.abs(boardCamVelY) > Constants.CAMERA_SPEED_MAX) {
-            boardCamVelY = MathUtils.clamp(boardCamVelY, -Constants.CAMERA_SPEED_MAX, Constants.CAMERA_SPEED_MAX);
-        }
-        else {
-            boardCamVelY += boardCamAccelY;
-        }
-    }
-
-    public static void setBoardCamAccelX(float x) {
-        boardCamAccelX = x;
-    }
-
-    public static void setBoardCamAccelY(float y) {
-        boardCamAccelY = y;
-    }
-
-    public static void slowCamera() {
-        float xdir = Math.abs(boardCamVelX) / boardCamVelX;
-        float ydir = Math.abs(boardCamVelY) / boardCamVelY;
-        if(boardCamAccelX == 0) {
-            if (!(Math.abs(boardCamVelX) < Constants.CAMERA_ZERO_THRESHOLD)) {
-                boardCamVelX -= Constants.CAMERA_SPEED_ACCEL * xdir;
-            }
-            else {
-                boardCamVelX = 0;
-            }
-        }
-        if(boardCamAccelY == 0) {
-            if (!(Math.abs(boardCamVelY) < Constants.CAMERA_ZERO_THRESHOLD)) {
-                boardCamVelY -= Constants.CAMERA_SPEED_ACCEL * ydir;
-            }
-            else {
-                boardCamVelY = 0;
-            }
-        }
-    }
-
-    public static void setBoardCamTargetZoom(float val) {
-        boardCamTargetZoom += val;
-        boardCamTargetZoom = MathUtils.clamp(boardCamTargetZoom, Constants.CAMERA_ZOOM_MAX, 1);
-    }
-
-    public static void zoomBoardCamera() {
-        System.out.println(boardCamTargetZoom);
-        if(Math.abs(boardCamZoom) != boardCamTargetZoom) {
-            boardCamZoom += Constants.CAMERA_ZOOM_SPEED_MAX * (Math.abs(boardCamTargetZoom - boardCam.zoom) / (boardCamTargetZoom - boardCam.zoom));
-            boardCamZoom = MathUtils.clamp(boardCamZoom, Constants.CAMERA_ZOOM_MAX, 1);
-        }
-    }
-
-    //------------------------------------------------------------------//
 
     public static void dispose() {
         batch.dispose();

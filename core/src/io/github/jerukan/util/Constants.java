@@ -1,8 +1,6 @@
 package io.github.jerukan.util;
 
-/*
-* The number Mason, what do they mean?
-* */
+/** The number Mason, what do they mean? */
 
 public class Constants {
 
@@ -20,7 +18,7 @@ public class Constants {
     public static final float UNIT_SIZE = TILE_SIZE * UNIT_SIZE_RATIO;
 
     public static final float CAMERA_SPEED_MAX = 5; // in pixels for now
-    public static final float CAMERA_SPEED_ACCEL = 0.2f;
+    public static final float CAMERA_SPEED_ACCEL = 0.25f;
     public static final float CAMERA_ZERO_THRESHOLD = 0.3f;
 
     public static final float CAMERA_ZOOM_MAX = 0.3f;

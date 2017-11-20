@@ -72,9 +72,9 @@ public class TileSelectMenu extends ButtonGroup {
             table.setVisible(false);
         }
         else if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
-            WorldRenderer.boardRenderer.updateOffsets();
+            WorldRenderer.boardCam.updateOffsets();
             Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
-            table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardRenderer.camOffsetX, s.getY() - WorldRenderer.boardRenderer.camOffsetY);
+            table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardCam.camOffsetX, s.getY() - WorldRenderer.boardCam.camOffsetY);
             if(!table.isVisible()) {
                 table.setVisible(true);
             }
