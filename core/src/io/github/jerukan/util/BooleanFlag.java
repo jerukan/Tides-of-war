@@ -1,5 +1,6 @@
 package io.github.jerukan.util;
 
+/** Wraps a boolean with a string name */
 public class BooleanFlag {
 
     private String name;

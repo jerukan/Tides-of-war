@@ -18,7 +18,7 @@ public class Position {
     }
 
     public Position(int[] pos) {
-        if(pos.length > 2) {
+        if(pos.length != 2) {
             throw new IllegalArgumentException("A position only has two numbers");
         }
         x = pos[0];
@@ -40,7 +40,7 @@ public class Position {
     }
 
     public boolean isValid() {
-        return x > -1 || y > -1;
+        return x >= 0 || y >= 0;
     }
 
     // mutators

@@ -43,6 +43,7 @@ public class GameScreen extends Screen {
 
     @Override
     public void clearWindows() {
+        building.setState(false);
         if(tables.get("tileSelectionTable").isVisible() || tables.get("unitsTable").isVisible()) {
             GameState.instance.boardManager.setSelectedPosition(new Position());
         }

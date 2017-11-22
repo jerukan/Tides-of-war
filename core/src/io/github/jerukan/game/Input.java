@@ -7,12 +7,6 @@ import io.github.jerukan.util.Constants;
 
 public class Input implements InputProcessor {
 
-    private GameState gameState;
-
-    public Input(GameState gameState) {
-        this.gameState = gameState;
-    }
-
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Keys.LEFT || keycode == Keys.A) {

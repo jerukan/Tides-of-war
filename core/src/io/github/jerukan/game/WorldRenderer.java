@@ -34,7 +34,7 @@ public class WorldRenderer {
 
     public static void init() {
         inputs.addProcessor(uiRenderer.getStage());
-        inputs.addProcessor(new Input(GameState.instance));
+        inputs.addProcessor(new Input());
         Gdx.input.setInputProcessor(inputs);
         boardRenderer.init();
         uiRenderer.setCurrentScreen(new GameScreen(uiStage));

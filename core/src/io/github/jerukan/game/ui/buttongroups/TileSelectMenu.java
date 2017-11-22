@@ -12,6 +12,7 @@ import io.github.jerukan.game.ui.screens.Screen;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.BooleanFlag;
 import io.github.jerukan.util.Constants;
+import io.github.jerukan.util.Position;
 
 /** The menu that pops up when a tile is selected
  * TODO radial menu would be cool */
