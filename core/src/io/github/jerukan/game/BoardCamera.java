@@ -106,7 +106,6 @@ public class BoardCamera {
     }
 
     public void zoomBoardCamera() {
-        System.out.println(boardCamTargetZoom);
         if(Math.abs(boardCamZoom) != boardCamTargetZoom) {
             boardCamZoom += Constants.CAMERA_ZOOM_SPEED_MAX * (Math.abs(boardCamTargetZoom - camera.zoom) / (boardCamTargetZoom - camera.zoom));
             boardCamZoom = MathUtils.clamp(boardCamZoom, Constants.CAMERA_ZOOM_MAX, 1);

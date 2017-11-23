@@ -69,10 +69,10 @@ public class UnitManager implements Manager {
 
     /** Removes the corpses from the field */
     public void killUnits() {
-        for(Unit unit : unitlist) {
-            if(unit.isDead()) {
-                unit.baseunit.onDeath(unit);
-                unitlist.remove(unit);
+        for(int i = 0; i < unitlist.size(); i++) {
+            if(unitlist.get(i).isDead()) {
+                unitlist.get(i).baseunit.onDeath(unitlist.get(i));
+                unitlist.remove(i);
             }
         }
     }
