@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
-import io.github.jerukan.game.gameunits.unitfiles.BaseUnit;
+import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.EmptyAction;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 import io.github.jerukan.util.Util;
@@ -24,6 +26,8 @@ public class Unit {
     private int currentRange;
 
     private Position position;
+
+    private UnitAction currentAction;
 
     private Sprite sprite;
 
@@ -48,6 +52,8 @@ public class Unit {
 
         this.position = position;
 
+        currentAction = new EmptyAction();
+
         sprite = new Sprite(baseunit.getTexture());
         moveSprite(position);
     }
@@ -63,16 +69,8 @@ public class Unit {
         sprite.setPosition(tile.getX() + spriteoffset, tile.getY() + spriteoffset);
     }
 
-    public void move(Position pos) {
-        if(pos.isValid()) {
-            if(Util.arrayContainsPosition(pos, availableMoves)) {
-                if(GameState.instance.unitManager.positionAvailable(pos)) {
-                    position = new Position(pos);
-                    moveSprite(position);
-                    generateMovesAndAttacks();
-                }
-            }
-        }
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public boolean isDead() {
@@ -99,6 +97,29 @@ public class Unit {
         baseunit.onTargetAction(this, target);
     }
 
+    // mutators
+
+
+    public void setCurrentAction(UnitAction currentAction) {
+        this.currentAction = currentAction;
+    }
+
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = currentHealth;
+    }
+
+    public void setCurrentAttack(int currentAttack) {
+        this.currentAttack = currentAttack;
+    }
+
+    public void setCurrentSpeed(int currentSpeed) {
+        this.currentSpeed = currentSpeed;
+    }
+
+    public void setCurrentRange(int currentRange) {
+        this.currentRange = currentRange;
+    }
+
     // accessors
 
     public ArrayList<Position> getAvailableMoves() {
@@ -111,6 +132,10 @@ public class Unit {
 
     public Position getPosition() {
         return position;
+    }
+
+    public UnitAction getCurrentAction() {
+        return currentAction;
     }
 
     public int getCurrentHealth() {

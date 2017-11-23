@@ -3,6 +3,8 @@ package io.github.jerukan.game.board;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Manager;
+import io.github.jerukan.game.gameunits.Unit;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
@@ -46,15 +48,11 @@ public class BoardManager implements Manager {
     /** Determines what happens on the next tile selection with the left mouse button */
     public void selectedPositionActionLeft() {
         switch (selectType) {
-            case MOVE:
-                GameState.instance.unitManager.getSelectedUnit().move(hoveredPosition);
-                selectType = SelectType.SELECT;
-                selectedPosition.reset();
-                break;
-            case ATTACK:
-                if(GameState.instance.unitManager.unitFromPosition(hoveredPosition) != null) {
-                    GameState.instance.unitManager.unitFromPosition(selectedPosition).targetAction(GameState.instance.unitManager.unitFromPosition(hoveredPosition));
-                    GameState.instance.unitManager.killUnits();
+            case ACTION:
+                Unit unit = GameState.instance.unitManager.getSelectedUnit();
+                UnitAction act = unit.getCurrentAction();
+                if(act.requiresTarget) {
+                    act.execute(unit, selectedPosition);
                 }
                 selectType = SelectType.SELECT;
                 selectedPosition.reset();
@@ -64,9 +62,9 @@ public class BoardManager implements Manager {
 
     /** Determines what happens on the next tile selection with the right mouse button */
     public void selectedPositionActionRight() {
-        selectedPosition = new Position(hoveredPosition);
         switch (selectType) {
             case SELECT:
+                selectedPosition = new Position(hoveredPosition);
                 GameState.instance.unitManager.setSelectedUnit(GameState.instance.unitManager.unitFromPosition(selectedPosition));
                 break;
         }
@@ -128,7 +126,6 @@ public class BoardManager implements Manager {
 
     public enum SelectType {
         SELECT,
-        MOVE,
-        ATTACK
+        ACTION
     }
 }

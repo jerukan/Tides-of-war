@@ -43,6 +43,21 @@ public class Position {
         return x >= 0 || y >= 0;
     }
 
+    /** Disclaimer: no diagonals
+     * @param x the x position of the other point
+     * @param y the y position of the other point
+     * @return distance to given point
+     */
+    public int distanceToPosition(int x, int y) {
+        return Math.abs(this.x - x) + Math.abs(this.y - y);
+    }
+
+    /** @param other the other position
+     * @return distance to given point */
+    public int distanceToPosition(Position other) {
+        return Math.abs(x - other.getX()) + Math.abs(y - other.getY());
+    }
+
     // mutators
 
     public void setX(int x) {

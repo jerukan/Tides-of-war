@@ -20,8 +20,6 @@ import io.github.jerukan.util.Position;
 public class TileSelectMenu extends ButtonGroup {
 
     private final TextButton buildButton;
-    private final TextButton moveButton;
-    private final TextButton attackButton;
 
     public TileSelectMenu(Screen screen, BooleanFlag[] flags) {
         super(screen, flags);
@@ -33,37 +31,9 @@ public class TileSelectMenu extends ButtonGroup {
                 flagFromArray("build").setState(true);
             }
         });
-        moveButton = new TextButton("Move", Assets.uiskin, "default");
-        moveButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()) != null) {
-                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.MOVE);
-                }
-                else {
-                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.SELECT);
-                }
-            }
-        });
-        attackButton = new TextButton("Attack", Assets.uiskin, "default");
-        attackButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()) != null) {
-                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.ATTACK);
-                }
-                else {
-                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.SELECT);
-                }
-            }
-        });
         table.align(Align.left);
 
-        table.add(buildButton);
-        table.row().pad(10);
-        table.add(moveButton);
-        table.row();
-        table.add(attackButton);
+        table.add(buildButton).pad(10).row();
     }
 
     @Override
@@ -73,10 +43,15 @@ public class TileSelectMenu extends ButtonGroup {
             table.setVisible(false);
         }
         else if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
-            WorldRenderer.boardRenderer.updateOffsets();
-            Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
-            table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardRenderer.camOffsetX, s.getY() - WorldRenderer.boardRenderer.camOffsetY);
-            table.setVisible(true);
+            if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()) == null) {
+                WorldRenderer.boardRenderer.updateOffsets();
+                Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
+                table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardRenderer.camOffsetX, s.getY() - WorldRenderer.boardRenderer.camOffsetY);
+                table.setVisible(true);
+            }
+            else {
+                table.setVisible(false);
+            }
         }
         else {
             table.setVisible(false);

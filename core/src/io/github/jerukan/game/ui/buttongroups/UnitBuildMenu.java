@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
 import io.github.jerukan.game.gameunits.AllUnits;
-import io.github.jerukan.game.gameunits.unitfiles.BaseUnit;
-import io.github.jerukan.game.ui.UnitBuildButton;
+import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
+import io.github.jerukan.game.ui.buttons.UnitBuildButton;
 import io.github.jerukan.game.ui.screens.Screen;
 import io.github.jerukan.util.BooleanFlag;
 import io.github.jerukan.util.Constants;
@@ -23,8 +23,7 @@ public class UnitBuildMenu extends ButtonGroup {
         //TODO make it automatically switch to new columns
         table.align(Align.bottomLeft);
         for(BaseUnit unit : AllUnits.list) {
-            table.add(new UnitBuildButton(unit, flagFromArray("build"))).pad(5);
-            table.row();
+            table.add(new UnitBuildButton(unit, flagFromArray("build"))).pad(5).row();
         }
     }
 

@@ -90,11 +90,8 @@ public class BoardRenderer implements Renderer {
         }
 
         if(GameState.instance.unitManager.getSelectedUnit() != null) {
-            if(boardManager.getSelectType() == BoardManager.SelectType.MOVE) {
+            if(boardManager.getSelectType() == BoardManager.SelectType.ACTION) {
                 highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), new Color(0.2f, 0.2f, 1, 0.4f));
-            }
-            else if(boardManager.getSelectType() == BoardManager.SelectType.ATTACK) {
-                highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableAttacks(), new Color(1, 0.2f, 0.2f, 0.4f));
             }
         }
     }

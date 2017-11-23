@@ -2,7 +2,7 @@ package io.github.jerukan.game.gameunits;
 
 import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.Player;
-import io.github.jerukan.game.gameunits.unitfiles.BaseUnit;
+import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.util.Position;
 
 import java.util.ArrayList;
@@ -90,6 +90,7 @@ public class UnitManager implements Manager {
 
     @Override
     public void init() {
+        AllUnits.validateUnits();
         clearUnits();
     }
 

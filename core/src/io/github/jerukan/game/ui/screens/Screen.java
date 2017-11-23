@@ -10,7 +10,6 @@ import java.util.HashMap;
 public abstract class Screen {
 
     private Stage stage;
-    HashMap<String, Table> tables = new HashMap<String, Table>();
     ButtonGroup[] menus;
 
     /** Classes that extend Screen have their buttons and tables initialized in the constructor
@@ -24,19 +23,16 @@ public abstract class Screen {
         for(int i = 0; i < in.length; i++) {
             menus[i] = in[i];
         }
-        addTablesToStage();
-    }
-
-    public void addTablesToStage() {
-        for(ButtonGroup menu : menus) {
-            stage.addActor(menu.getTable());
-        }
     }
 
     public abstract void init();
 
     /** Called to determine which tables are visible under conditions */
-    public abstract void updateVisibility();
+    public void updateVisibility() {
+        for(ButtonGroup menu : menus) {
+            menu.updateVisibility();
+        }
+    }
 
     /** Called to clear windows that aren't visible by default
      * For example, pop up windows and such */
