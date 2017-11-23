@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.jerukan.game.board.BoardRenderer;
 import io.github.jerukan.game.gameunits.UnitRenderer;
 import io.github.jerukan.game.ui.UIRenderer;
 import io.github.jerukan.game.ui.screens.GameScreen;
+import io.github.jerukan.util.Constants;
 
 /** Handles all the renderers and graphics related objects */
 
@@ -17,16 +19,14 @@ public class WorldRenderer {
 
     public static SpriteBatch batch = new SpriteBatch();
 
-    public static OrthographicCamera boardCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     public static OrthographicCamera uiCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+    public static BoardCamera boardCam = new BoardCamera(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
     public static ScreenViewport uiViewport = new ScreenViewport();
     public static Stage uiStage = new Stage();
 
     public static InputMultiplexer inputs = new InputMultiplexer();
-
-    private static float boardCamVelX = 0;
-    private static float boardCamVelY = 0;
 
     public static BoardRenderer boardRenderer = new BoardRenderer(GameState.instance.boardManager, boardCam);
     public static UIRenderer uiRenderer = new UIRenderer(uiCam, uiStage);
@@ -48,23 +48,14 @@ public class WorldRenderer {
     }
 
     public static void render() {
-        boardCam.translate(boardCamVelX, boardCamVelY);
         boardCam.update();
-        boardRenderer.updateOffsets();
-        batch.setProjectionMatrix(boardCam.combined);
+
+        batch.setProjectionMatrix(boardCam.getCamera().combined);
         uiRenderer.updateVisibility();
 
         boardRenderer.render(batch);
         unitRenderer.render(batch);
         uiRenderer.render(batch);
-    }
-
-    public static void setCameraVelX(float x) {
-        boardCamVelX = x;
-    }
-
-    public static void setCameraVelY(float y) {
-        boardCamVelY = y;
     }
 
     public static void dispose() {

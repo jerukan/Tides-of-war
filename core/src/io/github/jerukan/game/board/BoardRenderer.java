@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import io.github.jerukan.game.BoardCamera;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Renderer;
 import io.github.jerukan.game.gameunits.Unit;
@@ -19,15 +20,11 @@ public class BoardRenderer implements Renderer {
 
     private BoardManager boardManager;
 
-    private OrthographicCamera camera;
-
-    private float camOriginX, camOriginY;
-
-    public float camOffsetX, camOffsetY;
+    private BoardCamera camera;
 
     private ShapeRenderer highlighter;
 
-    public BoardRenderer(BoardManager boardManager, OrthographicCamera camera) {
+    public BoardRenderer(BoardManager boardManager, BoardCamera camera) {
         this.boardManager = boardManager;
         highlighter = new ShapeRenderer();
         this.camera = camera;
@@ -61,7 +58,7 @@ public class BoardRenderer implements Renderer {
 
     @Override
     public void render(Batch batch) {
-        highlighter.setProjectionMatrix(camera.combined);
+        highlighter.setProjectionMatrix(camera.getCamera().combined);
         int mousex = Gdx.input.getX();
         int mousey = Gdx.input.getY();
 
@@ -75,8 +72,10 @@ public class BoardRenderer implements Renderer {
 
         highlightPosition(boardManager.getSelectedPosition(), new Color(0.2f, 0.2f, 1, 0.4f));
 
-        int selectx = (int)(mousex + camera.position.x - camOriginX) / Constants.TILE_SIZE;
-        int selecty = (int)(Gdx.graphics.getHeight() - mousey + camera.position.y - camOriginY) / Constants.TILE_SIZE;
+        float mouseposboardx = camera.getCamera().zoom * (mousex - camera.camOriginX) + camera.getCamera().position.x;
+        float mouseposboardy = camera.getCamera().zoom * (Gdx.graphics.getHeight() - mousey - camera.camOriginY) + camera.getCamera().position.y;
+        int selectx = (int)(mouseposboardx / (float)Constants.TILE_SIZE);
+        int selecty = (int)(mouseposboardy / (float)Constants.TILE_SIZE);
 
         boardManager.setHoveredPosition(new Position(selectx, selecty));
 
@@ -107,21 +106,12 @@ public class BoardRenderer implements Renderer {
 
     @Override
     public void init() {
-        highlighter.setProjectionMatrix(camera.combined);
-        camOriginX = Gdx.graphics.getWidth() / 2;
-        camOriginY = Gdx.graphics.getHeight() / 2;
-    }
-
-    public void updateOffsets() {
-        camOffsetX = camera.position.x - camOriginX;
-        camOffsetY = camera.position.y - camOriginY;
+        highlighter.setProjectionMatrix(camera.getCamera().combined);
     }
 
     @Override
     public void resize(int width, int height) {
-        camOriginX = Gdx.graphics.getWidth() / 2;
-        camOriginY = Gdx.graphics.getHeight() / 2;
-        camera.setToOrtho(false, width, height);
+        camera.getCamera().setToOrtho(false, width, height);
     }
 
 

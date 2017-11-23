@@ -32,9 +32,9 @@ public class UnitBuildMenu extends ButtonGroup {
         if(flagFromArray("build").getState()) {
             if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
                 if (GameState.instance.unitManager.positionAvailable(GameState.instance.boardManager.getSelectedPosition())) {
-                    WorldRenderer.boardRenderer.updateOffsets();
+                WorldRenderer.boardCam.updateOffsets();
                     Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
-                    table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardRenderer.camOffsetX, s.getY() - WorldRenderer.boardRenderer.camOffsetY);
+                table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardCam.camOffsetX, s.getY() - WorldRenderer.boardCam.camOffsetY);
                     table.setVisible(true);
                 } else {
                     flagFromArray("build").setState(false);

@@ -3,6 +3,8 @@ package io.github.jerukan.game;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import io.github.jerukan.game.GameState;
+import io.github.jerukan.game.WorldRenderer;
 import io.github.jerukan.util.Constants;
 
 public class Input implements InputProcessor {
@@ -10,28 +12,43 @@ public class Input implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Keys.LEFT || keycode == Keys.A) {
-            WorldRenderer.setCameraVelX(-Constants.CAMERA_SPEED);
+            WorldRenderer.boardCam.setBoardCamAccelX(-Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.boardCam.boardCamSlowingX = false;
         }
         if(keycode == Keys.RIGHT || keycode == Keys.D) {
-            WorldRenderer.setCameraVelX(Constants.CAMERA_SPEED);
+            WorldRenderer.boardCam.setBoardCamAccelX(Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.boardCam.boardCamSlowingX = false;
         }
         if(keycode == Keys.UP || keycode == Keys.W) {
-            WorldRenderer.setCameraVelY(Constants.CAMERA_SPEED);
+            WorldRenderer.boardCam.setBoardCamAccelY(Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.boardCam.boardCamSlowingY = false;
         }
         if(keycode == Keys.DOWN || keycode == Keys.S) {
-            WorldRenderer.setCameraVelY(-Constants.CAMERA_SPEED);
+            WorldRenderer.boardCam.setBoardCamAccelY(-Constants.CAMERA_SPEED_ACCEL);
+            WorldRenderer.boardCam.boardCamSlowingY = false;
         }
+//        if(keycode == Keys.EQUALS) {
+//            WorldRenderer.setBoardCamZoom(-Constants.CAMERA_ZOOM_SPEED_MAX);
+//        }
+//        if(keycode == Keys.MINUS) {
+//            WorldRenderer.setBoardCamZoom(Constants.CAMERA_ZOOM_SPEED_MAX);
+//        }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
         if(keycode == Keys.LEFT || keycode == Keys.RIGHT || keycode == Keys.A || keycode == Keys.D) {
-            WorldRenderer.setCameraVelX(0);
+            WorldRenderer.boardCam.setBoardCamAccelX(0);
+            WorldRenderer.boardCam.boardCamSlowingX = true;
         }
         if(keycode == Keys.UP || keycode == Keys.DOWN || keycode == Keys.W || keycode == Keys.S) {
-            WorldRenderer.setCameraVelY(0);
+            WorldRenderer.boardCam.setBoardCamAccelY(0);
+            WorldRenderer.boardCam.boardCamSlowingY = true;
         }
+//        if(keycode == Keys.EQUALS || keycode == Keys.MINUS) {
+//            WorldRenderer.setBoardCamZoom(0);
+//        }
         return false;
     }
 
@@ -69,6 +86,12 @@ public class Input implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
+        if(amount == 1) {
+            WorldRenderer.boardCam.setBoardCamTargetZoom(Constants.CAMERA_ZOOM_SPEED_MAX);
+        }
+        else if(amount == -1) {
+            WorldRenderer.boardCam.setBoardCamTargetZoom(-Constants.CAMERA_ZOOM_SPEED_MAX);
+        }
         return false;
     }
 }
