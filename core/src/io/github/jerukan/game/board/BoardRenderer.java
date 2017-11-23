@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Renderer;
 import io.github.jerukan.game.gameunits.Unit;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 
@@ -91,7 +92,15 @@ public class BoardRenderer implements Renderer {
 
         if(GameState.instance.unitManager.getSelectedUnit() != null) {
             if(boardManager.getSelectType() == BoardManager.SelectType.ACTION) {
-                highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), new Color(0.2f, 0.2f, 1, 0.4f));
+                UnitAction act = GameState.instance.unitManager.getSelectedUnit().getCurrentAction();
+                if(act.requiresTarget) {
+                    if(act.getName().equals("move")) {
+                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), new Color(0.2f, 0.2f, 1, 0.4f));
+                    }
+                    else if(act.getName().equals("attack")) {
+                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableAttacks(), new Color(1, 0.2f, 0.2f, 0.4f));
+                    }
+                }
             }
         }
     }

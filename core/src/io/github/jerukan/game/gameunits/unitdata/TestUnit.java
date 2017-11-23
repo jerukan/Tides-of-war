@@ -8,7 +8,7 @@ public class TestUnit extends BaseUnit {
     public TestUnit() {
         name = "test1";
         baseHealth = 10;
-        baseAttack = 5;
+        baseAttack = 500;
         baseSpeed = 3;
         baseRange = 4;
         setTexture(Assets.getTexture(Assets.spearman));

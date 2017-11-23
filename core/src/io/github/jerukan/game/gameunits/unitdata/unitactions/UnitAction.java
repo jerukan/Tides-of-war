@@ -2,7 +2,6 @@ package io.github.jerukan.game.gameunits.unitdata.unitactions;
 
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
-import io.github.jerukan.game.gameunits.unitdata.EmptyUnit;
 import io.github.jerukan.util.Position;
 
 /** A class that defines an action some unit could use
@@ -17,7 +16,6 @@ public abstract class UnitAction {
     /** Constructs an action using stats from a base unit
      * Can be restricted to a single unit and such */
     public UnitAction() {
-        baseUnit = new EmptyUnit();
         name = "action";
         speedConsumption = 0;
         requiresTarget = false;
@@ -31,8 +29,6 @@ public abstract class UnitAction {
      * @param self the unit to perform this action
      * @param target the selected position */
     public abstract void execute(Unit self, Position target);
-
-    public abstract void awaitSelection(Unit self);
 
     public String getName() {
         return name;

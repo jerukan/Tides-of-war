@@ -1,6 +1,9 @@
 package io.github.jerukan.game.gameunits.unitdata;
 
 import io.github.jerukan.game.gameunits.Unit;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.AttackAction;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.MoveAction;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 
 public class TestUnit3 extends BaseUnit {

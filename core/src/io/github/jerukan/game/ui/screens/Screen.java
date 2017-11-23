@@ -23,6 +23,9 @@ public abstract class Screen {
         for(int i = 0; i < in.length; i++) {
             menus[i] = in[i];
         }
+        for(ButtonGroup menu : menus) {
+            stage.addActor(menu.getTable());
+        }
     }
 
     public abstract void init();

@@ -34,9 +34,4 @@ public class MoveAction extends UnitAction {
             }
         }
     }
-
-    @Override
-    public void awaitSelection(Unit self) {
-
-    }
 }

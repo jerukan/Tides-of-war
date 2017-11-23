@@ -52,8 +52,9 @@ public class BoardManager implements Manager {
                 Unit unit = GameState.instance.unitManager.getSelectedUnit();
                 UnitAction act = unit.getCurrentAction();
                 if(act.requiresTarget) {
-                    act.execute(unit, selectedPosition);
+                    act.execute(unit, hoveredPosition);
                 }
+                GameState.instance.unitManager.killUnits();
                 selectType = SelectType.SELECT;
                 selectedPosition.reset();
                 break;

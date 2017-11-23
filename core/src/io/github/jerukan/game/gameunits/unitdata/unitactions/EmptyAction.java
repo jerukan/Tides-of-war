@@ -13,9 +13,4 @@ public class EmptyAction extends UnitAction {
     public void execute(Unit self, Position target) {
 
     }
-
-    @Override
-    public void awaitSelection(Unit self) {
-
-    }
 }

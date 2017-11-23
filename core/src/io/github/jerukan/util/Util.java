@@ -2,7 +2,7 @@ package io.github.jerukan.util;
 
 import java.util.ArrayList;
 
-/** A class full of nifty functions */
+/** A class with nifty functions */
 public class Util {
 
     /** A working comparator because the ArrayList one doesn't do the job properly

@@ -30,8 +30,4 @@ public class AttackAction extends UnitAction {
         }
     }
 
-    @Override
-    public void awaitSelection(Unit self) {
-
-    }
 }
