@@ -1,4 +1,4 @@
-package io.github.jerukan.game.ui.buttons;
+package io.github.jerukan.game.ui.gamescreen.buttons;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;

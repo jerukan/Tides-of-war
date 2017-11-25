@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.github.jerukan.game.Renderer;
-import io.github.jerukan.game.ui.screens.Screen;
 
 /** Class that manages different game screens
  * Also handles displaying them for now */
+
 public class UIRenderer implements Renderer {
 
     private Stage stage;
@@ -51,7 +51,6 @@ public class UIRenderer implements Renderer {
     }
 
     // accessors
-
 
     public Screen getCurrentScreen() {
         return currentScreen;

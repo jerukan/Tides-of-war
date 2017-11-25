@@ -1,4 +1,4 @@
-package io.github.jerukan.game.ui.buttongroups;
+package io.github.jerukan.game.ui.gamescreen.menus;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Align;
@@ -6,8 +6,9 @@ import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
 import io.github.jerukan.game.gameunits.AllUnits;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
-import io.github.jerukan.game.ui.buttons.UnitBuildButton;
-import io.github.jerukan.game.ui.screens.Screen;
+import io.github.jerukan.game.ui.ButtonGroup;
+import io.github.jerukan.game.ui.gamescreen.buttons.UnitBuildButton;
+import io.github.jerukan.game.ui.Screen;
 import io.github.jerukan.util.BooleanFlag;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;

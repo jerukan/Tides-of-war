@@ -71,7 +71,7 @@ public class UnitManager implements Manager {
     public void killUnits() {
         for(int i = 0; i < unitlist.size(); i++) {
             if(unitlist.get(i).isDead()) {
-                unitlist.get(i).baseunit.onDeath(unitlist.get(i));
+                unitlist.get(i).onDeath();
                 unitlist.remove(i);
             }
         }

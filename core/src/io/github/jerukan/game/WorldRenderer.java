@@ -4,14 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.jerukan.game.board.BoardRenderer;
 import io.github.jerukan.game.gameunits.UnitRenderer;
 import io.github.jerukan.game.ui.UIRenderer;
-import io.github.jerukan.game.ui.screens.GameScreen;
-import io.github.jerukan.util.Constants;
+import io.github.jerukan.game.ui.gamescreen.GameScreen;
 
 /** Handles all the renderers and graphics related objects */
 

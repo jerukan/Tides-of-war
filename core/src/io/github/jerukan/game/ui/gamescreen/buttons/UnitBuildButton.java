@@ -1,4 +1,4 @@
-package io.github.jerukan.game.ui.buttons;
+package io.github.jerukan.game.ui.gamescreen.buttons;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -14,13 +14,14 @@ public class UnitBuildButton extends TextButton {
     private BaseUnit baseUnit;
 
     public UnitBuildButton(final BaseUnit baseUnit, final BooleanFlag buildFlag) {
-        super(baseUnit.name, Assets.uiskin, "default");
+        super(baseUnit.buttonDisplayString(), Assets.uiskin, "default");
         this.baseUnit = baseUnit;
         super.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GameState.instance.unitManager.addUnit(baseUnit, null, new Position(GameState.instance.boardManager.getSelectedPosition()));
                 GameState.instance.unitManager.setSelectedToLast();
+                GameState.instance.unitManager.getSelectedUnit().onCreation();
                 GameState.instance.unitManager.generateUnitMoves();
                 buildFlag.setState(false);
             }

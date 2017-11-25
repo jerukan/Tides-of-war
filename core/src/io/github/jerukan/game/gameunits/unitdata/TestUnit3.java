@@ -14,6 +14,8 @@ public class TestUnit3 extends BaseUnit {
         baseAttack = 1;
         baseSpeed = 1;
         baseRange = 9;
+
+        baseCost = 75;
         type = Type.BUILDING;
         setTexture(Assets.getTexture(Assets.wall));
     }

@@ -1,16 +1,12 @@
-package io.github.jerukan.game.ui.screens;
+package io.github.jerukan.game.ui;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import io.github.jerukan.game.ui.buttongroups.ButtonGroup;
-
-import java.util.HashMap;
 
 /** Bare minimum for all the UI screens */
 public abstract class Screen {
 
     private Stage stage;
-    ButtonGroup[] menus;
+    Menu[] menus;
 
     /** Classes that extend Screen have their buttons and tables initialized in the constructor
      * @param stage retrieved from UIRenderer */
@@ -23,7 +19,7 @@ public abstract class Screen {
         for(int i = 0; i < in.length; i++) {
             menus[i] = in[i];
         }
-        for(ButtonGroup menu : menus) {
+        for(Menu menu : menus) {
             stage.addActor(menu.getTable());
         }
     }
@@ -32,7 +28,7 @@ public abstract class Screen {
 
     /** Called to determine which tables are visible under conditions */
     public void updateVisibility() {
-        for(ButtonGroup menu : menus) {
+        for(Menu menu : menus) {
             menu.updateVisibility();
         }
     }

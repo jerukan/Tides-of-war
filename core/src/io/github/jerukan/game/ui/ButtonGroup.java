@@ -1,18 +1,17 @@
-package io.github.jerukan.game.ui.buttongroups;
+package io.github.jerukan.game.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import io.github.jerukan.game.ui.screens.Screen;
 import io.github.jerukan.util.BooleanFlag;
 
 /** Initialize buttons for the tables inside the constructor of extended classes */
 
-public abstract class ButtonGroup {
+public abstract class ButtonGroup implements Menu {
 
     protected Table table;
-    protected Screen screen;
+    private Screen screen;
 
     /** Possibly multiple flags that this button group will check to determine its visibility */
-    protected BooleanFlag[] visibilityFlags;
+    private BooleanFlag[] visibilityFlags;
 
     /** This ButtonGroup will always be visible
      * @param screen the screen this button group will be displayed on */

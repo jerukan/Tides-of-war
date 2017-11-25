@@ -1,10 +1,11 @@
-package io.github.jerukan.game.ui.screens;
+package io.github.jerukan.game.ui.gamescreen;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.github.jerukan.game.GameState;
-import io.github.jerukan.game.ui.buttongroups.TileSelectMenu;
-import io.github.jerukan.game.ui.buttongroups.UnitActionMenu;
-import io.github.jerukan.game.ui.buttongroups.UnitBuildMenu;
+import io.github.jerukan.game.ui.Screen;
+import io.github.jerukan.game.ui.gamescreen.menus.TileSelectMenu;
+import io.github.jerukan.game.ui.gamescreen.menus.UnitActionMenu;
+import io.github.jerukan.game.ui.gamescreen.menus.UnitBuildMenu;
 import io.github.jerukan.util.BooleanFlag;
 import io.github.jerukan.util.Position;
 

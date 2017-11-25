@@ -93,8 +93,24 @@ public class Unit {
         currentHealth -= amount;
     }
 
-    public void targetAction(Unit target) {
+    public void onTargetAction(Unit target) {
         baseunit.onTargetAction(this, target);
+    }
+
+    public void onCreation() {
+        baseunit.onCreation(this);
+    }
+
+    public void onDeath() {
+        baseunit.onDeath(this);
+    }
+
+    public void onTurnStart() {
+        baseunit.onTurnStart(this);
+    }
+
+    public void onTurnEnd() {
+        baseunit.onTurnEnd(this);
     }
 
     // mutators

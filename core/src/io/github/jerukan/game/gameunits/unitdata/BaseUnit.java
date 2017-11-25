@@ -22,6 +22,8 @@ public abstract class BaseUnit {
     public int baseSpeed;
     public int baseRange;
 
+    public int baseCost;
+
     public Type type;
 
     public UnitAction[] actions;
@@ -32,10 +34,12 @@ public abstract class BaseUnit {
      * These are default stats */
     public BaseUnit() {
         name = "dood";
-        baseHealth = 1;
+        baseHealth = 10;
         baseAttack = 0;
         baseSpeed = 0;
         baseRange = 0;
+
+        baseCost = 100;
 
         actions = new UnitAction[]{new MoveAction(this), new AttackAction(this)};
 
@@ -125,8 +129,8 @@ public abstract class BaseUnit {
      * @return ArrayList of valid move positions of the unit */
     public ArrayList<Position> getMoves(Unit self) {
         ArrayList<Position> moves = new ArrayList<Position>();
-        Position unitpos = new Position(self.getPosition().getPos());
-        Position startpos = new Position(self.getPosition().getPos());
+        Position unitpos = new Position(self.getPosition());
+        Position startpos = new Position(self.getPosition());
         generateMoves(startpos, unitpos, moves, self.getCurrentSpeed());
         return moves;
     }
@@ -137,8 +141,8 @@ public abstract class BaseUnit {
      * @return ArrayList of valid attack positions of the unit */
     public ArrayList<Position> getAttacks(Unit self) {
         ArrayList<Position> attacks = new ArrayList<Position>();
-        Position unitpos = new Position(self.getPosition().getPos());
-        Position startpos = new Position(self.getPosition().getPos());
+        Position unitpos = new Position(self.getPosition());
+        Position startpos = new Position(self.getPosition());
         generateAttacks(unitpos, startpos, attacks, self.getCurrentRange());
         return attacks;
     }
@@ -168,6 +172,10 @@ public abstract class BaseUnit {
      * Only called on the owner's turn end
      * @param self the existing selected unit */
     public abstract void onTurnEnd(Unit self);
+
+    public String buttonDisplayString() {
+        return name + " $" + baseCost;
+    }
 
     public void dispose() {
         texture.dispose();

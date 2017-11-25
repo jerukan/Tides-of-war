@@ -11,6 +11,8 @@ public class TestUnit2 extends BaseUnit {
         baseAttack = 2;
         baseSpeed = 7;
         baseRange = 4;
+
+        baseCost = 50;
         setTexture(Assets.getTexture(Assets.archer));
     }
 

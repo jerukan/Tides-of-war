@@ -3,8 +3,6 @@ package io.github.jerukan.game;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import io.github.jerukan.game.GameState;
-import io.github.jerukan.game.WorldRenderer;
 import io.github.jerukan.util.Constants;
 
 public class Input implements InputProcessor {

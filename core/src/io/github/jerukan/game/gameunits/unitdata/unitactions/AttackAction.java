@@ -24,7 +24,7 @@ public class AttackAction extends UnitAction {
     public void execute(Unit self, Position target) {
         if(Util.arrayContainsPosition(target, self.getAvailableAttacks())) {
             if (GameState.instance.unitManager.unitFromPosition(target) != null) {
-                self.targetAction(GameState.instance.unitManager.unitFromPosition(target));
+                self.onTargetAction(GameState.instance.unitManager.unitFromPosition(target));
                 self.setCurrentSpeed(self.getCurrentSpeed() - speedConsumption);
             }
         }

@@ -11,6 +11,8 @@ public class TestUnit extends BaseUnit {
         baseAttack = 500;
         baseSpeed = 3;
         baseRange = 4;
+
+        baseCost = 200;
         setTexture(Assets.getTexture(Assets.spearman));
     }
 

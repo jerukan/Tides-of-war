@@ -1,4 +1,4 @@
-package io.github.jerukan.game.ui.buttongroups;
+package io.github.jerukan.game.ui.gamescreen.menus;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -7,12 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
-import io.github.jerukan.game.board.BoardManager;
-import io.github.jerukan.game.ui.screens.Screen;
+import io.github.jerukan.game.ui.ButtonGroup;
+import io.github.jerukan.game.ui.Screen;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.BooleanFlag;
 import io.github.jerukan.util.Constants;
-import io.github.jerukan.util.Position;
 
 /** The menu that pops up when a tile is selected
  * TODO radial menu would be cool */
