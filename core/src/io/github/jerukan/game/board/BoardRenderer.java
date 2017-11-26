@@ -11,8 +11,10 @@ import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Renderer;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
+import io.github.jerukan.util.Colors;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
+import io.github.jerukan.util.Util;
 
 import java.util.ArrayList;
 
@@ -70,7 +72,12 @@ public class BoardRenderer implements Renderer {
         }
         batch.end();
 
-        highlightPosition(boardManager.getSelectedPosition(), new Color(0.2f, 0.2f, 1, 0.4f));
+        //highlight the selected position
+        highlightPosition(boardManager.getSelectedPosition(), Colors.SELECTED_TILE_COLOR);
+
+        for(Unit u : GameState.instance.unitManager.getUnitlist()) {
+            highlightPosition(u.getPosition(), Util.colorNewAlpha(u.getOwner().color, 0.8f));
+        }
 
         float mouseposboardx = camera.getCamera().zoom * (mousex - camera.camOriginX) + camera.getCamera().position.x;
         float mouseposboardy = camera.getCamera().zoom * (Gdx.graphics.getHeight() - mousey - camera.camOriginY) + camera.getCamera().position.y;
@@ -79,13 +86,13 @@ public class BoardRenderer implements Renderer {
 
         boardManager.setHoveredPosition(new Position(selectx, selecty));
 
-        if(selectx >= 0 && selectx < Constants.BOARD_WIDTH && selecty >= 0 && selecty < Constants.BOARD_HEIGHT) {
-            highlightPosition(boardManager.getHoveredPosition(), new Color(0.2f, 0.2f, 1, 0.4f));
+        if(boardManager.getHoveredPosition().isValid()) {
+            highlightPosition(boardManager.getHoveredPosition(), Colors.HOVERED_TILE_COLOR);
             Unit dude = GameState.instance.unitManager.unitFromPosition(boardManager.getHoveredPosition());
 
             // highlighting moves
             if(dude != null && dude != GameState.instance.unitManager.getSelectedUnit()) {
-                highlightPositions(dude.getAvailableMoves(), new Color(1, 0.2f, 0.2f, 0.4f));
+                highlightPositions(dude.getAvailableMoves(), Colors.ATTACK_TILE_COLOR);
             }
         }
 
@@ -94,10 +101,10 @@ public class BoardRenderer implements Renderer {
                 UnitAction act = GameState.instance.unitManager.getSelectedUnit().getCurrentAction();
                 if(act.requiresTarget) {
                     if(act.getName().equals("move")) {
-                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), new Color(0.2f, 0.2f, 1, 0.4f));
+                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), Colors.MOVE_TILE_COLOR);
                     }
                     else if(act.getName().equals("attack")) {
-                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableAttacks(), new Color(1, 0.2f, 0.2f, 0.4f));
+                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableAttacks(), Colors.ATTACK_TILE_COLOR);
                     }
                 }
             }

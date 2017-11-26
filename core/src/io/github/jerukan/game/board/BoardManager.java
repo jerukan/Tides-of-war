@@ -55,9 +55,13 @@ public class BoardManager implements Manager {
                     act.execute(unit, hoveredPosition);
                 }
                 GameState.instance.unitManager.killUnits();
+                GameState.instance.unitManager.resetSelectedUnit();
                 selectType = SelectType.SELECT;
                 selectedPosition.reset();
                 break;
+            case SELECT:
+                selectedPosition.reset();
+                GameState.instance.unitManager.resetSelectedUnit();
         }
     }
 

@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
 import io.github.jerukan.game.ui.ButtonGroup;
-import io.github.jerukan.game.ui.Screen;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.BooleanFlag;
 import io.github.jerukan.util.Constants;

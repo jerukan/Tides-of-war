@@ -40,7 +40,7 @@ public class Position {
     }
 
     public boolean isValid() {
-        return x >= 0 && y >= 0;
+        return x >= 0 && y >= 0 && x < Constants.BOARD_WIDTH && y < Constants.BOARD_HEIGHT;
     }
 
     /** Disclaimer: no diagonals

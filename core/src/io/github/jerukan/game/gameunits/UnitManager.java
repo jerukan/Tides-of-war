@@ -40,6 +40,10 @@ public class UnitManager implements Manager {
         this.selectedUnit = selectedUnit;
     }
 
+    public void resetSelectedUnit() {
+        selectedUnit = null;
+    }
+
     public void setSelectedToLast() {
         this.selectedUnit = unitlist.get(unitlist.size() - 1);
     }

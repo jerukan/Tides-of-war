@@ -7,7 +7,6 @@ import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.game.ui.ButtonGroup;
 import io.github.jerukan.game.ui.gamescreen.buttons.UnitActionButton;
-import io.github.jerukan.game.ui.Screen;
 import io.github.jerukan.util.Constants;
 
 import java.util.ArrayList;
