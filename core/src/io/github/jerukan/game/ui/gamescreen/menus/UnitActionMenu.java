@@ -16,8 +16,7 @@ public class UnitActionMenu extends ButtonGroup {
 
     ArrayList<UnitActionButton> actionButtons;
 
-    public UnitActionMenu(Screen screen) {
-        super(screen);
+    public UnitActionMenu() {
         actionButtons = new ArrayList<UnitActionButton>();
     }
 

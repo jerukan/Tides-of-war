@@ -5,32 +5,19 @@ import io.github.jerukan.util.BooleanFlag;
 
 /** Initialize buttons for the tables inside the constructor of extended classes */
 
-public abstract class ButtonGroup implements Menu {
-
-    protected Table table;
-    private Screen screen;
+public abstract class ButtonGroup extends Menu {
 
     /** Possibly multiple flags that this button group will check to determine its visibility */
     private BooleanFlag[] visibilityFlags;
 
-    /** This ButtonGroup will always be visible
-     * @param screen the screen this button group will be displayed on */
-    public ButtonGroup(Screen screen) {
-        this.screen = screen;
-        table = new Table();
+    /** This ButtonGroup will always be visible */
+    public ButtonGroup() {
         visibilityFlags = new BooleanFlag[]{new BooleanFlag()};
     }
 
-    public ButtonGroup(Screen screen, BooleanFlag[] flags) {
-        this.screen = screen;
+    public ButtonGroup(BooleanFlag[] flags) {
         table = new Table();
         visibilityFlags = flags;
-    }
-
-    public abstract void updateVisibility();
-
-    public Table getTable() {
-        return table;
     }
 
     public void resetFlags() {

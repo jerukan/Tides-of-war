@@ -3,6 +3,7 @@ package io.github.jerukan.game.ui.gamescreen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.ui.Screen;
+import io.github.jerukan.game.ui.gamescreen.menus.InfoDisplayMenu;
 import io.github.jerukan.game.ui.gamescreen.menus.TileSelectMenu;
 import io.github.jerukan.game.ui.gamescreen.menus.UnitActionMenu;
 import io.github.jerukan.game.ui.gamescreen.menus.UnitBuildMenu;
@@ -15,6 +16,8 @@ public class GameScreen extends Screen {
     private UnitBuildMenu unitBuildMenu;
     private UnitActionMenu unitActionMenu;
 
+    private InfoDisplayMenu infoDisplayMenu;
+
     private BooleanFlag building;
 
     public GameScreen(Stage stage) {
@@ -23,13 +26,15 @@ public class GameScreen extends Screen {
         building = new BooleanFlag("build", false);
         BooleanFlag[] buildMenuListeners = {building};
 
-        tileSelectMenu = new TileSelectMenu(this, buildMenuListeners);
+        tileSelectMenu = new TileSelectMenu(buildMenuListeners);
 
-        unitBuildMenu = new UnitBuildMenu(this, buildMenuListeners);
+        unitBuildMenu = new UnitBuildMenu(buildMenuListeners);
 
-        unitActionMenu = new UnitActionMenu(this);
+        unitActionMenu = new UnitActionMenu();
 
-        addMenus(tileSelectMenu, unitBuildMenu, unitActionMenu);
+        infoDisplayMenu = new InfoDisplayMenu();
+
+        addMenus(tileSelectMenu, unitBuildMenu, unitActionMenu, infoDisplayMenu);
     }
 
     @Override
@@ -37,6 +42,7 @@ public class GameScreen extends Screen {
         tileSelectMenu.getTable().setVisible(false);
         unitBuildMenu.getTable().setVisible(false);
         unitActionMenu.getTable().setVisible(false);
+        infoDisplayMenu.getTable().setVisible(true);
     }
 
     @Override

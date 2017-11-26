@@ -14,8 +14,8 @@ public abstract class Screen {
         this.stage = stage;
     }
 
-    public void addMenus(ButtonGroup... in) {
-        menus = new ButtonGroup[in.length];
+    public void addMenus(Menu... in) {
+        menus = new Menu[in.length];
         for(int i = 0; i < in.length; i++) {
             menus[i] = in[i];
         }

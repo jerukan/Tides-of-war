@@ -20,8 +20,8 @@ public class TileSelectMenu extends ButtonGroup {
 
     private final TextButton buildButton;
 
-    public TileSelectMenu(Screen screen, BooleanFlag[] flags) {
-        super(screen, flags);
+    public TileSelectMenu(BooleanFlag[] flags) {
+        super(flags);
 
         buildButton = new TextButton("Build", Assets.uiskin, "default");
         buildButton.addListener(new ClickListener(){

@@ -19,8 +19,8 @@ public class UnitBuildMenu extends ButtonGroup {
 
     private Position currentPos;
 
-    public UnitBuildMenu(Screen screen, BooleanFlag[] flags) {
-        super(screen, flags);
+    public UnitBuildMenu(BooleanFlag[] flags) {
+        super(flags);
         //TODO make it automatically switch to new columns
         table.align(Align.bottomLeft);
         for(BaseUnit unit : AllUnits.list) {
