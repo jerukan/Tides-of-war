@@ -154,6 +154,10 @@ public class Unit {
         return currentAction;
     }
 
+    public Player getOwner() {
+        return owner;
+    }
+
     public int getCurrentHealth() {
         return currentHealth;
     }

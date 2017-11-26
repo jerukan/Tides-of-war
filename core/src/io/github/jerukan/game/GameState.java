@@ -7,7 +7,7 @@ import io.github.jerukan.game.gameunits.UnitManager;
 /** Manages all the nitty gritty numbers and stuff of the game
  * Note to self: INDEPENDENT of the renderers */
 
-public class GameState {
+public class GameState implements Manager {
 
     public static GameState instance;
 
@@ -18,19 +18,21 @@ public class GameState {
     public Player player2;
 
     public Player[] players;
-    public Player currentPlayer;
+    public int currentPlayerNum;
 
     public GameState() {
         boardManager = new BoardManager();
         unitManager = new UnitManager();
 
-        player1 = new Player("dood", new Color(0.2f, 0.8f, 0.3f, 1f));
-        player2 = new Player("boi", new Color(0.8f, 0.3f, 0.3f, 1f));
+        player1 = new Player("boi", new Color(0.2f, 0.8f, 0.3f, 1f));
+        player2 = new Player("dood", new Color(0.5f, 0.2f, 0.9f, 1f));
         players = new Player[]{player1, player2};
-        currentPlayer = players[0];
+        currentPlayerNum = 0;
     }
 
+    @Override
     public void init() {
+        verifyPlayers();
         boardManager.init();
         unitManager.init();
     }
@@ -40,8 +42,36 @@ public class GameState {
         unitManager.clearUnits();
     }
 
+    public Player getCurrentPlayer() {
+        return players[currentPlayerNum];
+    }
+
+    public void passTurn() {
+        currentPlayerNum++;
+        if(currentPlayerNum >= players.length) {
+            currentPlayerNum = 0;
+        }
+    }
+
+    public void verifyPlayers() {
+        for(Player player : players) {
+            for(Player other : players) {
+                if(player != other) {
+                    if(player.name.equals(other.name)) {
+                        throw new IllegalArgumentException("Found two or more players with the name \"" + player.name + "\"");
+                    }
+                    else if(player.color.equals(other.color)) {
+                        throw new IllegalArgumentException("Found two or more players with the same colors " + player.color.toString());
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     public void update() {
         boardManager.update();
+        unitManager.update();
     }
 
     public void dispose() {

@@ -19,7 +19,7 @@ public class UnitBuildButton extends TextButton {
         super.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                GameState.instance.unitManager.addUnit(baseUnit, null, new Position(GameState.instance.boardManager.getSelectedPosition()));
+                GameState.instance.unitManager.addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(GameState.instance.boardManager.getSelectedPosition()));
                 GameState.instance.unitManager.setSelectedToLast();
                 GameState.instance.unitManager.getSelectedUnit().onCreation();
                 GameState.instance.unitManager.generateUnitMoves();

@@ -35,7 +35,8 @@ public class InfoDisplayMenu extends Menu {
 
         if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()) != null) {
             //lmao
-            unitInfo.setText("Unit: " + GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()).baseunit.name);
+            unitInfo.setText("Unit: " + GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()).baseunit.name
+                    + "\nOwner: " + GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()).getOwner().name);
         }
         else {
             unitInfo.setText(noUnitText);

@@ -3,10 +3,7 @@ package io.github.jerukan.game.ui.gamescreen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.ui.Screen;
-import io.github.jerukan.game.ui.gamescreen.menus.InfoDisplayMenu;
-import io.github.jerukan.game.ui.gamescreen.menus.TileSelectMenu;
-import io.github.jerukan.game.ui.gamescreen.menus.UnitActionMenu;
-import io.github.jerukan.game.ui.gamescreen.menus.UnitBuildMenu;
+import io.github.jerukan.game.ui.gamescreen.menus.*;
 import io.github.jerukan.util.BooleanFlag;
 import io.github.jerukan.util.Position;
 
@@ -17,6 +14,8 @@ public class GameScreen extends Screen {
     private UnitActionMenu unitActionMenu;
 
     private InfoDisplayMenu infoDisplayMenu;
+
+    private EndTurnMenu endTurnMenu;
 
     private BooleanFlag building;
 
@@ -34,7 +33,9 @@ public class GameScreen extends Screen {
 
         infoDisplayMenu = new InfoDisplayMenu();
 
-        addMenus(tileSelectMenu, unitBuildMenu, unitActionMenu, infoDisplayMenu);
+        endTurnMenu = new EndTurnMenu();
+
+        addMenus(tileSelectMenu, unitBuildMenu, unitActionMenu, infoDisplayMenu, endTurnMenu);
     }
 
     @Override
