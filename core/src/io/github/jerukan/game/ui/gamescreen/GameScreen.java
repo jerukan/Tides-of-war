@@ -44,6 +44,7 @@ public class GameScreen extends Screen {
         unitBuildMenu.getTable().setVisible(false);
         unitActionMenu.getTable().setVisible(false);
         infoDisplayMenu.getTable().setVisible(true);
+        endTurnMenu.getTable().setVisible(true);
     }
 
     @Override

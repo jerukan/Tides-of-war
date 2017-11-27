@@ -1,5 +1,7 @@
 package io.github.jerukan.util;
 
+import java.util.ArrayList;
+
 /** Generic class for a typical x y position */
 public class Position {
 
@@ -43,6 +45,24 @@ public class Position {
         return x >= 0 && y >= 0 && x < Constants.BOARD_WIDTH && y < Constants.BOARD_HEIGHT;
     }
 
+    public ArrayList<Position> getAdjacentPositions() {
+        ArrayList<Position> out = new ArrayList<Position>();
+
+        if(new Position(x + 1, y).isValid()) {
+            out.add(new Position(x + 1, y));
+        }
+        if(new Position(x - 1, y).isValid()) {
+            out.add(new Position(x - 1, y));
+        }
+        if(new Position(x, y + 1).isValid()) {
+            out.add(new Position(x, y + 1));
+        }
+        if(new Position(x, y - 1).isValid()) {
+            out.add(new Position(x, y - 1));
+        }
+        return out;
+    }
+
     /** Disclaimer: no diagonals
      * @param x the x position of the other point
      * @param y the y position of the other point
@@ -56,6 +76,15 @@ public class Position {
      * @return distance to given point */
     public int distanceToPosition(Position other) {
         return Math.abs(x - other.getX()) + Math.abs(y - other.getY());
+    }
+
+    public boolean existsInArray(ArrayList<Position> positions) {
+        for(Position pos : positions) {
+            if(equals(pos)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // mutators

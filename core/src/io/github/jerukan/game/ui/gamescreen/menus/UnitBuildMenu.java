@@ -10,13 +10,10 @@ import io.github.jerukan.game.ui.ButtonGroup;
 import io.github.jerukan.game.ui.gamescreen.buttons.UnitBuildButton;
 import io.github.jerukan.util.BooleanFlag;
 import io.github.jerukan.util.Constants;
-import io.github.jerukan.util.Position;
 
 /** Menu that appears when a player is selecting a unit to build */
 
 public class UnitBuildMenu extends ButtonGroup {
-
-    private Position currentPos;
 
     public UnitBuildMenu(BooleanFlag[] flags) {
         super(flags);
@@ -32,7 +29,7 @@ public class UnitBuildMenu extends ButtonGroup {
         if(flagFromArray("build").getState()) {
             if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
                 if (GameState.instance.unitManager.positionAvailable(GameState.instance.boardManager.getSelectedPosition())) {
-                WorldRenderer.boardCam.updateOffsets();
+                    WorldRenderer.boardCam.updateOffsets();
                     Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
                 table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardCam.camOffsetX, s.getY() - WorldRenderer.boardCam.camOffsetY);
                     table.setVisible(true);

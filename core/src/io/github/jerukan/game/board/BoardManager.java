@@ -4,10 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.gameunits.Unit;
+import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
+
+import java.util.ArrayList;
 
 /** A class managing most elements of the board, namely tiles */
 
@@ -18,11 +21,16 @@ public class BoardManager implements Manager {
     private Position hoveredPosition;
     private Position selectedPosition;
 
+    private ArrayList<Position> availableBuildPositions;
+
     private SelectType selectType;
 
     public BoardManager() {
         hoveredPosition = new Position();
         selectedPosition = new Position();
+
+        availableBuildPositions = new ArrayList<Position>();
+
         selectType = SelectType.SELECT;
     }
 
@@ -101,6 +109,22 @@ public class BoardManager implements Manager {
         }
     }
 
+    public void updateAvailableBuildPositions() {
+        availableBuildPositions.clear();
+        ArrayList<Unit> buildings = GameState.instance.unitManager.unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> u.baseunit.type == BaseUnit.Type.BUILDING);
+        for(Unit b : buildings) {
+            for(Position p : b.getPosition().getAdjacentPositions()) {
+                if(!p.existsInArray(availableBuildPositions) && GameState.instance.unitManager.positionAvailable(p)) {
+                    availableBuildPositions.add(p);
+                }
+            }
+        }
+    }
+
+    public ArrayList<Position> getAvailableBuildPositions() {
+        return availableBuildPositions;
+    }
+
     public void resetBoard() {
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
@@ -127,7 +151,7 @@ public class BoardManager implements Manager {
 
     @Override
     public void update() {
-
+        updateAvailableBuildPositions();
     }
 
     public enum SelectType {

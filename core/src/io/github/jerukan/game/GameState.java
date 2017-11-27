@@ -51,6 +51,7 @@ public class GameState implements Manager {
         if(currentPlayerNum >= players.length) {
             currentPlayerNum = 0;
         }
+        unitManager.onNewTurn();
     }
 
     public void verifyPlayers() {

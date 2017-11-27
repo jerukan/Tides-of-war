@@ -1,6 +1,8 @@
 package io.github.jerukan.game.gameunits.unitdata;
 
 import com.badlogic.gdx.graphics.Texture;
+import io.github.jerukan.game.GameState;
+import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.AttackAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.MoveAction;
@@ -63,7 +65,7 @@ public abstract class BaseUnit {
      * @param moves the aggregate ArrayList of all the valid move positions of the unit
      * @param movesleft number of moves left to determine when the max range of the moves is reached */
     protected void generateMoves(Position startpos, Position checkedpos, ArrayList<Position> moves, int movesleft) {
-        if(!Util.arrayContainsPosition(checkedpos, moves) && !startpos.equals(checkedpos)) {
+        if(!checkedpos.existsInArray(moves) && !startpos.equals(checkedpos)) {
             moves.add(checkedpos);
         }
         if(movesleft <= 0) {
@@ -96,7 +98,7 @@ public abstract class BaseUnit {
      * @param attacks the aggregate ArrayList of all the valid attack positions of the unit
      * @param attacksleft number of moves left to determine when the max range of the attacks is reached */
     protected void generateAttacks(Position startpos, Position checkedpos, ArrayList<Position> attacks, int attacksleft) {
-        if(!Util.arrayContainsPosition(checkedpos, attacks) && !startpos.equals(checkedpos)) {
+        if(!checkedpos.existsInArray(attacks) && !startpos.equals(checkedpos)) {
             attacks.add(checkedpos);
         }
         if(attacksleft <= 0) {
@@ -146,6 +148,21 @@ public abstract class BaseUnit {
         generateAttacks(unitpos, startpos, attacks, self.getCurrentRange());
         return attacks;
     }
+
+    /** Uses custom condition canBuildCondition given below to determine valid build positions
+     * May be overridden
+     * @param pos the selected position to build on
+     * @param owner the player who owns this unit
+     * @return whether the unit can be built or not */
+    public boolean canBuild(Position pos, Player owner) {
+        return pos.existsInArray(GameState.instance.boardManager.getAvailableBuildPositions()) && canBuildCondition(owner);
+    }
+
+    /** Defines the conditions under which the unit can be built under
+     * Does not include the insufficient money condition: that is assumed for all units
+     * @param owner the player who owns this unit
+     * @return whether the unit can be built or not */
+    public abstract boolean canBuildCondition(Player owner);
 
     /** Determines what happens when the unit performs an action on a specified target
      * Can perform actions other than only dealing damage to a single unit

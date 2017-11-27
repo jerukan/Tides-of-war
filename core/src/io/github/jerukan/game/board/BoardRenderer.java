@@ -29,38 +29,31 @@ public class BoardRenderer implements Renderer {
     public BoardRenderer(BoardManager boardManager, BoardCamera camera) {
         this.boardManager = boardManager;
         highlighter = new ShapeRenderer();
+        highlighter.setAutoShapeType(true);
         this.camera = camera;
     }
 
     public void highlightPosition(Position position, Color color) {
+        highlighter.set(ShapeRenderer.ShapeType.Filled);
+        highlighter.setColor(color);
         if(position.isValid()) {
-            Gdx.gl20.glEnable(GL20.GL_BLEND);
-            Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            highlighter.begin(ShapeRenderer.ShapeType.Filled);
-            highlighter.setColor(color);
             highlighter.rect(boardManager.getBoard()[position.getX()][position.getY()].getSprite().getX(), boardManager.getBoard()[position.getX()][position.getY()].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
-            highlighter.end();
-            Gdx.gl20.glDisable(GL20.GL_BLEND);
         }
     }
 
     public void highlightPositions(ArrayList<Position> positions, Color color) {
-        Gdx.gl20.glEnable(GL20.GL_BLEND);
-        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        highlighter.set(ShapeRenderer.ShapeType.Filled);
+        highlighter.setColor(color);
         for(Position pos : positions) {
             if(pos.isValid()) {
-                highlighter.begin(ShapeRenderer.ShapeType.Filled);
-                highlighter.setColor(color);
                 highlighter.rect(boardManager.getBoard()[pos.getX()][pos.getY()].getSprite().getX(), boardManager.getBoard()[pos.getX()][pos.getY()].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
-                highlighter.end();
             }
         }
-        Gdx.gl20.glDisable(GL20.GL_BLEND);
     }
 
     @Override
     public void render(Batch batch) {
-        highlighter.setProjectionMatrix(camera.getCamera().combined);
+
         int mousex = Gdx.input.getX();
         int mousey = Gdx.input.getY();
 
@@ -72,12 +65,19 @@ public class BoardRenderer implements Renderer {
         }
         batch.end();
 
+        highlighter.setProjectionMatrix(camera.getCamera().combined);
+        Gdx.gl20.glEnable(GL20.GL_BLEND);
+        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        highlighter.begin();
+
         //highlight the selected position
         highlightPosition(boardManager.getSelectedPosition(), Colors.SELECTED_TILE_COLOR);
 
         for(Unit u : GameState.instance.unitManager.getUnitlist()) {
             highlightPosition(u.getPosition(), Util.colorNewAlpha(u.getOwner().color, 0.8f));
         }
+
+        highlightPositions(boardManager.getAvailableBuildPositions(), Colors.BUILD_POSITION_COLOR);
 
         float mouseposboardx = camera.getCamera().zoom * (mousex - camera.camOriginX) + camera.getCamera().position.x;
         float mouseposboardy = camera.getCamera().zoom * (Gdx.graphics.getHeight() - mousey - camera.camOriginY) + camera.getCamera().position.y;
@@ -109,6 +109,9 @@ public class BoardRenderer implements Renderer {
                 }
             }
         }
+
+        highlighter.end();
+        Gdx.gl20.glDisable(GL20.GL_BLEND);
     }
 
     @Override

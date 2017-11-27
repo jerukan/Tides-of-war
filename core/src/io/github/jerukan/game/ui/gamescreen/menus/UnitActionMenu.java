@@ -36,7 +36,8 @@ public class UnitActionMenu extends ButtonGroup {
     @Override
     public void updateVisibility() {
         if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
-            if (GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()) != null) {
+            Unit selected = GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition());
+            if(selected != null && selected.getOwner() == GameState.instance.getCurrentPlayer()) {
                 if(actionButtons.size() == 0) {
                     generateButtons(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()));
                 }

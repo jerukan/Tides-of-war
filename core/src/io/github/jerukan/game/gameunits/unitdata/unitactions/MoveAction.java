@@ -23,7 +23,7 @@ public class MoveAction extends UnitAction {
     @Override
     public void execute(Unit self, Position target) {
         if(target.isValid()) {
-            if(Util.arrayContainsPosition(target, self.getAvailableMoves())) {
+            if(target.existsInArray(self.getAvailableMoves())) {
                 if(GameState.instance.unitManager.positionAvailable(target)) {
                     Position prev = new Position(self.getPosition());
                     self.setPosition(new Position(target));

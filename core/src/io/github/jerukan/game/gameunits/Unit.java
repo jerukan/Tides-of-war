@@ -119,6 +119,9 @@ public class Unit {
 
     // mutators
 
+    public void resetSpeed() {
+        currentSpeed = baseunit.baseSpeed;
+    }
 
     public void setCurrentAction(UnitAction currentAction) {
         this.currentAction = currentAction;

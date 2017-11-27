@@ -1,11 +1,13 @@
 package io.github.jerukan.game.gameunits;
 
+import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.util.Position;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 /** A class that organizes the units into an aggregate list
  * Manages the logistics of the units instead of having the board do everything */
@@ -74,6 +76,25 @@ public class UnitManager implements Manager {
         return true;
     }
 
+    public ArrayList<Unit> unitsFromPlayer(Player p, Predicate<Unit> pred) {
+        ArrayList<Unit> out = new ArrayList<Unit>();
+        for(Unit u : unitlist) {
+            if(pred.test(u) && u.getOwner() == p) {
+                out.add(u);
+            }
+        }
+        return out;
+    }
+
+    public boolean playerHasUnit(Player p, String unitname) {
+        for(Unit u : unitlist) {
+            if(u.baseunit.name.equals(unitname) && u.getOwner() == p) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** Removes the corpses from the field */
     public void killUnits() {
         for(int i = 0; i < unitlist.size(); i++) {
@@ -81,6 +102,15 @@ public class UnitManager implements Manager {
                 unitlist.get(i).onDeath();
                 unitlist.remove(i);
             }
+        }
+    }
+
+    public void onNewTurn() {
+        ArrayList<Unit> temp = unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> !u.isDead());
+
+        for(Unit u : temp) {
+            u.resetSpeed();
+            u.onTurnStart();
         }
     }
 

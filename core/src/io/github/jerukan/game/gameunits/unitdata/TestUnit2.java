@@ -1,5 +1,6 @@
 package io.github.jerukan.game.gameunits.unitdata;
 
+import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.util.Assets;
 
@@ -14,6 +15,11 @@ public class TestUnit2 extends BaseUnit {
 
         baseCost = 50;
         setTexture(Assets.getTexture(Assets.archer));
+    }
+
+    @Override
+    public boolean canBuildCondition(Player owner) {
+        return true;
     }
 
     @Override
