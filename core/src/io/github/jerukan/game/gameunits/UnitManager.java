@@ -103,7 +103,7 @@ public class UnitManager implements Manager {
 
     @Override
     public void update() {
-
+        generateUnitMoves();
     }
 
     public ArrayList<Unit> getUnitlist() {

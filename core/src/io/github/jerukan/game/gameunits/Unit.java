@@ -87,6 +87,10 @@ public class Unit {
         availableAttacks.clear();
     }
 
+    public boolean hasSufficientSpeed(int spd) {
+        return currentSpeed >= spd;
+    }
+
     // unit actions
 
     public void takeDamage(int amount) {

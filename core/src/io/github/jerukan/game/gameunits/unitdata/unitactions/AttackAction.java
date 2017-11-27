@@ -23,11 +23,12 @@ public class AttackAction extends UnitAction {
     @Override
     public void execute(Unit self, Position target) {
         if(Util.arrayContainsPosition(target, self.getAvailableAttacks())) {
-            if (GameState.instance.unitManager.unitFromPosition(target) != null) {
-                self.onTargetAction(GameState.instance.unitManager.unitFromPosition(target));
-                self.setCurrentSpeed(self.getCurrentSpeed() - speedConsumption);
+            if(GameState.instance.unitManager.unitFromPosition(target) != null) {
+                if(GameState.instance.unitManager.unitFromPosition(target).getOwner() != self.getOwner()) {
+                    self.onTargetAction(GameState.instance.unitManager.unitFromPosition(target));
+                    self.setCurrentSpeed(self.getCurrentSpeed() - speedConsumption);
+                }
             }
         }
     }
-
 }

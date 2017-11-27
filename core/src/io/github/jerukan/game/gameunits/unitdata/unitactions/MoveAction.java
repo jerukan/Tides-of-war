@@ -29,7 +29,7 @@ public class MoveAction extends UnitAction {
                     self.setPosition(new Position(target));
                     self.moveSprite(target);
                     self.generateMovesAndAttacks();
-                    self.setCurrentSpeed(self.getPosition().distanceToPosition(prev));
+                    self.setCurrentSpeed(self.getCurrentSpeed() - self.getPosition().distanceToPosition(prev));
                 }
             }
         }

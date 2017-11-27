@@ -14,6 +14,7 @@ public class Main extends Game {
 	public void create () {
 		Assets.load();
 		Assets.assetManager.finishLoading();
+		AllUnits.init();
 		GameState.instance = new GameState();
 		WorldRenderer.init();
 		GameState.instance.init();
@@ -22,7 +23,6 @@ public class Main extends Game {
 
 	@Override
 	public void render () {
-		GameState.instance.update();
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		WorldRenderer.render();

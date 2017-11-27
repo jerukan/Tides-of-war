@@ -3,6 +3,7 @@ package io.github.jerukan.game.ui.gamescreen.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import io.github.jerukan.game.GameState;
+import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.ui.Menu;
 import io.github.jerukan.util.Assets;
 
@@ -35,8 +36,10 @@ public class InfoDisplayMenu extends Menu {
 
         if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()) != null) {
             //lmao
-            unitInfo.setText("Unit: " + GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()).baseunit.name
-                    + "\nOwner: " + GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()).getOwner().name);
+            Unit u = GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition());
+            unitInfo.setText("Unit: " + u.baseunit.name + "\nOwner: " + u.getOwner().name
+                    + "\nHealth: " + u.getCurrentHealth() + "/" + u.baseunit.baseHealth
+                    + "\nSpeed: " + u.getCurrentSpeed() + "/" + u.baseunit.baseSpeed);
         }
         else {
             unitInfo.setText(noUnitText);

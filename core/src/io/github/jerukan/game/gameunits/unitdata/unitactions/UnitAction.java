@@ -33,4 +33,8 @@ public abstract class UnitAction {
     public String getName() {
         return name;
     }
+
+    public int getSpeedConsumption() {
+        return speedConsumption;
+    }
 }

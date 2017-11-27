@@ -58,6 +58,7 @@ public class BoardManager implements Manager {
                 GameState.instance.unitManager.resetSelectedUnit();
                 selectType = SelectType.SELECT;
                 selectedPosition.reset();
+                GameState.instance.update();
                 break;
             case SELECT:
                 selectedPosition.reset();

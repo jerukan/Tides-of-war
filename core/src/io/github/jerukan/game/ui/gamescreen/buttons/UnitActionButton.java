@@ -16,12 +16,13 @@ public class UnitActionButton extends TextButton {
         super.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(action.requiresTarget) {
-                    self.setCurrentAction(action);
-                    GameState.instance.boardManager.setSelectType(BoardManager.SelectType.ACTION);
-                }
-                else {
-                    action.execute(self);
+                if(self.hasSufficientSpeed(action.getSpeedConsumption())) {
+                    if (action.requiresTarget) {
+                        self.setCurrentAction(action);
+                        GameState.instance.boardManager.setSelectType(BoardManager.SelectType.ACTION);
+                    } else {
+                        action.execute(self);
+                    }
                 }
             }
         });
