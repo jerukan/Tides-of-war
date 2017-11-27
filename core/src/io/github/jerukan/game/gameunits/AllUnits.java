@@ -12,7 +12,7 @@ import java.util.Collections;
 public class AllUnits {
 
     public static final BaseUnit[] basicList = {
-            new BasicUnit("footman", 2, 1, 2, 1, 100, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.spearman)),
+            new BasicUnit("footman", 2, 1, 2, 1, 100, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.footman)),
             new BasicUnit("archer", 1, 1, 2, 2, 100, BaseUnit.Type.SOLDIER, "Masters of rushing, but die to a tap.", Assets.getTexture(Assets.archer)),
             new BasicUnit("armory", 7, 0, 0, 0, 400, BaseUnit.Type.BUILDING, "Allows the production of spearmen and shieldbearers", Assets.getTexture(Assets.armory))
     };

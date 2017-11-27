@@ -13,6 +13,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> grass1 = new AssetDescriptor<Texture>("tiles/grassland_tile1.bmp", Texture.class);
 
     public static final AssetDescriptor<Texture> spearman = new AssetDescriptor<Texture>("units/spearman.png", Texture.class);
+    public static final AssetDescriptor<Texture> footman = new AssetDescriptor<Texture>("units/footman.png", Texture.class);
     public static final AssetDescriptor<Texture> archer = new AssetDescriptor<Texture>("units/archer.png", Texture.class);
     public static final AssetDescriptor<Texture> wall = new AssetDescriptor<Texture>("units/wall.png", Texture.class);
     public static final AssetDescriptor<Texture> village = new AssetDescriptor<Texture>("units/village.png", Texture.class);
@@ -24,6 +25,7 @@ public class Assets {
         assetManager.load(grass1);
 
         assetManager.load(spearman);
+        assetManager.load(footman);
         assetManager.load(archer);
         assetManager.load(wall);
         assetManager.load(village);
