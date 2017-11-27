@@ -49,7 +49,7 @@ public class Player {
         return unitCap;
     }
 
-    public void setUnitCap(int in) {
-        unitCap = in;
+    public void addUnitCap(int val) {
+        unitCap += val;
     }
 }

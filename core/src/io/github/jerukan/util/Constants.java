@@ -6,8 +6,8 @@ public class Constants {
 
     public static final String GAME_NAME = "Realms of War";
 
-    public static final int BOARD_WIDTH = 15;
-    public static final int BOARD_HEIGHT = 15;
+    public static final int BOARD_WIDTH = 9;
+    public static final int BOARD_HEIGHT = 9;
 
     public static final int TILE_SIZE = 60;
 

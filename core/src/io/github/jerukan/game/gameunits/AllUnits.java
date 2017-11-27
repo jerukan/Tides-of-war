@@ -19,7 +19,8 @@ public class AllUnits {
     private static final BaseUnit[] specialList = {
             new VillageUnit(),
             new SpearmanUnit(),
-            new GoldmineUnit()
+            new GoldmineUnit(),
+            new FarmUnit()
     };
 
     public static ArrayList<BaseUnit> list = new ArrayList<>();
