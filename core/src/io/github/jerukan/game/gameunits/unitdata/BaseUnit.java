@@ -24,6 +24,7 @@ public abstract class BaseUnit {
     public int baseSpeed;
     public int baseRange;
 
+    public int baseUpkeep;
     public int baseCost;
 
     public Type type;
@@ -43,6 +44,7 @@ public abstract class BaseUnit {
         baseSpeed = 0;
         baseRange = 0;
 
+        baseUpkeep = 1;
         baseCost = 100;
 
         actions = new UnitAction[]{new MoveAction(this), new AttackAction(this)};
@@ -134,7 +136,7 @@ public abstract class BaseUnit {
      * @param self the existing selected unit
      * @return ArrayList of valid move positions of the unit */
     public ArrayList<Position> getMoves(Unit self) {
-        ArrayList<Position> moves = new ArrayList<Position>();
+        ArrayList<Position> moves = new ArrayList<>();
         Position unitpos = new Position(self.getPosition());
         Position startpos = new Position(self.getPosition());
         generateMoves(startpos, unitpos, moves, self.getCurrentSpeed());
@@ -146,7 +148,7 @@ public abstract class BaseUnit {
      * @param self the existing selected unit
      * @return ArrayList of valid attack positions of the unit */
     public ArrayList<Position> getAttacks(Unit self) {
-        ArrayList<Position> attacks = new ArrayList<Position>();
+        ArrayList<Position> attacks = new ArrayList<>();
         Position unitpos = new Position(self.getPosition());
         Position startpos = new Position(self.getPosition());
         generateAttacks(unitpos, startpos, attacks, self.getCurrentRange());
@@ -159,7 +161,9 @@ public abstract class BaseUnit {
      * @param owner the player who owns this unit
      * @return whether the unit can be built or not */
     public boolean canBuild(Position pos, Player owner) {
-        return pos.existsInArray(GameState.instance.boardManager.getAvailableBuildPositions()) && canBuildCondition(owner);
+        return owner.hasSufficientMoney(baseCost)
+                && pos.existsInArray(GameState.instance.boardManager.getAvailableBuildPositions())
+                && canBuildCondition(owner) && owner.hasSufficientUpkeep(baseUpkeep);
     }
 
     /** Defines the conditions under which the unit can be built under

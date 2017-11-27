@@ -25,4 +25,10 @@ public class Constants {
     public static final float CAMERA_ZOOM_SPEED_MAX = 0.05f;
 
     public static final double CHRIS_CONSTANT = 4.2 * Math.pow(10, 2);  // a mysterious number, what could it mean?
+
+    // GAMEPLAY CONSTANTS
+    public static final int DEFAULT_START_MONEY = 200;
+    public static final int DEFAULT_MONEY_PRODUCTION = 150;
+
+    public static final int DEFAULT_UNIT_CAP = 3;
 }

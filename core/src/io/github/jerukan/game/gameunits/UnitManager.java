@@ -18,7 +18,7 @@ public class UnitManager implements Manager {
     private Unit selectedUnit;
 
     public UnitManager() {
-        unitlist = new ArrayList<Unit>();
+        unitlist = new ArrayList<>();
         selectedUnit = null;
     }
 
@@ -35,6 +35,19 @@ public class UnitManager implements Manager {
     public void addUnit(Unit unit) {
         if(positionAvailable(unit.getPosition())) {
             unitlist.add(unit);
+        }
+    }
+
+    public void buildUnit(BaseUnit baseUnit) {
+        if(baseUnit.canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
+            addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(GameState.instance.boardManager.getSelectedPosition()));
+            setSelectedToLast();
+            getSelectedUnit().onCreation();
+            getSelectedUnit().setCurrentSpeed(0);
+            generateUnitMoves();
+            GameState.instance.boardManager.updateAvailableBuildPositions();
+
+            GameState.instance.getCurrentPlayer().setMoney(GameState.instance.getCurrentPlayer().getMoney() - baseUnit.baseCost);
         }
     }
 

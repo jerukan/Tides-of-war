@@ -17,6 +17,8 @@ public class VillageUnit extends BaseUnit {
 
         actions = new UnitAction[]{};
 
+        baseUpkeep = 0;
+
         type = Type.BUILDING;
 
         description = "This is your lifeline. Don\'t let it die.";

@@ -40,6 +40,8 @@ public class GameState implements Manager {
     public void reset() {
         boardManager.resetBoard();
         unitManager.clearUnits();
+        //to lazy to make it so that nothing happens on both player's first turns
+        getCurrentPlayer().onNewTurn();
     }
 
     public Player getCurrentPlayer() {
@@ -53,6 +55,7 @@ public class GameState implements Manager {
         }
         boardManager.getSelectedPosition().reset();
         unitManager.onNewTurn();
+        getCurrentPlayer().onNewTurn();
         boardManager.updateAvailableBuildPositions();
     }
 
