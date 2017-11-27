@@ -1,0 +1,2 @@
+- fix bug where a unit can't move on a new turn without reselecting it
+- radial menu is cool
