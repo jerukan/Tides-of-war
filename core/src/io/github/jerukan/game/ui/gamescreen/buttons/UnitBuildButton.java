@@ -23,6 +23,7 @@ public class UnitBuildButton extends TextButton {
                     GameState.instance.unitManager.addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(GameState.instance.boardManager.getSelectedPosition()));
                     GameState.instance.unitManager.setSelectedToLast();
                     GameState.instance.unitManager.getSelectedUnit().onCreation();
+                    GameState.instance.unitManager.getSelectedUnit().setCurrentSpeed(0);
                     GameState.instance.unitManager.generateUnitMoves();
                     GameState.instance.boardManager.updateAvailableBuildPositions();
                 }

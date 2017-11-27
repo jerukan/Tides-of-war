@@ -51,7 +51,7 @@ public class GameScreen extends Screen {
     public void clearWindows() {
         building.setState(false);
         if(tileSelectMenu.getTable().isVisible() || unitBuildMenu.getTable().isVisible() || unitActionMenu.getTable().isVisible()) {
-            GameState.instance.boardManager.setSelectedPosition(new Position());
+            GameState.instance.boardManager.getSelectedPosition().reset();
         }
         tileSelectMenu.getTable().setVisible(false);
         unitBuildMenu.getTable().setVisible(false);

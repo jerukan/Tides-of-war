@@ -1,6 +1,7 @@
 package io.github.jerukan.game.gameunits;
 
 import io.github.jerukan.game.gameunits.unitdata.*;
+import io.github.jerukan.game.gameunits.unitdata.SpearmanUnit;
 import io.github.jerukan.util.Assets;
 
 import java.util.ArrayList;
@@ -11,28 +12,30 @@ import java.util.Collections;
 public class AllUnits {
 
     public static final BaseUnit[] basicList = {
-            new BasicUnit("spearman", 3, 2, 3, 1, 2, BaseUnit.Type.SOLDIER, Assets.getTexture(Assets.spearman)),
+            new BasicUnit("footman", 2, 1, 2, 1, 100, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.spearman)),
+            new BasicUnit("archer", 1, 1, 2, 2, 100, BaseUnit.Type.SOLDIER, "Masters of rushing, but die to a tap.", Assets.getTexture(Assets.archer)),
+            new BasicUnit("armory", 7, 0, 0, 0, 400, BaseUnit.Type.BUILDING, "Allows the production of spearmen and shieldbearers", Assets.getTexture(Assets.armory))
     };
 
-    public static final BaseUnit[] normalList = {
+    public static final BaseUnit[] specialList = {
             new VillageUnit(),
-            new TestUnit(),
-            new TestUnit2(),
-            new TestUnit3()
+            new SpearmanUnit()
     };
 
-    public static ArrayList<BaseUnit> list = new ArrayList<BaseUnit>();
+    public static ArrayList<BaseUnit> list = new ArrayList<>();
 
     public static void init() {
         Collections.addAll(list, basicList);
-        Collections.addAll(list, normalList);
+        Collections.addAll(list, specialList);
     }
 
     public static void validateUnits() {
         for(BaseUnit unit : list) {
             for(BaseUnit other : list) {
-                if(!unit.equals(other) && unit.name.equals(other.name)) {
-                    throw new IllegalArgumentException("Two or more units of name \"" + unit.name + "\" found");
+                if(!unit.equals(other)) {
+                    if(unit.name.equals(other.name)) {
+                        throw new IllegalArgumentException("Two or more units of name \"" + unit.name + "\" found");
+                    }
                 }
             }
         }

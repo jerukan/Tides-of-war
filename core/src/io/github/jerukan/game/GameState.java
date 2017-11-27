@@ -51,7 +51,9 @@ public class GameState implements Manager {
         if(currentPlayerNum >= players.length) {
             currentPlayerNum = 0;
         }
+        boardManager.getSelectedPosition().reset();
         unitManager.onNewTurn();
+        boardManager.updateAvailableBuildPositions();
     }
 
     public void verifyPlayers() {

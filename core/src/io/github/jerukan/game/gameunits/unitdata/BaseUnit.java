@@ -30,6 +30,8 @@ public abstract class BaseUnit {
 
     public UnitAction[] actions;
 
+    public String description;
+
     private Texture texture;
 
     /** Creates a reference unit containing stats of the unit and actions it can perform
@@ -45,12 +47,14 @@ public abstract class BaseUnit {
 
         actions = new UnitAction[]{new MoveAction(this), new AttackAction(this)};
 
+        description = "This is a generic unit without any love put into it";
+
         type = Type.SOLDIER;
     }
 
     /** Call this in the constructor of the custom unit
      * @param texture specified texture of the unit, size (usually) doesn't matter */
-    void setTexture(Texture texture) {
+    protected void setTexture(Texture texture) {
         this.texture = texture;
     }
 

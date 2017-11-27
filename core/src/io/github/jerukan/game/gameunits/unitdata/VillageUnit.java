@@ -16,7 +16,10 @@ public class VillageUnit extends BaseUnit {
         baseCost = 0;
 
         actions = new UnitAction[]{};
+
         type = Type.BUILDING;
+
+        description = "This is your lifeline. Don\'t let it die.";
         setTexture(Assets.getTexture(Assets.village));
     }
 
