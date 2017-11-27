@@ -22,7 +22,9 @@ public class InfoDisplayMenu extends Menu {
         table.add(tileInfo).pad(10).row();
         table.add(unitInfo);
 
-        table.setPosition(80, Gdx.graphics.getHeight() - 40);
+        table.setHeight(tileInfo.getHeight() + unitInfo.getHeight());
+
+        table.setPosition(80, Gdx.graphics.getHeight() - table.getHeight() - 20);
     }
 
     @Override
@@ -44,5 +46,7 @@ public class InfoDisplayMenu extends Menu {
         else {
             unitInfo.setText(noUnitText);
         }
+        table.setHeight(tileInfo.getHeight() + unitInfo.getHeight());
+        table.setPosition(80, Gdx.graphics.getHeight() - table.getHeight() - 20);
     }
 }
