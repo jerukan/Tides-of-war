@@ -90,10 +90,20 @@ public class UnitManager implements Manager {
     }
 
     public ArrayList<Unit> unitsFromPlayer(Player p, Predicate<Unit> pred) {
-        ArrayList<Unit> out = new ArrayList<Unit>();
+        ArrayList<Unit> out = new ArrayList<>();
         for(Unit u : unitlist) {
             if(pred.test(u) && u.getOwner() == p) {
                 out.add(u);
+            }
+        }
+        return out;
+    }
+
+    public int totalUpkeepFromPlayer(Player p) {
+        int out = 0;
+        for(Unit u : unitlist) {
+            if(u.getOwner() == p) {
+                out += u.baseunit.baseUpkeep;
             }
         }
         return out;

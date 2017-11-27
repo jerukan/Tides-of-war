@@ -42,8 +42,11 @@ public class Player {
     }
 
     public boolean hasSufficientUpkeep(int cost) {
-        int units = GameState.instance.unitManager.unitsFromPlayer(this, (Unit u) -> u.baseunit.type == BaseUnit.Type.SOLDIER).size();
-        return units + cost <= unitCap;
+        return GameState.instance.unitManager.totalUpkeepFromPlayer(this) + cost <= unitCap;
+    }
+
+    public int getUnitCap() {
+        return unitCap;
     }
 
     public void setUnitCap(int in) {

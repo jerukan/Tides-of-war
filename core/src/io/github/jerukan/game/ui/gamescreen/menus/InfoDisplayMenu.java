@@ -3,6 +3,7 @@ package io.github.jerukan.game.ui.gamescreen.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import io.github.jerukan.game.GameState;
+import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.GoldmineUnit;
 import io.github.jerukan.game.ui.Menu;
@@ -37,7 +38,8 @@ public class InfoDisplayMenu extends Menu {
     @Override
     public void updateVisibility() {
         //PUT SOMEWHERE ELSE LATER
-        int numofmines = GameState.instance.unitManager.unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> u.baseunit.name.equals("goldmine")).size();
+        Player currentplayer = GameState.instance.getCurrentPlayer();
+        int numofmines = GameState.instance.unitManager.unitsFromPlayer(currentplayer, (Unit u) -> u.baseunit.name.equals("goldmine")).size();
         if(GameState.instance.boardManager.getHoveredPosition().isValid()) {
             tileInfo.setText("Hovered tile: " + GameState.instance.boardManager.getHoveredPosition().toString());
         }
@@ -45,8 +47,11 @@ public class InfoDisplayMenu extends Menu {
             tileInfo.setText(blankTileText);
         }
 
-        currentPlayerInfo.setText("$" + GameState.instance.getCurrentPlayer().getMoney() + " + $"
-                + (numofmines * GoldmineUnit.GOLDMINE_DEFAULT_PRODUCTION + Constants.DEFAULT_MONEY_PRODUCTION));
+        currentPlayerInfo.setText("$" + currentplayer.getMoney() + " + $"
+                + (numofmines * GoldmineUnit.GOLDMINE_DEFAULT_PRODUCTION + Constants.DEFAULT_MONEY_PRODUCTION)
+                + " next turn\nCurrent upkeep: "
+                + GameState.instance.unitManager.totalUpkeepFromPlayer(currentplayer) + "/"
+                + currentplayer.getUnitCap());
 
         if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()) != null) {
             //lmao
@@ -59,6 +64,6 @@ public class InfoDisplayMenu extends Menu {
             unitInfo.setText(noUnitText);
         }
         table.setHeight(tileInfo.getHeight() + unitInfo.getHeight());
-        table.setPosition(80, Gdx.graphics.getHeight() - table.getHeight() - 20);
+        table.setPosition(90, Gdx.graphics.getHeight() - table.getHeight() - 30);
     }
 }
