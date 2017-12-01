@@ -6,10 +6,12 @@ public class Constants {
 
     public static final String GAME_NAME = "Realms of War";
 
-    public static final int BOARD_WIDTH = 20;
-    public static final int BOARD_HEIGHT = 20;
+    public static final int BOARD_WIDTH = 30;
+    public static final int BOARD_HEIGHT = 30;
 
     public static final int TILE_SIZE = 60;
+
+    public static final int PERLIN_SAMPLES = 10; //SHOULDN'T EXIST IF PERLIN NOISE WAS ACTUALLY DONE RIGHT
 
     public static final float TILE_MENU_OFFSET = TILE_SIZE * 0.2f;
 

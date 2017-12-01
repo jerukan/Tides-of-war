@@ -1,7 +1,6 @@
 package io.github.jerukan.game.board;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.gameunits.Unit;
@@ -10,6 +9,7 @@ import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
+import io.github.jerukan.util.Util;
 import io.github.jerukan.util.heightmaps.Perlin;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class BoardManager implements Manager {
         hoveredPosition = new Position();
         selectedPosition = new Position();
 
-        availableBuildPositions = new ArrayList<Position>();
+        availableBuildPositions = new ArrayList<>();
 
         selectType = SelectType.SELECT;
     }
@@ -129,7 +129,6 @@ public class BoardManager implements Manager {
 
     public void resetBoard() {
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
-        Perlin.randomizeVectors();
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                 Position pos = new Position(x, y);
@@ -141,9 +140,21 @@ public class BoardManager implements Manager {
     }
 
     public void generateHeightsPerlin() {
+        Perlin.randomizeVectors();
+        Perlin.zeroExtrema();
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                board[x][y].setHeight(Perlin.getNoise((float)(x + Math.random()), (float)(y + Math.random())));
+                double sum = 0;
+                for(int i = 0; i < Constants.PERLIN_SAMPLES; i++) {
+                    sum += Perlin.getNoise((float) (x + Math.random()), (float) (y + Math.random()));
+                }
+                sum /= Constants.PERLIN_SAMPLES;
+                board[x][y].setHeight((float)sum);
+            }
+        }
+        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                board[x][y].setHeight(Util.map(board[x][y].getHeight(), Perlin.min, Perlin.max, 0, 1));
             }
         }
     }

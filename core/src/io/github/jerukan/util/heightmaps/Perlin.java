@@ -5,11 +5,18 @@ import com.badlogic.gdx.math.Vector2;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Util;
 
+/** NOT FUNCTIONAL BECAUSE I HAVE NO IDEA WHAT IS HAPPENING */
+
 public class Perlin {
 
     public static Vector2[][] vectors = new Vector2[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
     public static float max = 0;
     public static float min = 0;
+
+    public static void zeroExtrema() {
+        max = 0;
+        min = 0;
+    }
 
     public static void randomizeVectors() {
         for(int x = 0; x < vectors.length; x++) {
@@ -48,14 +55,11 @@ public class Perlin {
         float ix2 = MathUtils.lerp(n2, n3, weightx);
 
         float out = MathUtils.lerp(ix1, ix2, weighty);
-        //out = Util.map(out, 1, 2, 0, 1);
         if(out > max) {
             max = out;
         }else if(out < min) {
             min = out;
         }
-        System.out.println(max);
-        System.out.println(min);
         return out;
     }
 }
