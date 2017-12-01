@@ -14,6 +14,8 @@ public class Tile {
     private Sprite sprite;
     private Texture rect;
 
+    private float height;
+
     public Tile(Position position, Sprite sprite) {
         this.position = position;
         this.sprite = sprite;
@@ -36,6 +38,14 @@ public class Tile {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getHeight() {
+        return height;
     }
 
     public void dispose() {

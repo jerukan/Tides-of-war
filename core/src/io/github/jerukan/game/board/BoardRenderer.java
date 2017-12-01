@@ -57,13 +57,13 @@ public class BoardRenderer implements Renderer {
         int mousex = Gdx.input.getX();
         int mousey = Gdx.input.getY();
 
-        batch.begin();
-        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
-            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                boardManager.getBoard()[x][y].render(batch);
-            }
-        }
-        batch.end();
+//        batch.begin();
+//        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
+//            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+//                boardManager.getBoard()[x][y].render(batch);
+//            }
+//        }
+//        batch.end();
 
         highlighter.setProjectionMatrix(camera.getCamera().combined);
         Gdx.gl20.glEnable(GL20.GL_BLEND);
@@ -71,45 +71,49 @@ public class BoardRenderer implements Renderer {
         highlighter.begin();
 
         //highlight the selected position
-        highlightPosition(boardManager.getSelectedPosition(), Colors.SELECTED_TILE_COLOR);
-
-        for(Unit u : GameState.instance.unitManager.getUnitlist()) {
-            highlightPosition(u.getPosition(), Util.colorNewAlpha(u.getOwner().color, 0.8f));
-        }
-
-        highlightPositions(boardManager.getAvailableBuildPositions(), Colors.BUILD_POSITION_COLOR);
-
-        float mouseposboardx = camera.getCamera().zoom * (mousex - camera.camOriginX) + camera.getCamera().position.x;
-        float mouseposboardy = camera.getCamera().zoom * (Gdx.graphics.getHeight() - mousey - camera.camOriginY) + camera.getCamera().position.y;
-        int selectx = (int)(mouseposboardx / (float)Constants.TILE_SIZE);
-        int selecty = (int)(mouseposboardy / (float)Constants.TILE_SIZE);
-
-        boardManager.setHoveredPosition(new Position(selectx, selecty));
-
-        if(boardManager.getHoveredPosition().isValid()) {
-            highlightPosition(boardManager.getHoveredPosition(), Colors.HOVERED_TILE_COLOR);
-            Unit dude = GameState.instance.unitManager.unitFromPosition(boardManager.getHoveredPosition());
-
-            // highlighting moves
-            if(dude != null && dude != GameState.instance.unitManager.getSelectedUnit()) {
-                highlightPositions(dude.getAvailableMoves(), Colors.ATTACK_TILE_COLOR);
+//        highlightPosition(boardManager.getSelectedPosition(), Colors.SELECTED_TILE_COLOR);
+//
+//        for(Unit u : GameState.instance.unitManager.getUnitlist()) {
+//            highlightPosition(u.getPosition(), Util.colorNewAlpha(u.getOwner().color, 0.8f));
+//        }
+//
+//        highlightPositions(boardManager.getAvailableBuildPositions(), Colors.BUILD_POSITION_COLOR);
+//
+//        float mouseposboardx = camera.getCamera().zoom * (mousex - camera.camOriginX) + camera.getCamera().position.x;
+//        float mouseposboardy = camera.getCamera().zoom * (Gdx.graphics.getHeight() - mousey - camera.camOriginY) + camera.getCamera().position.y;
+//        int selectx = (int)(mouseposboardx / (float)Constants.TILE_SIZE);
+//        int selecty = (int)(mouseposboardy / (float)Constants.TILE_SIZE);
+//
+//        boardManager.setHoveredPosition(new Position(selectx, selecty));
+//
+//        if(boardManager.getHoveredPosition().isValid()) {
+//            highlightPosition(boardManager.getHoveredPosition(), Colors.HOVERED_TILE_COLOR);
+//            Unit dude = GameState.instance.unitManager.unitFromPosition(boardManager.getHoveredPosition());
+//
+//            // highlighting moves
+//            if(dude != null && dude != GameState.instance.unitManager.getSelectedUnit()) {
+//                highlightPositions(dude.getAvailableMoves(), Colors.ATTACK_TILE_COLOR);
+//            }
+//        }
+//
+//        if(GameState.instance.unitManager.getSelectedUnit() != null) {
+//            if(boardManager.getSelectType() == BoardManager.SelectType.ACTION) {
+//                UnitAction act = GameState.instance.unitManager.getSelectedUnit().getCurrentAction();
+//                if(act.requiresTarget) {
+//                    if(act.getName().equals("move")) {
+//                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), Colors.MOVE_TILE_COLOR);
+//                    }
+//                    else if(act.getName().equals("attack")) {
+//                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableAttacks(), Colors.ATTACK_TILE_COLOR);
+//                    }
+//                }
+//            }
+//        }
+        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                highlightPosition(new Position(x, y), new Color(0,0,boardManager.getBoard()[x][y].getHeight(), 1));
             }
         }
-
-        if(GameState.instance.unitManager.getSelectedUnit() != null) {
-            if(boardManager.getSelectType() == BoardManager.SelectType.ACTION) {
-                UnitAction act = GameState.instance.unitManager.getSelectedUnit().getCurrentAction();
-                if(act.requiresTarget) {
-                    if(act.getName().equals("move")) {
-                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), Colors.MOVE_TILE_COLOR);
-                    }
-                    else if(act.getName().equals("attack")) {
-                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableAttacks(), Colors.ATTACK_TILE_COLOR);
-                    }
-                }
-            }
-        }
-
         highlighter.end();
         Gdx.gl20.glDisable(GL20.GL_BLEND);
     }

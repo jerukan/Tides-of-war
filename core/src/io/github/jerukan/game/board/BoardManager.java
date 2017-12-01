@@ -1,6 +1,7 @@
 package io.github.jerukan.game.board;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.gameunits.Unit;
@@ -9,6 +10,7 @@ import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
+import io.github.jerukan.util.heightmaps.Perlin;
 
 import java.util.ArrayList;
 
@@ -127,11 +129,21 @@ public class BoardManager implements Manager {
 
     public void resetBoard() {
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
+        Perlin.randomizeVectors();
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                 Position pos = new Position(x, y);
                 board[x][y] = new Tile(pos, new Sprite(Assets.assetManager.get(Assets.grass1)));
                 board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
+            }
+        }
+        generateHeightsPerlin();
+    }
+
+    public void generateHeightsPerlin() {
+        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                board[x][y].setHeight(Perlin.getNoise((float)(x + Math.random()), (float)(y + Math.random())));
             }
         }
     }
