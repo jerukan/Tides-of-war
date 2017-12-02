@@ -77,7 +77,7 @@ public abstract class BaseUnit {
         if(movesleft <= 0) {
             return;
         }
-        movesleft -= 1;
+        movesleft -= GameState.instance.boardManager.getBoard()[checkedpos.getX()][checkedpos.getY()].getSpeedConsump();
 
         if(checkedpos.getX() + 1 < Constants.BOARD_WIDTH) {
             Position newpos = new Position(checkedpos.getX() + 1, checkedpos.getY());

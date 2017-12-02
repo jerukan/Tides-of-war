@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class DiamondSquare {
 
-    private static double[][] heights = new double[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
+    public static double[][] heights = new double[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
     private static double offsetFactorConstant = 0.7;
-    private static double offsetFactor = 0.7; //add to constants later
+    private static double offsetFactor = 0.5;
 
     private static void initCorners() {
         heights[0][0] = Math.random();
@@ -41,6 +41,7 @@ public class DiamondSquare {
             selectHeights.add(heights[p.getX()][p.getY()]);
         }
         double offset = (2 * Math.random() - 1) * offsetFactor;
+        offsetFactor *= offsetFactorConstant;
         return Util.averageList(selectHeights) + offset;
     }
 
@@ -54,6 +55,7 @@ public class DiamondSquare {
             selectHeights.add(heights[p.getX()][p.getY()]);
         }
         double offset = (2 * Math.random() - 1) * offsetFactor;
+        offsetFactor *= offsetFactorConstant;
         return Util.averageList(selectHeights) + offset;
     }
 
@@ -67,23 +69,12 @@ public class DiamondSquare {
                     }
                 }
             }
-            offsetFactor *= offsetFactorConstant;
             for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                     if(heights[x][y] == 0) {
                         heights[x][y] = MathUtils.clamp(squareStep(x, y, radius), 0, 1);
                     }
                 }
-            }
-            offsetFactor *= offsetFactorConstant;
-        }
-    }
-
-    public static void setBoardHeights(Tile[][] board) {
-        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
-            for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                System.out.println(heights[x][y]);
-                board[x][y].setHeight((float)heights[x][y]);
             }
         }
     }

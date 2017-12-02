@@ -129,20 +129,19 @@ public class BoardManager implements Manager {
     }
 
     public void resetBoard() {
+        generateHeightsDSquare();
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                 Position pos = new Position(x, y);
-                board[x][y] = new Tile(pos, new Sprite(Assets.assetManager.get(Assets.grass1)));
+                board[x][y] = new Tile(pos, (float)DiamondSquare.heights[x][y]);
                 board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
             }
         }
-        generateHeightsDSquare();
     }
 
     public void generateHeightsDSquare() {
         DiamondSquare.generateHeights();
-        DiamondSquare.setBoardHeights(board);
     }
 
     public void generateHeightsPerlin() {
@@ -155,12 +154,12 @@ public class BoardManager implements Manager {
                     sum += Perlin.getNoise((float) (x + Math.random()), (float) (y + Math.random()));
                 }
                 sum /= Constants.PERLIN_SAMPLES;
-                board[x][y].setHeight((float)sum);
+                //board[x][y].setHeight((float)sum);
             }
         }
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                board[x][y].setHeight(Util.map(board[x][y].getHeight(), Perlin.min, Perlin.max, 0, 1));
+                //board[x][y].setHeight(Util.map(board[x][y].getHeight(), Perlin.min, Perlin.max, 0, 1));
             }
         }
     }
