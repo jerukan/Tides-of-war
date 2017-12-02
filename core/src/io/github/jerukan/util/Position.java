@@ -45,20 +45,60 @@ public class Position {
         return x >= 0 && y >= 0 && x < Constants.BOARD_WIDTH && y < Constants.BOARD_HEIGHT;
     }
 
+    public static boolean isValid(int x, int y) {
+        return x >= 0 && y >= 0 && x < Constants.BOARD_WIDTH && y < Constants.BOARD_HEIGHT;
+    }
+
     public ArrayList<Position> getAdjacentPositions() {
         ArrayList<Position> out = new ArrayList<Position>();
 
-        if(new Position(x + 1, y).isValid()) {
+        if(isValid(x + 1, y)) {
             out.add(new Position(x + 1, y));
         }
-        if(new Position(x - 1, y).isValid()) {
+        if(isValid(x - 1, y)) {
             out.add(new Position(x - 1, y));
         }
-        if(new Position(x, y + 1).isValid()) {
+        if(isValid(x, y + 1)) {
             out.add(new Position(x, y + 1));
         }
-        if(new Position(x, y - 1).isValid()) {
+        if(isValid(x, y - 1)) {
             out.add(new Position(x, y - 1));
+        }
+        return out;
+    }
+
+    public ArrayList<Position> getPositionsDistance(int dist) {
+        ArrayList<Position> out = new ArrayList<Position>();
+
+        if(isValid(x + dist, y)) {
+            out.add(new Position(x + dist, y));
+        }
+        if(isValid(x - dist, y)) {
+            out.add(new Position(x - dist, y));
+        }
+        if(isValid(x, y + dist)) {
+            out.add(new Position(x, y + dist));
+        }
+        if(isValid(x, y - dist)) {
+            out.add(new Position(x, y - dist));
+        }
+        return out;
+    }
+
+    public ArrayList<Position> getPositionsDiagonal(int xdist, int ydist) {
+        ArrayList<Position> out = new ArrayList<>();
+
+        if(isValid(x + xdist, y + ydist)) {
+            out.add(new Position(x + xdist, y + ydist));
+        }
+        if(isValid(x + xdist, y - ydist)) {
+            out.add(new Position(x + xdist, y - ydist));
+        }
+        if(isValid(x - xdist, y + ydist)) {
+            out.add(new Position(x - xdist, y + ydist));
+        }
+        if(isValid(x - ydist, y - ydist)) {
+            out.add(new Position(x - xdist, y - ydist));
         }
         return out;
     }

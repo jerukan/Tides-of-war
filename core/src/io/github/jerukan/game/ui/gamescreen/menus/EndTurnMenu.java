@@ -30,7 +30,7 @@ public class EndTurnMenu extends ButtonGroup {
         genHeights.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                GameState.instance.boardManager.generateHeightsPerlin();
+                GameState.instance.boardManager.generateHeightsDSquare();
             }
         });
         endTurnButton = new TextButton("End turn", Assets.uiskin, "default");

@@ -2,6 +2,8 @@ package io.github.jerukan.util;
 
 import com.badlogic.gdx.graphics.Color;
 
+import java.util.ArrayList;
+
 /** A class with nifty functions */
 public class Util {
 
@@ -25,5 +27,13 @@ public class Util {
      */
     public static float map(float val, float x1, float x2, float x3, float x4) {
         return ((val - x1) / (x2-x1)) * (x4-x3) + x3;
+    }
+
+    public static double averageList(ArrayList<Double> num) {
+        double out = 0;
+        for(double n : num) {
+            out += n;
+        }
+        return out / num.size();
     }
 }

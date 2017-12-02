@@ -10,6 +10,7 @@ import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 import io.github.jerukan.util.Util;
+import io.github.jerukan.util.heightmaps.DiamondSquare;
 import io.github.jerukan.util.heightmaps.Perlin;
 
 import java.util.ArrayList;
@@ -136,7 +137,12 @@ public class BoardManager implements Manager {
                 board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
             }
         }
-        generateHeightsPerlin();
+        generateHeightsDSquare();
+    }
+
+    public void generateHeightsDSquare() {
+        DiamondSquare.generateHeights();
+        DiamondSquare.setBoardHeights(board);
     }
 
     public void generateHeightsPerlin() {
