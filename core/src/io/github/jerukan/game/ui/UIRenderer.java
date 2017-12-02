@@ -21,6 +21,10 @@ public class UIRenderer implements Renderer {
         this.stage = stage;
     }
 
+    public void clear() {
+        currentScreen.clearWindows();
+    }
+
     @Override
     public void init() {
         currentScreen.init();

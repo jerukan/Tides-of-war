@@ -41,7 +41,8 @@ public class InfoDisplayMenu extends Menu {
         Player currentplayer = GameState.instance.getCurrentPlayer();
         int numofmines = GameState.instance.unitManager.unitsFromPlayer(currentplayer, (Unit u) -> u.baseunit.name.equals("goldmine")).size();
         if(GameState.instance.boardManager.getHoveredPosition().isValid()) {
-            tileInfo.setText("Hovered tile: " + GameState.instance.boardManager.getHoveredPosition().toString());
+            tileInfo.setText("Hovered tile: " + GameState.instance.boardManager.getHoveredPosition().toString()
+                    + "\nTerrain: " + GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getHoveredPosition()).getTerrain().name);
         }
         else {
             tileInfo.setText(blankTileText);

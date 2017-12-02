@@ -22,15 +22,13 @@ public class MoveAction extends UnitAction {
 
     @Override
     public void execute(Unit self, Position target) {
-        if(target.isValid()) {
-            if(target.existsInArray(self.getAvailableMoves())) {
-                if(GameState.instance.unitManager.positionAvailable(target)) {
-                    Position prev = new Position(self.getPosition());
-                    self.setPosition(new Position(target));
-                    self.moveSprite(target);
-                    self.generateMovesAndAttacks();
-                    self.setCurrentSpeed(self.getCurrentSpeed() - self.getPosition().distanceToPosition(prev));
-                }
+        if(target.existsInArray(self.getAvailableMoves())) {
+            if(GameState.instance.unitManager.positionAvailable(target)) {
+                Position prev = new Position(self.getPosition());
+                self.setPosition(new Position(target));
+                self.moveSprite(target);
+                self.generateMovesAndAttacks();
+                self.setCurrentSpeed(self.getCurrentSpeed() - self.getPosition().distanceToPosition(prev));
             }
         }
     }

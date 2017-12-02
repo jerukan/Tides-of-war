@@ -10,9 +10,13 @@ import java.util.ArrayList;
 
 public class DiamondSquare {
 
+    private static int diamondsteps = 0;
+    private static int squaresteps = 0;
+
     public static double[][] heights = new double[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
-    private static double offsetFactorConstant = 0.7;
-    private static double offsetFactor = 0.5;
+    private static final double offsetFactorDefault = 0.5;
+    private static final double offsetFactorConstant = 0.7;
+    private static double offsetFactor = offsetFactorDefault;
 
     private static void initCorners() {
         heights[0][0] = Math.random();
@@ -22,7 +26,7 @@ public class DiamondSquare {
     }
 
     private static void reset() {
-        offsetFactor = 0.3;
+        offsetFactor = offsetFactorDefault;
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                 heights[x][y] = 0;
@@ -31,6 +35,7 @@ public class DiamondSquare {
         initCorners();
     }
 
+    //apparently this is actually a diamond step but whatever
     private static double squareStep(int xpos, int ypos, int radius) {
         ArrayList<Position> points = new Position(xpos, ypos).getPositionsDistance(radius);
         ArrayList<Double> selectHeights = new ArrayList<>();
@@ -41,10 +46,11 @@ public class DiamondSquare {
             selectHeights.add(heights[p.getX()][p.getY()]);
         }
         double offset = (2 * Math.random() - 1) * offsetFactor;
-        offsetFactor *= offsetFactorConstant;
+        squaresteps++;
         return Util.averageList(selectHeights) + offset;
     }
 
+    //this is supposed to be the square step (?)
     private static double diamondStep(int xpos, int ypos, int radius) {
         ArrayList<Position> points = new Position(xpos, ypos).getPositionsDiagonal(radius, radius);
         ArrayList<Double> selectHeights = new ArrayList<>();
@@ -55,13 +61,15 @@ public class DiamondSquare {
             selectHeights.add(heights[p.getX()][p.getY()]);
         }
         double offset = (2 * Math.random() - 1) * offsetFactor;
-        offsetFactor *= offsetFactorConstant;
+        diamondsteps++;
         return Util.averageList(selectHeights) + offset;
     }
 
     public static void generateHeights() {
         reset();
         for(int radius = (Constants.BOARD_WIDTH - 1) / 2; radius > 0; radius--) {
+            diamondsteps = 0;
+            squaresteps = 0;
             for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
                 for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                     if(heights[x][y] == 0) {
@@ -76,6 +84,9 @@ public class DiamondSquare {
                     }
                 }
             }
+//            System.out.println("diamond steps: " + diamondsteps);
+//            System.out.println("square steps: " + squaresteps);
+            offsetFactor *= offsetFactorConstant;
         }
     }
 }

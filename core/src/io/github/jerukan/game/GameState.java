@@ -57,6 +57,7 @@ public class GameState implements Manager {
         unitManager.onNewTurn();
         getCurrentPlayer().onNewTurn();
         boardManager.updateAvailableBuildPositions();
+        update();
     }
 
     public void verifyPlayers() {

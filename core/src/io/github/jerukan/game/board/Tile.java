@@ -52,6 +52,10 @@ public class Tile {
         return terrain.speedConsump;
     }
 
+    public Terrain.TerrainInfo getTerrain() {
+        return terrain;
+    }
+
     public void dispose() {
         rect.dispose();
     }
