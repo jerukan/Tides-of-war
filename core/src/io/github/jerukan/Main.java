@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
-import io.github.jerukan.game.gameunits.AllUnits;
+import io.github.jerukan.game.gameunits.UnitRegistry;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Colors;
 
@@ -15,7 +15,7 @@ public class Main extends Game {
 	public void create () {
 		Assets.load();
 		Assets.assetManager.finishLoading();
-		AllUnits.init();
+		UnitRegistry.init();
 		GameState.instance = new GameState();
 		WorldRenderer.init();
 		GameState.instance.init();
@@ -37,7 +37,7 @@ public class Main extends Game {
 	@Override
 	public void dispose () {
 		Assets.dispose();
-		AllUnits.dispose();
+		UnitRegistry.dispose();
 		GameState.instance.dispose();
 		WorldRenderer.dispose();
 	}

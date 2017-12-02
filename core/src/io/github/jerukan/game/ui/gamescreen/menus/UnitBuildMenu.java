@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
-import io.github.jerukan.game.gameunits.AllUnits;
+import io.github.jerukan.game.gameunits.UnitRegistry;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.game.ui.ButtonGroup;
 import io.github.jerukan.game.ui.gamescreen.buttons.UnitBuildButton;
@@ -27,7 +27,7 @@ public class UnitBuildMenu extends ButtonGroup {
 
     public void resetTable() {
         table.clear();
-        for(BaseUnit unit : AllUnits.list) {
+        for(BaseUnit unit : UnitRegistry.list) {
             if(unit.canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
                 table.add(new UnitBuildButton(unit, flagFromArray("build"))).pad(5).row();
             }

@@ -150,7 +150,7 @@ public class UnitManager implements Manager {
 
     @Override
     public void init() {
-        AllUnits.validateUnits();
+        UnitRegistry.validateUnits();
         clearUnits();
     }
 

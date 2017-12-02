@@ -8,7 +8,7 @@ import java.util.Collections;
 
 /** Manages instances of every type of unit that is to exist in the game */
 
-public class AllUnits {
+public class UnitRegistry {
 
     private static final BaseUnit[] basicList = {
             new BasicUnit("footman", 2, 1, 2, 1, 100, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.footman)),
