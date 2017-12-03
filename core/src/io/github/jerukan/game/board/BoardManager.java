@@ -107,9 +107,7 @@ public class BoardManager implements Manager {
         if(pos.isValid()) {
             return board[pos.getX()][pos.getY()];
         }
-        else {
-            return null;
-        }
+        throw new IllegalArgumentException("No tile at " + pos.toString());
     }
 
     public void updateAvailableBuildPositions() {

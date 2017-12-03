@@ -33,6 +33,7 @@ public class Unit {
 
     private ArrayList<Position> availableMoves;
     private ArrayList<Position> availableAttacks;
+    private ArrayList<Integer> moveConsumptions;
 
     private Player owner;
 
@@ -56,6 +57,10 @@ public class Unit {
 
         sprite = new Sprite(baseunit.getTexture());
         moveSprite(position);
+
+        availableMoves = new ArrayList<>();
+        availableAttacks = new ArrayList<>();
+        moveConsumptions = new ArrayList<>();
     }
 
     public void render(Batch batch) {
@@ -78,7 +83,7 @@ public class Unit {
     }
 
     public void generateMovesAndAttacks() {
-        availableMoves = baseunit.getMoves(this);
+        baseunit.getMoves(this);
         availableAttacks = baseunit.getAttacks(this);
     }
 
@@ -147,6 +152,10 @@ public class Unit {
 
     public ArrayList<Position> getAvailableMoves() {
         return availableMoves;
+    }
+
+    public ArrayList<Integer> getMoveConsumptions() {
+        return moveConsumptions;
     }
 
     public ArrayList<Position> getAvailableAttacks() {
