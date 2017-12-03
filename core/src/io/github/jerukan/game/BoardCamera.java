@@ -47,7 +47,7 @@ public class BoardCamera {
 
         camera.translate(boardCamVelX, boardCamVelY);
 
-        camera.zoom = MathUtils.clamp(boardCamZoom, Constants.CAMERA_ZOOM_MAX, 1);
+        camera.zoom = MathUtils.clamp(boardCamZoom, Constants.CAMERA_ZOOM_MAX, Constants.CAMERA_ZOOM_MIN);
 
         camera.update();
     }
@@ -102,17 +102,23 @@ public class BoardCamera {
 
     public void setBoardCamTargetZoom(float val) {
         boardCamTargetZoom += val;
-        boardCamTargetZoom = MathUtils.clamp(boardCamTargetZoom, Constants.CAMERA_ZOOM_MAX, 1);
+        boardCamTargetZoom = MathUtils.clamp(boardCamTargetZoom, Constants.CAMERA_ZOOM_MAX, Constants.CAMERA_ZOOM_MIN);
     }
 
     public void zoomBoardCamera() {
         if(Math.abs(boardCamZoom) != boardCamTargetZoom) {
             boardCamZoom += Constants.CAMERA_ZOOM_SPEED_MAX * (Math.abs(boardCamTargetZoom - camera.zoom) / (boardCamTargetZoom - camera.zoom));
-            boardCamZoom = MathUtils.clamp(boardCamZoom, Constants.CAMERA_ZOOM_MAX, 1);
+            boardCamZoom = MathUtils.clamp(boardCamZoom, Constants.CAMERA_ZOOM_MAX, Constants.CAMERA_ZOOM_MIN);
         }
     }
 
+    public void updateOrigins() {
+        camOriginX = Gdx.graphics.getWidth() / 2;
+        camOriginY = Gdx.graphics.getHeight() / 2;
+    }
+
     public void updateOffsets() {
+        updateOrigins();
         camOffsetX = camera.position.x - camOriginX;
         camOffsetY = camera.position.y - camOriginY;
     }

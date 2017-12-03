@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 
@@ -14,9 +15,14 @@ public class Tile {
     private Sprite sprite;
     private Texture rect;
 
-    public Tile(Position position, Sprite sprite) {
+    private float height;
+    private Terrain.TerrainInfo terrain;
+
+    public Tile(Position position, float height) {
         this.position = position;
-        this.sprite = sprite;
+        this.height = height;
+        terrain = Terrain.terrainInfoFromHeight(height);
+        sprite = new Sprite(terrain.texture);
         sprite.setSize(Constants.TILE_SIZE, Constants.TILE_SIZE);
         Pixmap pixmap = new Pixmap((int)(sprite.getWidth()), (int)(sprite.getHeight()), Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
@@ -26,7 +32,7 @@ public class Tile {
     }
 
     public void render(Batch batch) {
-        sprite.draw(batch);
+        batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         batch.draw(rect, sprite.getX(), sprite.getY());
     }
 
@@ -36,6 +42,18 @@ public class Tile {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public int getSpeedConsump() {
+        return terrain.speedConsump;
+    }
+
+    public Terrain.TerrainInfo getTerrain() {
+        return terrain;
     }
 
     public void dispose() {

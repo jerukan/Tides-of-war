@@ -1,7 +1,6 @@
 package io.github.jerukan.game.gameunits;
 
 import io.github.jerukan.game.gameunits.unitdata.*;
-import io.github.jerukan.game.gameunits.unitdata.SpearmanUnit;
 import io.github.jerukan.util.Assets;
 
 import java.util.ArrayList;
@@ -9,17 +8,19 @@ import java.util.Collections;
 
 /** Manages instances of every type of unit that is to exist in the game */
 
-public class AllUnits {
+public class UnitRegistry {
 
-    public static final BaseUnit[] basicList = {
-            new BasicUnit("footman", 2, 1, 2, 1, 100, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.spearman)),
+    private static final BaseUnit[] basicList = {
+            new BasicUnit("footman", 2, 1, 2, 1, 100, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.footman)),
             new BasicUnit("archer", 1, 1, 2, 2, 100, BaseUnit.Type.SOLDIER, "Masters of rushing, but die to a tap.", Assets.getTexture(Assets.archer)),
             new BasicUnit("armory", 7, 0, 0, 0, 400, BaseUnit.Type.BUILDING, "Allows the production of spearmen and shieldbearers", Assets.getTexture(Assets.armory))
     };
 
-    public static final BaseUnit[] specialList = {
+    private static final BaseUnit[] specialList = {
             new VillageUnit(),
-            new SpearmanUnit()
+            new SpearmanUnit(),
+            new GoldmineUnit(),
+            new FarmUnit()
     };
 
     public static ArrayList<BaseUnit> list = new ArrayList<>();

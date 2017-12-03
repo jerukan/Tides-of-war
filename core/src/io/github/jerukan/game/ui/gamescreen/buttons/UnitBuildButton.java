@@ -19,14 +19,8 @@ public class UnitBuildButton extends TextButton {
         super.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(baseUnit.canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
-                    GameState.instance.unitManager.addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(GameState.instance.boardManager.getSelectedPosition()));
-                    GameState.instance.unitManager.setSelectedToLast();
-                    GameState.instance.unitManager.getSelectedUnit().onCreation();
-                    GameState.instance.unitManager.getSelectedUnit().setCurrentSpeed(0);
-                    GameState.instance.unitManager.generateUnitMoves();
-                    GameState.instance.boardManager.updateAvailableBuildPositions();
-                }
+                //TODO: move this to a better place
+                GameState.instance.unitManager.buildUnit(baseUnit);
                 buildFlag.setState(false);
             }
         });

@@ -21,8 +21,8 @@ public class WorldRenderer {
 
     public static BoardCamera boardCam = new BoardCamera(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
-    public static ScreenViewport uiViewport = new ScreenViewport();
-    public static Stage uiStage = new Stage();
+    public static ScreenViewport uiViewport = new ScreenViewport(uiCam);
+    public static Stage uiStage = new Stage(uiViewport);
 
     public static InputMultiplexer inputs = new InputMultiplexer();
 

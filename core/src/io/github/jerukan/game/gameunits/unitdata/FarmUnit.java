@@ -2,22 +2,26 @@ package io.github.jerukan.game.gameunits.unitdata;
 
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
-import io.github.jerukan.game.gameunits.unitdata.unitactions.AttackAction;
-import io.github.jerukan.game.gameunits.unitdata.unitactions.MoveAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 
-public class TestUnit3 extends BaseUnit {
+public class FarmUnit extends BaseUnit {
 
-    public TestUnit3() {
-        name = "test3";
-        baseHealth = 1;
-        baseAttack = 1;
-        baseSpeed = 1;
-        baseRange = 9;
+    public static int FARM_DEFAULT_INCREASE = 2;
 
-        baseCost = 75;
+    public FarmUnit() {
+        name = "farm";
+        baseHealth = 6;
+
+        baseUpkeep = 0;
+
+        baseCost = 350;
+
+        actions = new UnitAction[]{};
+
         type = Type.BUILDING;
+
+        description = "Increases unit upkeep by " + FARM_DEFAULT_INCREASE;
         setTexture(Assets.getTexture(Assets.wall));
     }
 
@@ -28,12 +32,12 @@ public class TestUnit3 extends BaseUnit {
 
     @Override
     public void onCreation(Unit self) {
-
+        self.getOwner().addUnitCap(FARM_DEFAULT_INCREASE);
     }
 
     @Override
     public void onDeath(Unit self) {
-
+        self.getOwner().addUnitCap(-FARM_DEFAULT_INCREASE);
     }
 
     @Override

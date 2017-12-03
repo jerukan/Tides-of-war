@@ -10,9 +10,14 @@ public class Assets {
 
     public static AssetManager assetManager = new AssetManager();
 
-    public static final AssetDescriptor<Texture> grass1 = new AssetDescriptor<Texture>("tiles/grassland_tile1.bmp", Texture.class);
+    public static final AssetDescriptor<Texture> grass1 = new AssetDescriptor<Texture>("tiles/grassland_tile1.png", Texture.class);
+    public static final AssetDescriptor<Texture> desert1 = new AssetDescriptor<Texture>("tiles/desert_tile1.png", Texture.class);
+    public static final AssetDescriptor<Texture> hill1 = new AssetDescriptor<Texture>("tiles/hill_tile1.png", Texture.class);
+    public static final AssetDescriptor<Texture> highland1 = new AssetDescriptor<Texture>("tiles/highland_tile1.png", Texture.class);
+    public static final AssetDescriptor<Texture> mountain1 = new AssetDescriptor<Texture>("tiles/mountain_tile1.png", Texture.class);
 
     public static final AssetDescriptor<Texture> spearman = new AssetDescriptor<Texture>("units/spearman.png", Texture.class);
+    public static final AssetDescriptor<Texture> footman = new AssetDescriptor<Texture>("units/footman.png", Texture.class);
     public static final AssetDescriptor<Texture> archer = new AssetDescriptor<Texture>("units/archer.png", Texture.class);
     public static final AssetDescriptor<Texture> wall = new AssetDescriptor<Texture>("units/wall.png", Texture.class);
     public static final AssetDescriptor<Texture> village = new AssetDescriptor<Texture>("units/village.png", Texture.class);
@@ -22,8 +27,13 @@ public class Assets {
 
     public static void load() {
         assetManager.load(grass1);
+        assetManager.load(desert1);
+        assetManager.load(hill1);
+        assetManager.load(highland1);
+        assetManager.load(mountain1);
 
         assetManager.load(spearman);
+        assetManager.load(footman);
         assetManager.load(archer);
         assetManager.load(wall);
         assetManager.load(village);
