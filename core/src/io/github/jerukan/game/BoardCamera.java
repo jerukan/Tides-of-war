@@ -112,7 +112,13 @@ public class BoardCamera {
         }
     }
 
+    public void updateOrigins() {
+        camOriginX = Gdx.graphics.getWidth() / 2;
+        camOriginY = Gdx.graphics.getHeight() / 2;
+    }
+
     public void updateOffsets() {
+        updateOrigins();
         camOffsetX = camera.position.x - camOriginX;
         camOffsetY = camera.position.y - camOriginY;
     }

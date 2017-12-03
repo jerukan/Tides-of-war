@@ -2,6 +2,7 @@ package io.github.jerukan.game.ui.gamescreen.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
@@ -12,8 +13,10 @@ import io.github.jerukan.util.Constants;
 
 public class InfoDisplayMenu extends Menu {
 
-    private final String blankTileText = "No tile selected";
-    private final String noUnitText = "No unit here";
+    private final String BLANK_TILE_TEXT = "No tile selected";
+    private final String NO_UNIT_TEXT = "No unit here";
+
+    private final float TABLE_WIDTH = 200;
 
     private Label tileInfo;
     private Label currentPlayerInfo;
@@ -21,18 +24,21 @@ public class InfoDisplayMenu extends Menu {
 
     public InfoDisplayMenu() {
         int numofmines = GameState.instance.unitManager.unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> u.baseunit.name.equals("goldmine")).size();
-        tileInfo = new Label(blankTileText, Assets.uiskin, "default");
+        tileInfo = new Label(BLANK_TILE_TEXT, Assets.uiskin, "default");
         currentPlayerInfo = new Label("$" + GameState.instance.getCurrentPlayer().getMoney() + " + $"
                 + (numofmines * GoldmineUnit.GOLDMINE_DEFAULT_PRODUCTION + Constants.DEFAULT_MONEY_PRODUCTION), Assets.uiskin, "default");
-        unitInfo = new Label(noUnitText, Assets.uiskin, "default");
+        unitInfo = new Label(NO_UNIT_TEXT, Assets.uiskin, "default");
+        unitInfo.setWrap(true);
 
         table.add(tileInfo).pad(10).row();
-        table.add(currentPlayerInfo).row();
-        table.add(unitInfo);
+        table.add(currentPlayerInfo).pad(10).row();
+        table.add(unitInfo).width(TABLE_WIDTH);
 
-        table.setHeight(tileInfo.getHeight() + unitInfo.getHeight());
+        table.setWidth(TABLE_WIDTH);
+        table.setHeight(tileInfo.getHeight() + currentPlayerInfo.getHeight() + unitInfo.getHeight());
+        table.align(Align.topLeft);
 
-        table.setPosition(80, Gdx.graphics.getHeight() - table.getHeight() - 20);
+        table.setPosition(10, Gdx.graphics.getHeight() - table.getHeight() - 20);
     }
 
     @Override
@@ -42,10 +48,11 @@ public class InfoDisplayMenu extends Menu {
         int numofmines = GameState.instance.unitManager.unitsFromPlayer(currentplayer, (Unit u) -> u.baseunit.name.equals("goldmine")).size();
         if(GameState.instance.boardManager.getHoveredPosition().isValid()) {
             tileInfo.setText("Hovered tile: " + GameState.instance.boardManager.getHoveredPosition().toString()
-                    + "\nTerrain: " + GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getHoveredPosition()).getTerrain().name);
+                    + "\nTerrain: " + GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getHoveredPosition()).getTerrain().name
+                    + "\nSpeed needed: " + GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getHoveredPosition()).getTerrain().speedConsump);
         }
         else {
-            tileInfo.setText(blankTileText);
+            tileInfo.setText(BLANK_TILE_TEXT);
         }
 
         currentPlayerInfo.setText("$" + currentplayer.getMoney() + " + $"
@@ -59,12 +66,13 @@ public class InfoDisplayMenu extends Menu {
             Unit u = GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition());
             unitInfo.setText("Unit: " + u.baseunit.name + "\nOwner: " + u.getOwner().name
                     + "\nHealth: " + u.getCurrentHealth() + "/" + u.baseunit.baseHealth
-                    + "\nSpeed: " + u.getCurrentSpeed() + "/" + u.baseunit.baseSpeed);
+                    + "\nSpeed: " + u.getCurrentSpeed() + "/" + u.baseunit.baseSpeed
+                    + "\n" + u.baseunit.description);
         }
         else {
-            unitInfo.setText(noUnitText);
+            unitInfo.setText(NO_UNIT_TEXT);
         }
         table.setHeight(tileInfo.getHeight() + unitInfo.getHeight());
-        table.setPosition(90, Gdx.graphics.getHeight() - table.getHeight() - 30);
+        table.setPosition(10, Gdx.graphics.getHeight() - table.getHeight() - 10);
     }
 }

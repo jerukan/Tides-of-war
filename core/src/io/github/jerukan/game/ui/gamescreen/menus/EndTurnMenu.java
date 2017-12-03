@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.ui.ButtonGroup;
 import io.github.jerukan.util.Assets;
@@ -36,11 +37,13 @@ public class EndTurnMenu extends ButtonGroup {
 
         table.add(currentPlayerLabel).pad(10).row();
         table.add(endTurnButton);
-        table.setPosition(Gdx.graphics.getWidth() - 100, 50);
+        table.align(Align.bottomRight);
+        table.setPosition(Gdx.graphics.getWidth() - 100, 20);
     }
 
     @Override
     public void updateVisibility() {
+        table.setPosition(Gdx.graphics.getWidth() - 100, 20);
         currentPlayerLabel.setText(GameState.instance.getCurrentPlayer().name + "\'s turn");
     }
 }
