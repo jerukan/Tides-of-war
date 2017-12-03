@@ -9,6 +9,9 @@ import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
+import io.github.jerukan.util.Util;
+import io.github.jerukan.util.heightmaps.DiamondSquare;
+import io.github.jerukan.util.heightmaps.Perlin;
 
 import java.util.ArrayList;
 
@@ -29,7 +32,7 @@ public class BoardManager implements Manager {
         hoveredPosition = new Position();
         selectedPosition = new Position();
 
-        availableBuildPositions = new ArrayList<Position>();
+        availableBuildPositions = new ArrayList<>();
 
         selectType = SelectType.SELECT;
     }
@@ -104,9 +107,7 @@ public class BoardManager implements Manager {
         if(pos.isValid()) {
             return board[pos.getX()][pos.getY()];
         }
-        else {
-            return null;
-        }
+        throw new IllegalArgumentException("No tile at " + pos.toString());
     }
 
     public void updateAvailableBuildPositions() {
@@ -126,12 +127,42 @@ public class BoardManager implements Manager {
     }
 
     public void resetBoard() {
+        generateHeightsDSquare(1121956);
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                 Position pos = new Position(x, y);
-                board[x][y] = new Tile(pos, new Sprite(Assets.assetManager.get(Assets.grass1)));
+                board[x][y] = new Tile(pos, (float)DiamondSquare.heights[x][y]);
                 board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
+            }
+        }
+    }
+
+    public void generateHeightsDSquare() {
+        DiamondSquare.generateHeights();
+    }
+
+    public void generateHeightsDSquare(long seed) {
+        DiamondSquare.setSeed(seed);
+        DiamondSquare.generateHeights();
+    }
+
+    public void generateHeightsPerlin() {
+        Perlin.randomizeVectors();
+        Perlin.zeroExtrema();
+        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                double sum = 0;
+                for(int i = 0; i < Constants.PERLIN_SAMPLES; i++) {
+                    sum += Perlin.getNoise((float) (x + Math.random()), (float) (y + Math.random()));
+                }
+                sum /= Constants.PERLIN_SAMPLES;
+                //board[x][y].setHeight((float)sum);
+            }
+        }
+        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
+            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+                //board[x][y].setHeight(Util.map(board[x][y].getHeight(), Perlin.min, Perlin.max, 0, 1));
             }
         }
     }

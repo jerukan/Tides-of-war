@@ -26,6 +26,13 @@ public class EndTurnMenu extends ButtonGroup {
         currentPlayerLabel.getStyle().background = new Image(new Texture(labelColor)).getDrawable();
         labelColor.dispose();
 
+        TextButton genHeights = new TextButton("heights", Assets.uiskin, "default");
+        genHeights.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                GameState.instance.boardManager.resetBoard();
+            }
+        });
         endTurnButton = new TextButton("End turn", Assets.uiskin, "default");
         endTurnButton.addListener(new ClickListener() {
             @Override
@@ -34,6 +41,7 @@ public class EndTurnMenu extends ButtonGroup {
             }
         });
 
+        table.add(genHeights);
         table.add(currentPlayerLabel).pad(10).row();
         table.add(endTurnButton);
         table.setPosition(Gdx.graphics.getWidth() - 100, 50);

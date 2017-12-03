@@ -70,30 +70,37 @@ public abstract class BaseUnit {
      * @param checkedpos continuously changing position being checked to see if it's a valid move position
      * @param moves the aggregate ArrayList of all the valid move positions of the unit
      * @param movesleft number of moves left to determine when the max range of the moves is reached */
-    protected void generateMoves(Position startpos, Position checkedpos, ArrayList<Position> moves, int movesleft) {
-        if(!checkedpos.existsInArray(moves) && !startpos.equals(checkedpos)) {
-            moves.add(checkedpos);
-        }
-        if(movesleft <= 0) {
-            return;
-        }
-        movesleft -= 1;
+    protected void generateMoves(Position startpos, Position checkedpos, ArrayList<Position> moves, ArrayList<Integer> moveConsump, int aggregateConsump, int movesleft) {
+        int speedconsump = GameState.instance.boardManager.tileFromPosition(checkedpos).getSpeedConsump();
 
-        if(checkedpos.getX() + 1 < Constants.BOARD_WIDTH) {
+        if(!startpos.equals(checkedpos)) {
+            if (movesleft < speedconsump - 1) {
+                return;
+            }
+
+            if (!checkedpos.existsInArray(moves)) {
+                moves.add(checkedpos);
+                moveConsump.add(aggregateConsump);
+            }
+        }
+        aggregateConsump += speedconsump;
+        movesleft -= speedconsump;
+
+        if (checkedpos.getX() + 1 < Constants.BOARD_WIDTH) {
             Position newpos = new Position(checkedpos.getX() + 1, checkedpos.getY());
-            generateMoves(startpos, newpos, moves, movesleft);
+            generateMoves(startpos, newpos, moves, moveConsump, aggregateConsump, movesleft);
         }
-        if(checkedpos.getX() - 1 >= 0) {
+        if (checkedpos.getX() - 1 >= 0) {
             Position newpos = new Position(checkedpos.getX() - 1, checkedpos.getY());
-            generateMoves(startpos, newpos, moves, movesleft);
+            generateMoves(startpos, newpos, moves, moveConsump, aggregateConsump, movesleft);
         }
-        if(checkedpos.getY() + 1 < Constants.BOARD_HEIGHT) {
+        if (checkedpos.getY() + 1 < Constants.BOARD_HEIGHT) {
             Position newpos = new Position(checkedpos.getX(), checkedpos.getY() + 1);
-            generateMoves(startpos, newpos, moves, movesleft);
+            generateMoves(startpos, newpos, moves, moveConsump, aggregateConsump, movesleft);
         }
-        if(checkedpos.getY() - 1 < Constants.BOARD_HEIGHT) {
+        if (checkedpos.getY() - 1 >= 0) {
             Position newpos = new Position(checkedpos.getX(), checkedpos.getY() - 1);
-            generateMoves(startpos, newpos, moves, movesleft);
+            generateMoves(startpos, newpos, moves, moveConsump, aggregateConsump, movesleft);
         }
     }
 
@@ -115,32 +122,31 @@ public abstract class BaseUnit {
 
         if(checkedpos.getX() + 1 < Constants.BOARD_WIDTH) {
             Position newpos = new Position(checkedpos.getX() + 1, checkedpos.getY());
-            generateMoves(startpos, newpos, attacks, attacksleft);
+            generateAttacks(startpos, newpos, attacks, attacksleft);
         }
         if(checkedpos.getX() - 1 >= 0) {
             Position newpos = new Position(checkedpos.getX() - 1, checkedpos.getY());
-            generateMoves(startpos, newpos, attacks, attacksleft);
+            generateAttacks(startpos, newpos, attacks, attacksleft);
         }
         if(checkedpos.getY() + 1 < Constants.BOARD_HEIGHT) {
             Position newpos = new Position(checkedpos.getX(), checkedpos.getY() + 1);
-            generateMoves(startpos, newpos, attacks, attacksleft);
+            generateAttacks(startpos, newpos, attacks, attacksleft);
         }
-        if(checkedpos.getY() - 1 < Constants.BOARD_HEIGHT) {
+        if(checkedpos.getY() - 1 >= 0) {
             Position newpos = new Position(checkedpos.getX(), checkedpos.getY() - 1);
-            generateMoves(startpos, newpos, attacks, attacksleft);
+            generateAttacks(startpos, newpos, attacks, attacksleft);
         }
     }
 
     /** Called by the actual units to retrieve unit moves
      * Uses generateMoves to get the moves
-     * @param self the existing selected unit
-     * @return ArrayList of valid move positions of the unit */
-    public ArrayList<Position> getMoves(Unit self) {
-        ArrayList<Position> moves = new ArrayList<>();
+     * @param self the existing selected unit */
+    public void getMoves(Unit self) {
+        self.getAvailableMoves().clear();
+        self.getMoveConsumptions().clear();
         Position unitpos = new Position(self.getPosition());
         Position startpos = new Position(self.getPosition());
-        generateMoves(startpos, unitpos, moves, self.getCurrentSpeed());
-        return moves;
+        generateMoves(startpos, unitpos, self.getAvailableMoves(), self.getMoveConsumptions(), 0, self.getCurrentSpeed());
     }
 
     /** Called by the actual units to retrieve unit attacks

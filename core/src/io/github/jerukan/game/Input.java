@@ -62,7 +62,7 @@ public class Input implements InputProcessor {
         }
         if(button == Buttons.LEFT) {
             GameState.instance.boardManager.selectedPositionActionLeft();
-            WorldRenderer.uiRenderer.getCurrentScreen().clearWindows();
+            WorldRenderer.uiRenderer.clear();
         }
         return false;
     }
