@@ -1,12 +1,12 @@
 package io.github.jerukan.util.heightmaps;
 
 import com.badlogic.gdx.math.MathUtils;
-import io.github.jerukan.game.board.Tile;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 import io.github.jerukan.util.Util;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DiamondSquare {
 
@@ -14,19 +14,26 @@ public class DiamondSquare {
     private static int squaresteps = 0;
 
     public static double[][] heights = new double[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
-    private static final double offsetFactorDefault = 0.5;
-    private static final double offsetFactorConstant = 0.7;
-    private static double offsetFactor = offsetFactorDefault;
+    private static final double OFFSET_FACTOR_DEFAULT = 0.5;
+    private static final double OFFSET_MULTIPLIER = 0.7;
+    private static double offsetFactor = OFFSET_FACTOR_DEFAULT;
+
+    private static final long DEFAULT_SEED = 1;
+    private static Random random = new Random(DEFAULT_SEED);
+
+    public static void setSeed(long seed) {
+        random.setSeed(seed);
+    }
 
     private static void initCorners() {
-        heights[0][0] = Math.random();
-        heights[Constants.BOARD_WIDTH - 1][0] = Math.random();
-        heights[0][Constants.BOARD_HEIGHT - 1] = Math.random();
-        heights[Constants.BOARD_WIDTH - 1][Constants.BOARD_HEIGHT - 1] = Math.random();
+        heights[0][0] = random.nextDouble();
+        heights[Constants.BOARD_WIDTH - 1][0] = random.nextDouble();
+        heights[0][Constants.BOARD_HEIGHT - 1] = random.nextDouble();
+        heights[Constants.BOARD_WIDTH - 1][Constants.BOARD_HEIGHT - 1] = random.nextDouble();
     }
 
     private static void reset() {
-        offsetFactor = offsetFactorDefault;
+        offsetFactor = OFFSET_FACTOR_DEFAULT;
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
                 heights[x][y] = 0;
@@ -45,7 +52,7 @@ public class DiamondSquare {
             }
             selectHeights.add(heights[p.getX()][p.getY()]);
         }
-        double offset = (2 * Math.random() - 1) * offsetFactor;
+        double offset = (2 * random.nextDouble() - 1) * offsetFactor;
         squaresteps++;
         return Util.averageList(selectHeights) + offset;
     }
@@ -60,7 +67,7 @@ public class DiamondSquare {
             }
             selectHeights.add(heights[p.getX()][p.getY()]);
         }
-        double offset = (2 * Math.random() - 1) * offsetFactor;
+        double offset = (2 * random.nextDouble() - 1) * offsetFactor;
         diamondsteps++;
         return Util.averageList(selectHeights) + offset;
     }
@@ -86,7 +93,7 @@ public class DiamondSquare {
             }
 //            System.out.println("diamond steps: " + diamondsteps);
 //            System.out.println("square steps: " + squaresteps);
-            offsetFactor *= offsetFactorConstant;
+            offsetFactor *= OFFSET_MULTIPLIER;
         }
     }
 }

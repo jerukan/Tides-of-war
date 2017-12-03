@@ -127,7 +127,7 @@ public class BoardManager implements Manager {
     }
 
     public void resetBoard() {
-        generateHeightsDSquare();
+        generateHeightsDSquare(1121956);
         board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
         for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
             for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
@@ -139,6 +139,11 @@ public class BoardManager implements Manager {
     }
 
     public void generateHeightsDSquare() {
+        DiamondSquare.generateHeights();
+    }
+
+    public void generateHeightsDSquare(long seed) {
+        DiamondSquare.setSeed(seed);
         DiamondSquare.generateHeights();
     }
 
