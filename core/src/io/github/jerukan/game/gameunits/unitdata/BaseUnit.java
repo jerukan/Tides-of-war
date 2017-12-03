@@ -91,7 +91,7 @@ public abstract class BaseUnit {
             Position newpos = new Position(checkedpos.getX(), checkedpos.getY() + 1);
             generateMoves(startpos, newpos, moves, movesleft);
         }
-        if(checkedpos.getY() - 1 < Constants.BOARD_HEIGHT) {
+        if (checkedpos.getY() - 1 >= 0) {
             Position newpos = new Position(checkedpos.getX(), checkedpos.getY() - 1);
             generateMoves(startpos, newpos, moves, movesleft);
         }
@@ -125,7 +125,7 @@ public abstract class BaseUnit {
             Position newpos = new Position(checkedpos.getX(), checkedpos.getY() + 1);
             generateMoves(startpos, newpos, attacks, attacksleft);
         }
-        if(checkedpos.getY() - 1 < Constants.BOARD_HEIGHT) {
+        if(checkedpos.getY() - 1 >= 0) {
             Position newpos = new Position(checkedpos.getX(), checkedpos.getY() - 1);
             generateMoves(startpos, newpos, attacks, attacksleft);
         }
