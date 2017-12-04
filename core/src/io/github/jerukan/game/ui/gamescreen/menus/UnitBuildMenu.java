@@ -27,8 +27,8 @@ public class UnitBuildMenu extends ButtonGroup {
 
     public void resetTable() {
         table.clear();
-        for(BaseUnit unit : UnitRegistry.list) {
-            if(unit.canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
+        for(BaseUnit unit : UnitRegistry.unitList) {
+            if(unit._canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
                 table.add(new UnitBuildButton(unit, flagFromArray("build"))).pad(5).row();
             }
         }

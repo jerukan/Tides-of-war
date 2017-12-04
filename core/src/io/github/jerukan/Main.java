@@ -17,8 +17,8 @@ public class Main extends Game {
 		Assets.assetManager.finishLoading();
 		UnitRegistry.init();
 		GameState.instance = new GameState();
-		WorldRenderer.init();
 		GameState.instance.init();
+		WorldRenderer.init();
 		GameState.instance.reset();
 	}
 

@@ -9,7 +9,7 @@ import io.github.jerukan.util.Position;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-/** A class that organizes the units into an aggregate list
+/** A class that organizes the units into an aggregate unitList
  * Manages the logistics of the units instead of having the board do everything */
 public class UnitManager implements Manager {
 
@@ -39,7 +39,7 @@ public class UnitManager implements Manager {
     }
 
     public void buildUnit(BaseUnit baseUnit) {
-        if(baseUnit.canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
+        if(baseUnit._canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
             addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(GameState.instance.boardManager.getSelectedPosition()));
             setSelectedToLast();
             getSelectedUnit().onCreation();
@@ -109,9 +109,9 @@ public class UnitManager implements Manager {
         return out;
     }
 
-    public boolean playerHasUnit(Player p, String unitname) {
+    public boolean playerHasUnit(Player p, int unitId) {
         for(Unit u : unitlist) {
-            if(u.baseunit.name.equals(unitname) && u.getOwner() == p) {
+            if(u.baseunit.id == unitId && u.getOwner() == p) {
                 return true;
             }
         }
@@ -150,7 +150,6 @@ public class UnitManager implements Manager {
 
     @Override
     public void init() {
-        UnitRegistry.validateUnits();
         clearUnits();
     }
 

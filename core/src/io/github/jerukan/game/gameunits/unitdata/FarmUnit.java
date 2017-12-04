@@ -26,7 +26,7 @@ public class FarmUnit extends BaseUnit {
     }
 
     @Override
-    public boolean canBuildCondition(Player owner) {
+    public boolean canBuild(Player owner) {
         return true;
     }
 

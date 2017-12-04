@@ -9,7 +9,6 @@ import io.github.jerukan.game.gameunits.unitdata.unitactions.MoveAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
-import io.github.jerukan.util.Util;
 
 import java.util.ArrayList;
 
@@ -17,6 +16,9 @@ import java.util.ArrayList;
  * Not actually the object that gets placed on the board */
 
 public abstract class BaseUnit {
+
+    //temporary id will be set later in UnitRegistry
+    public int id = -1;
 
     public String name;
     public int baseHealth;
@@ -62,6 +64,10 @@ public abstract class BaseUnit {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /** The recursive method containing the algorithm for generating board positions the unit can move to
@@ -161,22 +167,22 @@ public abstract class BaseUnit {
         return attacks;
     }
 
-    /** Uses custom condition canBuildCondition given below to determine valid build positions
+    /** Uses custom condition canBuild given below to determine valid build positions
      * May be overridden
      * @param pos the selected position to build on
      * @param owner the player who owns this unit
      * @return whether the unit can be built or not */
-    public boolean canBuild(Position pos, Player owner) {
+    public boolean _canBuild(Position pos, Player owner) {
         return owner.hasSufficientMoney(baseCost)
                 && pos.existsInArray(GameState.instance.boardManager.getAvailableBuildPositions())
-                && canBuildCondition(owner) && owner.hasSufficientUpkeep(baseUpkeep);
+                && canBuild(owner) && owner.hasSufficientUpkeep(baseUpkeep);
     }
 
     /** Defines the conditions under which the unit can be built under
      * Does not include the insufficient money condition: that is assumed for all units
      * @param owner the player who owns this unit
      * @return whether the unit can be built or not */
-    public abstract boolean canBuildCondition(Player owner);
+    public abstract boolean canBuild(Player owner);
 
     /** Determines what happens when the unit performs an action on a specified target
      * Can perform actions other than only dealing damage to a single unit
