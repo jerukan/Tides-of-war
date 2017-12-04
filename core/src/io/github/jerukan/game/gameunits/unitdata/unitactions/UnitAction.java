@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /** A class that defines an action some unit could use
  * There are two basic actions: moving and attacking */
+
 public abstract class UnitAction {
 
     protected BaseUnit baseUnit;
@@ -33,7 +34,7 @@ public abstract class UnitAction {
      * @param target the selected position */
     public abstract void execute(Unit self, Position target);
 
-    /** Recursion flood fill galore
+    /** Recursion flood fill galore (or not you decide)
      * @param self the dude who is performing the action
      * @param startpos the unit's position
      * @param checkedpos the position being checked
