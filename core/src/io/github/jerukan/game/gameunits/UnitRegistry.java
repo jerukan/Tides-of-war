@@ -10,29 +10,41 @@ import java.util.Collections;
 
 public class UnitRegistry {
 
-    private static final BaseUnit[] basicList = {
-            new BasicUnit("footman", 2, 1, 2, 1, 100, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.footman)),
-            new BasicUnit("archer", 1, 1, 2, 2, 100, BaseUnit.Type.SOLDIER, "Masters of rushing, but die to a tap.", Assets.getTexture(Assets.archer)),
-            new BasicUnit("armory", 7, 0, 0, 0, 400, BaseUnit.Type.BUILDING, "Allows the production of spearmen and shieldbearers", Assets.getTexture(Assets.armory))
-    };
+    private static int currentId = 0;
 
-    private static final BaseUnit[] specialList = {
-            new VillageUnit(),
-            new SpearmanUnit(),
-            new GoldmineUnit(),
-            new FarmUnit()
-    };
+    public static BasicUnit footman = new BasicUnit("footman", 2, 1, 2, 1, 100,
+            BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.footman));
+    public static BasicUnit archer = new BasicUnit("archer", 1, 1, 2, 2, 100,
+            BaseUnit.Type.SOLDIER, "Masters of rushing, but die to a tap.", Assets.getTexture(Assets.archer));
+    public static BasicUnit armory = new BasicUnit("armory", 7, 0, 0, 0, 400,
+            BaseUnit.Type.BUILDING, "Allows the production of spearmen and shieldbearers", Assets.getTexture(Assets.armory));
 
-    public static ArrayList<BaseUnit> list = new ArrayList<>();
+    public static VillageUnit village = new VillageUnit();
+    public static SpearmanUnit spearman = new SpearmanUnit();
+    public static GoldmineUnit goldmine = new GoldmineUnit();
+    public static FarmUnit farm = new FarmUnit();
 
-    public static void init() {
-        Collections.addAll(list, basicList);
-        Collections.addAll(list, specialList);
+    public static ArrayList<BaseUnit> unitList = new ArrayList<>();
+
+    private static void register(BaseUnit unit) {
+        unit.setId(currentId);
+        unitList.add(unit);
+        currentId++;
     }
 
-    public static void validateUnits() {
-        for(BaseUnit unit : list) {
-            for(BaseUnit other : list) {
+    private static void registerUnits() {
+        register(footman);
+        register(archer);
+        register(armory);
+        register(village);
+        register(spearman);
+        register(goldmine);
+        register(farm);
+    }
+
+    private static void validateUnits() {
+        for(BaseUnit unit : unitList) {
+            for(BaseUnit other : unitList) {
                 if(!unit.equals(other)) {
                     if(unit.name.equals(other.name)) {
                         throw new IllegalArgumentException("Two or more units of name \"" + unit.name + "\" found");
@@ -42,8 +54,13 @@ public class UnitRegistry {
         }
     }
 
-    public static BaseUnit getUnit(String name) {
-        for(BaseUnit unit : list) {
+    public static void init() {
+        registerUnits();
+        validateUnits();
+    }
+
+    public static BaseUnit getUnitFromName(String name) {
+        for(BaseUnit unit : unitList) {
             if(unit.name.equals(name)) {
                 return unit;
             }
@@ -52,7 +69,7 @@ public class UnitRegistry {
     }
 
     public static void dispose() {
-        for(BaseUnit unit : list) {
+        for(BaseUnit unit : unitList) {
             unit.dispose();
         }
     }

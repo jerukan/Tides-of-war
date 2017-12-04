@@ -26,13 +26,13 @@ public class VillageUnit extends BaseUnit {
     }
 
     @Override
-    public boolean canBuild(Position pos, Player owner) {
-        return canBuildCondition(owner);
+    public boolean _canBuild(Position pos, Player owner) {
+        return canBuild(owner);
     }
 
     @Override
-    public boolean canBuildCondition(Player owner) {
-        return !GameState.instance.unitManager.playerHasUnit(owner, name);
+    public boolean canBuild(Player owner) {
+        return !GameState.instance.unitManager.playerHasUnit(owner, id);
     }
 
     @Override

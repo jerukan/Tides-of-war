@@ -1,20 +1,20 @@
 package io.github.jerukan.util;
 
 /** Wraps a boolean with a string name */
-public class BooleanFlag {
+public class NamedFlag {
 
     private String name;
 
     private boolean defaultState;
     private boolean state;
 
-    public BooleanFlag() {
+    public NamedFlag() {
         name = "flag";
         defaultState = true;
         state = true;
     }
 
-    public BooleanFlag(String name, boolean defaultState) {
+    public NamedFlag(String name, boolean defaultState) {
         this.name = name;
         this.defaultState = defaultState;
         state = this.defaultState;

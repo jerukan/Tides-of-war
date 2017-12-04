@@ -49,6 +49,7 @@ public class GameState implements Manager {
     }
 
     public void passTurn() {
+        unitManager.onEndTurn();
         currentPlayerNum++;
         if(currentPlayerNum >= players.length) {
             currentPlayerNum = 0;

@@ -9,7 +9,6 @@ import io.github.jerukan.game.gameunits.unitdata.unitactions.EmptyAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
-import io.github.jerukan.util.Util;
 
 import java.util.ArrayList;
 
@@ -31,9 +30,8 @@ public class Unit {
 
     private Sprite sprite;
 
-    private ArrayList<Position> availableMoves;
-    private ArrayList<Position> availableAttacks;
-    private ArrayList<Integer> moveConsumptions;
+    private ArrayList<Position> availableTargets;
+    private ArrayList<Integer> targetSpeedConsumptions;
 
     private Player owner;
 
@@ -53,14 +51,13 @@ public class Unit {
 
         this.position = position;
 
-        currentAction = new EmptyAction();
+        currentAction = new EmptyAction(unit);
 
         sprite = new Sprite(baseunit.getTexture());
         moveSprite(position);
 
-        availableMoves = new ArrayList<>();
-        availableAttacks = new ArrayList<>();
-        moveConsumptions = new ArrayList<>();
+        availableTargets = new ArrayList<>();
+        targetSpeedConsumptions = new ArrayList<>();
     }
 
     public void render(Batch batch) {
@@ -82,28 +79,23 @@ public class Unit {
         return currentHealth <= 0;
     }
 
-    public void generateMovesAndAttacks() {
-        baseunit.getMoves(this);
-        availableAttacks = baseunit.getAttacks(this);
-    }
-
     public void clearMoves() {
-        availableMoves.clear();
-        availableAttacks.clear();
+        availableTargets.clear();
     }
 
     public boolean hasSufficientSpeed(int spd) {
         return currentSpeed >= spd;
     }
 
+    public void clearMoveLists() {
+        availableTargets.clear();
+        targetSpeedConsumptions.clear();
+    }
+
     // unit actions
 
     public void takeDamage(int amount) {
         currentHealth -= amount;
-    }
-
-    public void onTargetAction(Unit target) {
-        baseunit.onTargetAction(this, target);
     }
 
     public void onCreation() {
@@ -128,6 +120,16 @@ public class Unit {
         currentSpeed = baseunit.baseSpeed;
     }
 
+    public void setAvailableTargets(ArrayList<Position> positions) {
+        availableTargets.clear();
+        availableTargets.addAll(positions);
+    }
+
+    public void setTargetSpeedConsumptions(ArrayList<Integer> speeds) {
+        targetSpeedConsumptions.clear();
+        targetSpeedConsumptions.addAll(speeds);
+    }
+
     public void setCurrentAction(UnitAction currentAction) {
         this.currentAction = currentAction;
     }
@@ -150,16 +152,8 @@ public class Unit {
 
     // accessors
 
-    public ArrayList<Position> getAvailableMoves() {
-        return availableMoves;
-    }
-
-    public ArrayList<Integer> getMoveConsumptions() {
-        return moveConsumptions;
-    }
-
-    public ArrayList<Position> getAvailableAttacks() {
-        return availableAttacks;
+    public ArrayList<Position> getAvailableTargets() {
+        return availableTargets;
     }
 
     public Position getPosition() {

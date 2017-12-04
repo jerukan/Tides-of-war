@@ -4,8 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.ui.Screen;
 import io.github.jerukan.game.ui.gamescreen.menus.*;
-import io.github.jerukan.util.BooleanFlag;
-import io.github.jerukan.util.Position;
+import io.github.jerukan.util.NamedFlag;
 
 public class GameScreen extends Screen {
 
@@ -17,13 +16,13 @@ public class GameScreen extends Screen {
 
     private EndTurnMenu endTurnMenu;
 
-    private BooleanFlag building;
+    private NamedFlag building;
 
     public GameScreen(Stage stage) {
         super(stage);
 
-        building = new BooleanFlag("build", false);
-        BooleanFlag[] buildMenuListeners = {building};
+        building = new NamedFlag("build", false);
+        NamedFlag[] buildMenuListeners = {building};
 
         tileSelectMenu = new TileSelectMenu(buildMenuListeners);
 

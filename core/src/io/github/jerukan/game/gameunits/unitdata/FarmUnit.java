@@ -2,6 +2,7 @@ package io.github.jerukan.game.gameunits.unitdata;
 
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.DismissAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 
@@ -17,16 +18,16 @@ public class FarmUnit extends BaseUnit {
 
         baseCost = 350;
 
-        actions = new UnitAction[]{};
+        actions = new UnitAction[]{new DismissAction(this)};
 
         type = Type.BUILDING;
 
         description = "Increases unit upkeep by " + FARM_DEFAULT_INCREASE;
-        setTexture(Assets.getTexture(Assets.wall));
+        setTexture(Assets.getTexture(Assets.farm));
     }
 
     @Override
-    public boolean canBuildCondition(Player owner) {
+    public boolean canBuild(Player owner) {
         return true;
     }
 

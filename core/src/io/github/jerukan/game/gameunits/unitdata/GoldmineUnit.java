@@ -2,6 +2,7 @@ package io.github.jerukan.game.gameunits.unitdata;
 
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.DismissAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
 
@@ -17,16 +18,16 @@ public class GoldmineUnit extends BaseUnit {
 
         baseCost = 450;
 
-        actions = new UnitAction[]{};
+        actions = new UnitAction[]{new DismissAction(this)};
 
         type = Type.BUILDING;
 
         description = "Increases money production by $" + GOLDMINE_DEFAULT_PRODUCTION;
-        setTexture(Assets.getTexture(Assets.wall));
+        setTexture(Assets.getTexture(Assets.goldmine));
     }
 
     @Override
-    public boolean canBuildCondition(Player owner) {
+    public boolean canBuild(Player owner) {
         return true;
     }
 

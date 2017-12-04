@@ -9,7 +9,7 @@ import io.github.jerukan.util.Position;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-/** A class that organizes the units into an aggregate list
+/** A class that organizes the units into an aggregate unitList
  * Manages the logistics of the units instead of having the board do everything */
 public class UnitManager implements Manager {
 
@@ -32,19 +32,18 @@ public class UnitManager implements Manager {
         }
     }
 
-    public void addUnit(Unit unit) {
-        if(positionAvailable(unit.getPosition())) {
-            unitlist.add(unit);
-        }
+    /** kill kill kill
+     * @param unit this dude is dunzo */
+    public void removeUnit(Unit unit) {
+        unitlist.remove(unit);
     }
 
     public void buildUnit(BaseUnit baseUnit) {
-        if(baseUnit.canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
+        if(baseUnit._canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
             addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(GameState.instance.boardManager.getSelectedPosition()));
             setSelectedToLast();
             getSelectedUnit().onCreation();
             getSelectedUnit().setCurrentSpeed(0);
-            generateUnitMoves();
             GameState.instance.boardManager.updateAvailableBuildPositions();
 
             GameState.instance.getCurrentPlayer().setMoney(GameState.instance.getCurrentPlayer().getMoney() - baseUnit.baseCost);
@@ -68,12 +67,9 @@ public class UnitManager implements Manager {
     }
 
     public Unit unitFromPosition(Position pos) {
-        if(!pos.isValid()) {
-            return null;
-        }
         for(Unit unit : unitlist) {
             Position unitpos = unit.getPosition();
-            if(unitpos.equals(new Position(pos.getPos()))) {
+            if(unitpos.equals(pos.getPos())) {
                 return unit;
             }
         }
@@ -109,9 +105,9 @@ public class UnitManager implements Manager {
         return out;
     }
 
-    public boolean playerHasUnit(Player p, String unitname) {
+    public boolean playerHasUnit(Player p, int unitId) {
         for(Unit u : unitlist) {
-            if(u.baseunit.name.equals(unitname) && u.getOwner() == p) {
+            if(u.baseunit.id == unitId && u.getOwner() == p) {
                 return true;
             }
         }
@@ -137,26 +133,25 @@ public class UnitManager implements Manager {
         }
     }
 
+    public void onEndTurn() {
+        ArrayList<Unit> temp = unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> !u.isDead());
+
+        for(Unit u : temp) {
+            u.onTurnEnd();
+        }
+    }
+
     public void clearUnits() {
         unitlist.clear();
     }
 
-    /** Also generates attacks, I just didn't feel like putting that in the name */
-    public void generateUnitMoves() {
-        for(Unit unit : unitlist) {
-            unit.generateMovesAndAttacks();
-        }
-    }
-
     @Override
     public void init() {
-        UnitRegistry.validateUnits();
         clearUnits();
     }
 
     @Override
     public void update() {
-        generateUnitMoves();
     }
 
     public ArrayList<Unit> getUnitlist() {

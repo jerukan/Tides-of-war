@@ -1,23 +1,24 @@
 package io.github.jerukan.game.gameunits.unitdata.unitactions;
 
+import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.util.Position;
 
 import java.util.ArrayList;
 
-public class EmptyAction extends UnitAction {
+public class DismissAction extends UnitAction {
 
-    public EmptyAction(BaseUnit baseUnit) {
+    public DismissAction(BaseUnit baseUnit) {
         super(baseUnit);
-        name = "none";
+        name = "dismiss";
         speedConsumption = 0;
         requiresTarget = false;
     }
 
     @Override
     public void execute(Unit self) {
-
+        GameState.instance.unitManager.removeUnit(self);
     }
 
     @Override

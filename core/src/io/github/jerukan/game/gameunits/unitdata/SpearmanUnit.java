@@ -3,6 +3,7 @@ package io.github.jerukan.game.gameunits.unitdata;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
+import io.github.jerukan.game.gameunits.UnitRegistry;
 import io.github.jerukan.util.Assets;
 
 public class SpearmanUnit extends BaseUnit {
@@ -24,8 +25,8 @@ public class SpearmanUnit extends BaseUnit {
     }
 
     @Override
-    public boolean canBuildCondition(Player owner) {
-        return GameState.instance.unitManager.playerHasUnit(owner, "armory");
+    public boolean canBuild(Player owner) {
+        return GameState.instance.unitManager.playerHasUnit(owner, UnitRegistry.armory.id);
     }
 
     @Override
