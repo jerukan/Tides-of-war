@@ -38,6 +38,12 @@ public class UnitManager implements Manager {
         }
     }
 
+    /** kill kill kill
+     * @param unit this dude is dunzo */
+    public void removeUnit(Unit unit) {
+        unitlist.remove(unit);
+    }
+
     public void buildUnit(BaseUnit baseUnit) {
         if(baseUnit._canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
             addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(GameState.instance.boardManager.getSelectedPosition()));

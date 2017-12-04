@@ -8,7 +8,7 @@ import io.github.jerukan.game.gameunits.UnitRegistry;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.game.ui.ButtonGroup;
 import io.github.jerukan.game.ui.gamescreen.buttons.UnitBuildButton;
-import io.github.jerukan.util.BooleanFlag;
+import io.github.jerukan.util.NamedFlag;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 
@@ -18,7 +18,7 @@ public class UnitBuildMenu extends ButtonGroup {
 
     private Position currentPos;
 
-    public UnitBuildMenu(BooleanFlag[] flags) {
+    public UnitBuildMenu(NamedFlag[] flags) {
         super(flags);
         currentPos = new Position();
         table.align(Align.bottomLeft);

@@ -5,6 +5,7 @@ import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.AttackAction;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.DismissAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.MoveAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Constants;
@@ -49,7 +50,7 @@ public abstract class BaseUnit {
         baseUpkeep = 1;
         baseCost = 100;
 
-        actions = new UnitAction[]{new MoveAction(this), new AttackAction(this)};
+        actions = new UnitAction[]{new MoveAction(this), new AttackAction(this), new DismissAction(this)};
 
         description = "This is a generic unit without any love put into it";
 

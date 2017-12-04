@@ -11,7 +11,7 @@ public class MoveAction extends UnitAction {
     public MoveAction(BaseUnit baseUnit) {
         this.baseUnit = baseUnit;
         name = "move";
-        speedConsumption = 0; //modified based on distance traveled
+        //speed is modified based on distance traveled
         requiresTarget = true;
     }
 

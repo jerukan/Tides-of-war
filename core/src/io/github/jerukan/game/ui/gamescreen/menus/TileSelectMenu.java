@@ -9,7 +9,7 @@ import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
 import io.github.jerukan.game.ui.ButtonGroup;
 import io.github.jerukan.util.Assets;
-import io.github.jerukan.util.BooleanFlag;
+import io.github.jerukan.util.NamedFlag;
 import io.github.jerukan.util.Constants;
 
 /** The menu that pops up when a tile is selected
@@ -19,7 +19,7 @@ public class TileSelectMenu extends ButtonGroup {
 
     private final TextButton buildButton;
 
-    public TileSelectMenu(BooleanFlag[] flags) {
+    public TileSelectMenu(NamedFlag[] flags) {
         super(flags);
 
         buildButton = new TextButton("Build", Assets.uiskin, "default");

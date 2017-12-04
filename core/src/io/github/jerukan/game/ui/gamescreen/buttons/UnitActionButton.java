@@ -24,6 +24,7 @@ public class UnitActionButton extends TextButton {
                         action.execute(self);
                     }
                 }
+                GameState.instance.update();
             }
         });
     }
