@@ -102,10 +102,6 @@ public class Unit {
         currentHealth -= amount;
     }
 
-    public void onTargetAction(Unit target) {
-        baseunit.onTargetAction(this, target);
-    }
-
     public void onCreation() {
         baseunit.onCreation(this);
     }

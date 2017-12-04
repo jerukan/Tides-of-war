@@ -140,6 +140,14 @@ public class UnitManager implements Manager {
         }
     }
 
+    public void onEndTurn() {
+        ArrayList<Unit> temp = unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> !u.isDead());
+
+        for(Unit u : temp) {
+            u.onTurnEnd();
+        }
+    }
+
     public void clearUnits() {
         unitlist.clear();
     }

@@ -25,7 +25,7 @@ public class AttackAction extends UnitAction {
         if(target.existsInArray(self.getAvailableAttacks())) {
             if(GameState.instance.unitManager.unitFromPosition(target) != null) {
                 if(GameState.instance.unitManager.unitFromPosition(target).getOwner() != self.getOwner()) {
-                    self.onTargetAction(GameState.instance.unitManager.unitFromPosition(target));
+                    GameState.instance.unitManager.unitFromPosition(target).takeDamage(self.getCurrentAttack());
                     self.setCurrentSpeed(self.getCurrentSpeed() - speedConsumption);
                 }
             }

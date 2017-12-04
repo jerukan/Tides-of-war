@@ -185,14 +185,6 @@ public abstract class BaseUnit {
      * @return whether the unit can be built or not */
     public abstract boolean canBuild(Player owner);
 
-    /** Determines what happens when the unit performs an action on a specified target
-     * Can perform actions other than only dealing damage to a single unit
-     * @param self the existing selected unit
-     * @param target the existing targeted unit */
-    public void onTargetAction(Unit self, Unit target) {
-        target.takeDamage(self.getCurrentAttack());
-    }
-
     /** Action that is performed when a unit is added to the board
      * @param self the unit being created */
     public abstract void onCreation(Unit self);
