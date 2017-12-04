@@ -22,6 +22,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> wall = new AssetDescriptor<Texture>("units/wall.png", Texture.class);
     public static final AssetDescriptor<Texture> village = new AssetDescriptor<Texture>("units/village.png", Texture.class);
     public static final AssetDescriptor<Texture> armory = new AssetDescriptor<Texture>("units/armory.png", Texture.class);
+    public static final AssetDescriptor<Texture> goldmine = new AssetDescriptor<Texture>("units/goldmine.png", Texture.class);
+    public static final AssetDescriptor<Texture> farm = new AssetDescriptor<Texture>("units/farm.png", Texture.class);
 
     public static final Skin uiskin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
@@ -38,6 +40,8 @@ public class Assets {
         assetManager.load(wall);
         assetManager.load(village);
         assetManager.load(armory);
+        assetManager.load(goldmine);
+        assetManager.load(farm);
     }
 
     public static Texture getTexture(AssetDescriptor<Texture> asset) {

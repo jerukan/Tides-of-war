@@ -23,7 +23,7 @@ public class GoldmineUnit extends BaseUnit {
         type = Type.BUILDING;
 
         description = "Increases money production by $" + GOLDMINE_DEFAULT_PRODUCTION;
-        setTexture(Assets.getTexture(Assets.wall));
+        setTexture(Assets.getTexture(Assets.goldmine));
     }
 
     @Override

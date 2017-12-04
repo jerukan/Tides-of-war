@@ -23,7 +23,7 @@ public class FarmUnit extends BaseUnit {
         type = Type.BUILDING;
 
         description = "Increases unit upkeep by " + FARM_DEFAULT_INCREASE;
-        setTexture(Assets.getTexture(Assets.wall));
+        setTexture(Assets.getTexture(Assets.farm));
     }
 
     @Override
