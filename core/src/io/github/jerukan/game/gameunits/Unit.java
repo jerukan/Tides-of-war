@@ -53,7 +53,7 @@ public class Unit {
 
         this.position = position;
 
-        currentAction = new EmptyAction();
+        currentAction = new EmptyAction(unit);
 
         sprite = new Sprite(baseunit.getTexture());
         moveSprite(position);

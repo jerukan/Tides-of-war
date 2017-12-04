@@ -8,7 +8,7 @@ import io.github.jerukan.util.Position;
 public class DismissAction extends UnitAction {
 
     public DismissAction(BaseUnit baseUnit) {
-        this.baseUnit = baseUnit;
+        super(baseUnit);
         name = "dismiss";
         speedConsumption = 0;
         requiresTarget = false;

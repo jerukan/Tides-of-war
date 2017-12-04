@@ -74,12 +74,9 @@ public class UnitManager implements Manager {
     }
 
     public Unit unitFromPosition(Position pos) {
-        if(!pos.isValid()) {
-            return null;
-        }
         for(Unit unit : unitlist) {
             Position unitpos = unit.getPosition();
-            if(unitpos.equals(new Position(pos.getPos()))) {
+            if(unitpos.equals(pos.getPos())) {
                 return unit;
             }
         }

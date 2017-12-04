@@ -15,10 +15,8 @@ public abstract class UnitAction {
 
     /** Constructs an action using stats from a base unit
      * Can be restricted to a single unit and such */
-    public UnitAction() {
-        name = "action";
-        speedConsumption = 0;
-        requiresTarget = false;
+    public UnitAction(BaseUnit baseUnit) {
+        this.baseUnit = baseUnit;
     }
 
     /** Action without a target

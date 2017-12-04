@@ -27,18 +27,28 @@ public class Position {
         y = pos[1];
     }
 
+    /** Basically clones another position
+     * @param pos the other position */
     public Position(Position pos) {
         x = pos.getX();
         y = pos.getY();
     }
 
     /** @return (x, y) */
+    @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
     }
 
     public boolean equals(Position pos) {
         return pos.getX() == x && pos.getY() == y;
+    }
+
+    public boolean equals(int[] pos) {
+        if(pos.length != 2) {
+            throw new IllegalArgumentException("A position only has two numbers");
+        }
+        return pos[0] == x && pos[1] == y;
     }
 
     public boolean isValid() {

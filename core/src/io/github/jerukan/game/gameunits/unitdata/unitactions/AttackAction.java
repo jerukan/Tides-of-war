@@ -9,7 +9,7 @@ import io.github.jerukan.util.Util;
 public class AttackAction extends UnitAction {
 
     public AttackAction(BaseUnit baseUnit) {
-        this.baseUnit = baseUnit;
+        super(baseUnit);
         name = "attack";
         speedConsumption = 1;
         requiresTarget = true;

@@ -9,9 +9,9 @@ import io.github.jerukan.util.Util;
 public class MoveAction extends UnitAction {
 
     public MoveAction(BaseUnit baseUnit) {
-        this.baseUnit = baseUnit;
+        super(baseUnit);
         name = "move";
-        //speed is modified based on distance traveled
+        speedConsumption = 0;   //speed is modified based on distance traveled
         requiresTarget = true;
     }
 

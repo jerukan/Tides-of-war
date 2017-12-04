@@ -1,15 +1,12 @@
 package io.github.jerukan.game.board;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
-import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
-import io.github.jerukan.util.Util;
 import io.github.jerukan.util.heightmaps.DiamondSquare;
 import io.github.jerukan.util.heightmaps.Perlin;
 
