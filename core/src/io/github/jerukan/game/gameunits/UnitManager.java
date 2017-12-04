@@ -44,7 +44,6 @@ public class UnitManager implements Manager {
             setSelectedToLast();
             getSelectedUnit().onCreation();
             getSelectedUnit().setCurrentSpeed(0);
-            generateUnitMoves();
             GameState.instance.boardManager.updateAvailableBuildPositions();
 
             GameState.instance.getCurrentPlayer().setMoney(GameState.instance.getCurrentPlayer().getMoney() - baseUnit.baseCost);
@@ -146,13 +145,6 @@ public class UnitManager implements Manager {
         unitlist.clear();
     }
 
-    /** Also generates attacks, I just didn't feel like putting that in the name */
-    public void generateUnitMoves() {
-        for(Unit unit : unitlist) {
-            unit.generateMovesAndAttacks();
-        }
-    }
-
     @Override
     public void init() {
         clearUnits();
@@ -160,7 +152,6 @@ public class UnitManager implements Manager {
 
     @Override
     public void update() {
-        generateUnitMoves();
     }
 
     public ArrayList<Unit> getUnitlist() {

@@ -3,7 +3,6 @@ package io.github.jerukan.game.board;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import io.github.jerukan.game.BoardCamera;
@@ -92,7 +91,7 @@ public class BoardRenderer implements Renderer {
 
             // highlighting moves
             if(dude != null && dude != GameState.instance.unitManager.getSelectedUnit()) {
-                highlightPositions(dude.getAvailableMoves(), Colors.ATTACK_TILE_COLOR);
+                highlightPositions(dude.getAvailableTargets(), Colors.ATTACK_TILE_COLOR);
             }
         }
 
@@ -101,10 +100,10 @@ public class BoardRenderer implements Renderer {
                 UnitAction act = GameState.instance.unitManager.getSelectedUnit().getCurrentAction();
                 if(act.requiresTarget) {
                     if(act.getName().equals("move")) {
-                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableMoves(), Colors.MOVE_TILE_COLOR);
+                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableTargets(), Colors.MOVE_TILE_COLOR);
                     }
                     else if(act.getName().equals("attack")) {
-                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableAttacks(), Colors.ATTACK_TILE_COLOR);
+                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableTargets(), Colors.ATTACK_TILE_COLOR);
                     }
                 }
             }

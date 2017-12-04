@@ -19,6 +19,9 @@ public class UnitActionButton extends TextButton {
                 if(self.hasSufficientSpeed(action.getSpeedConsumption())) {
                     if (action.requiresTarget) {
                         self.setCurrentAction(action);
+                        action.generateTargets(self);
+                        self.setAvailableTargets(action.getAvailableTargets());
+                        self.setTargetSpeedConsumptions(action.getTargetSpeedConsumptions());
                         GameState.instance.boardManager.setSelectType(BoardManager.SelectType.ACTION);
                     } else {
                         action.execute(self);

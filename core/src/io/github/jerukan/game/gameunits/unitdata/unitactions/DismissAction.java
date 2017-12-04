@@ -5,6 +5,8 @@ import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.util.Position;
 
+import java.util.ArrayList;
+
 public class DismissAction extends UnitAction {
 
     public DismissAction(BaseUnit baseUnit) {
@@ -21,6 +23,16 @@ public class DismissAction extends UnitAction {
 
     @Override
     public void execute(Unit self, Position target) {
+
+    }
+
+    @Override
+    public void getTarget(Unit self, Position startpos, Position checkedpos, ArrayList<Position> moves, ArrayList<Integer> moveConsump, int aggregateConsump, int movesleft) {
+
+    }
+
+    @Override
+    public void generateTargets(Unit self) {
 
     }
 }
