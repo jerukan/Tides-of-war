@@ -32,12 +32,6 @@ public class UnitManager implements Manager {
         }
     }
 
-    public void addUnit(Unit unit) {
-        if(positionAvailable(unit.getPosition())) {
-            unitlist.add(unit);
-        }
-    }
-
     /** kill kill kill
      * @param unit this dude is dunzo */
     public void removeUnit(Unit unit) {
