@@ -62,11 +62,13 @@ public class InfoDisplayMenu extends Menu {
                 + currentplayer.getUnitCap());
 
         if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()) != null) {
-            //lmao
             Unit u = GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition());
-            unitInfo.setText("Unit: " + u.baseunit.name + "\nOwner: " + u.getOwner().name
+            unitInfo.setText("Unit: " + u.baseunit.name
+                    + "\nOwner: " + u.getOwner().name
                     + "\nHealth: " + u.getCurrentHealth() + "/" + u.baseunit.baseHealth
                     + "\nSpeed: " + u.getCurrentSpeed() + "/" + u.baseunit.baseSpeed
+                    + "\nAttack: " + u.getCurrentAttack()
+                    + "\nType: " + u.baseunit.type
                     + "\n" + u.baseunit.description);
         }
         else {

@@ -24,10 +24,8 @@ public class MoveAction extends UnitAction {
 
     @Override
     public void execute(Unit self, Position target) {
-        //generateTargets(self);
         if(target.existsInArray(availableTargets)) {
             if(GameState.instance.unitManager.positionAvailable(target)) {
-                //Position prev = new Position(self.getPosition());
                 int speedconsump = 0;
                 //checks the corresponding speed the tile will consume
                 for(int i = 0; i < self.getAvailableTargets().size(); i++) {
