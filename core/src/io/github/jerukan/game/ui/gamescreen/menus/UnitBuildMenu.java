@@ -1,5 +1,6 @@
 package io.github.jerukan.game.ui.gamescreen.menus;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
@@ -12,26 +13,42 @@ import io.github.jerukan.util.NamedFlag;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 
+import java.util.ArrayList;
+
 /** Menu that appears when a player is selecting a unit to build */
 
 public class UnitBuildMenu extends ButtonGroup {
 
     private Position currentPos;
+    private ArrayList<UnitBuildButton> unitButtons;
 
     public UnitBuildMenu(NamedFlag[] flags) {
         super(flags);
         currentPos = new Position();
         table.align(Align.bottomLeft);
+        unitButtons = new ArrayList<>();
+        for(BaseUnit unit : UnitRegistry.unitList) {
+            unitButtons.add(new UnitBuildButton(unit, flagFromArray("build")));
+        }
         resetTable();
     }
 
     public void resetTable() {
         table.clear();
-        for(BaseUnit unit : UnitRegistry.unitList) {
-            if(unit._canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
-                table.add(new UnitBuildButton(unit, flagFromArray("build"))).pad(5).row();
+        for(UnitBuildButton button : unitButtons) {
+            if(button.getBaseUnit()._canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
+                table.add(button).pad(5).row();
             }
         }
+    }
+
+    public UnitBuildButton getHoveredButton() {
+        for(UnitBuildButton button : unitButtons) {
+            if(button.isHovered()) {
+                return button;
+            }
+        }
+        return null;
     }
 
     @Override

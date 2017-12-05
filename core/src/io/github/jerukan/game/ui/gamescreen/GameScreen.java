@@ -13,6 +13,7 @@ public class GameScreen extends Screen {
     private UnitActionMenu unitActionMenu;
 
     private InfoDisplayMenu infoDisplayMenu;
+    private BuildInfoMenu buildInfoMenu;
 
     private EndTurnMenu endTurnMenu;
 
@@ -34,7 +35,9 @@ public class GameScreen extends Screen {
 
         endTurnMenu = new EndTurnMenu();
 
-        addMenus(tileSelectMenu, unitBuildMenu, unitActionMenu, infoDisplayMenu, endTurnMenu);
+        buildInfoMenu = new BuildInfoMenu(unitBuildMenu);
+
+        addMenus(tileSelectMenu, unitBuildMenu, unitActionMenu, infoDisplayMenu, endTurnMenu, buildInfoMenu);
     }
 
     @Override
@@ -44,6 +47,7 @@ public class GameScreen extends Screen {
         unitActionMenu.getTable().setVisible(false);
         infoDisplayMenu.getTable().setVisible(true);
         endTurnMenu.getTable().setVisible(true);
+        buildInfoMenu.getTable().setVisible(true);
     }
 
     @Override
