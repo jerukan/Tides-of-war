@@ -1,6 +1,5 @@
 package io.github.jerukan.game.ui.gamescreen.menus;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;

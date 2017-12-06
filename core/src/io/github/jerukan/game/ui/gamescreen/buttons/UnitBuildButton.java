@@ -1,5 +1,6 @@
 package io.github.jerukan.game.ui.gamescreen.buttons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -37,7 +38,7 @@ public class UnitBuildButton extends TextButton {
     }
 
     public boolean isHovered() {
-        return hovered;
+        return isOver();
     }
 
     public BaseUnit getBaseUnit() {
