@@ -1,18 +1,17 @@
 package io.github.jerukan.game.gameunits.unitdata;
 
 import com.badlogic.gdx.graphics.Texture;
+import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
-import io.github.jerukan.game.gameunits.unitdata.unitactions.AttackAction;
-import io.github.jerukan.game.gameunits.unitdata.unitactions.DismissAction;
-import io.github.jerukan.game.gameunits.unitdata.unitactions.MoveAction;
-import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
+import io.github.jerukan.game.gameunits.UnitRegistry;
+import io.github.jerukan.game.gameunits.unitdata.unitactions.*;
 
 /** All the units that don't have anything very special to them */
 
 public class BasicUnit extends BaseUnit {
 
-    public BasicUnit(String name, int health, int attack, int speed, int range, int cost, Type type, String description, Texture texture) {
+    public BasicUnit(String name, int health, int attack, int speed, int range, int cost, BaseUnit requiredUnit, Type type, String description, Texture texture) {
         this.name = name;
         baseHealth = health;
         baseAttack = attack;
@@ -20,6 +19,8 @@ public class BasicUnit extends BaseUnit {
         baseRange = range;
 
         baseCost = cost;
+
+        this.requiredUnit = requiredUnit;
 
         this.type = type;
 
@@ -29,9 +30,13 @@ public class BasicUnit extends BaseUnit {
             actions = new UnitAction[]{new MoveAction(this), new AttackAction(this), new DismissAction(this)};
             baseUpkeep = 1;
         }
-        if(this.type == Type.BUILDING) {
+        else if(this.type == Type.BUILDING) {
             actions = new UnitAction[]{new DismissAction(this)};
             baseUpkeep = 0;
+        }
+        else if(this.type == Type.FLYING) {
+            actions = new UnitAction[]{new MoveFlyAction(this), new AttackAction(this), new DismissAction(this)};
+            baseUpkeep = 1;
         }
 
         setTexture(texture);
@@ -39,7 +44,7 @@ public class BasicUnit extends BaseUnit {
 
     @Override
     public boolean canBuild(Player owner) {
-        return true;
+        return requiredUnit == null || GameState.instance.unitManager.playerHasUnit(owner, requiredUnit.id);
     }
 
     @Override

@@ -99,7 +99,7 @@ public class BoardRenderer implements Renderer {
             if(boardManager.getSelectType() == BoardManager.SelectType.ACTION) {
                 UnitAction act = GameState.instance.unitManager.getSelectedUnit().getCurrentAction();
                 if(act.requiresTarget) {
-                    if(act.getName().equals("move")) {
+                    if(act.getName().equals("move") || act.getName().equals("fly")) {
                         highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableTargets(), Colors.MOVE_TILE_COLOR);
                     }
                     else if(act.getName().equals("attack")) {

@@ -36,6 +36,8 @@ public abstract class BaseUnit {
 
     public String description;
 
+    public BaseUnit requiredUnit = null;
+
     private Texture texture;
 
     /** Creates a reference unit containing stats of the unit and actions it can perform
@@ -115,6 +117,6 @@ public abstract class BaseUnit {
     }
 
     public enum Type {
-        BUILDING, SOLDIER
+        BUILDING, SOLDIER, FLYING
     }
 }
