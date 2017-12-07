@@ -114,6 +114,11 @@ public class BoardRenderer implements Renderer {
     }
 
     @Override
+    public void render(Batch batch, float stateTime) {
+
+    }
+
+    @Override
     public void init() {
         highlighter.setProjectionMatrix(camera.getCamera().combined);
     }
