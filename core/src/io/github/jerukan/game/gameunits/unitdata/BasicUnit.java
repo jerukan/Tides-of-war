@@ -27,9 +27,11 @@ public class BasicUnit extends BaseUnit {
 
         if(this.type == Type.SOLDIER) {
             actions = new UnitAction[]{new MoveAction(this), new AttackAction(this), new DismissAction(this)};
+            baseUpkeep = 1;
         }
         if(this.type == Type.BUILDING) {
             actions = new UnitAction[]{new DismissAction(this)};
+            baseUpkeep = 0;
         }
 
         setTexture(texture);
