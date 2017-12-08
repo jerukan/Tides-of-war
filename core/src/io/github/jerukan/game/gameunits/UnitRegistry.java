@@ -52,10 +52,8 @@ public class UnitRegistry {
     private static void validateUnits() {
         for(BaseUnit unit : unitList) {
             for(BaseUnit other : unitList) {
-                if(!unit.equals(other)) {
-                    if(unit.name.equals(other.name)) {
-                        throw new IllegalArgumentException("Two or more units of name \"" + unit.name + "\" found");
-                    }
+                if(!unit.equals(other) && unit.name.equals(other.name)) {
+                    throw new IllegalArgumentException("Two or more units of name \"" + unit.name + "\" found");
                 }
             }
         }
