@@ -20,8 +20,6 @@ public class Assets {
     public static final AssetDescriptor<Texture> hill1 = new AssetDescriptor<>("tiles/hill_tile1.png", Texture.class);
     public static final AssetDescriptor<Texture> highland1 = new AssetDescriptor<>("tiles/highland_tile1.png", Texture.class);
     public static final AssetDescriptor<Texture> mountain1 = new AssetDescriptor<>("tiles/mountain_tile1.png", Texture.class);
-    public static final AssetDescriptor<Texture> blimpWorkshop = new AssetDescriptor<Texture>("units/blimpworkshop.png", Texture.class);
-    public static final AssetDescriptor<Texture> blimp = new AssetDescriptor<Texture>("units/blimp.png", Texture.class);
 
     public static final AssetDescriptor<Texture> spearman = new AssetDescriptor<>("units/spearman.png", Texture.class);
     public static final AssetDescriptor<Texture> footman = new AssetDescriptor<>("units/footman_anim.png", Texture.class);
@@ -31,6 +29,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> armory = new AssetDescriptor<>("units/armory.png", Texture.class);
     public static final AssetDescriptor<Texture> goldmine = new AssetDescriptor<>("units/goldmine.png", Texture.class);
     public static final AssetDescriptor<Texture> farm = new AssetDescriptor<>("units/farm.png", Texture.class);
+    public static final AssetDescriptor<Texture> blimpWorkshop = new AssetDescriptor<Texture>("units/blimpworkshop.png", Texture.class);
+    public static final AssetDescriptor<Texture> blimp = new AssetDescriptor<Texture>("units/blimp_anim.png", Texture.class);
 
     public static final Skin uiskin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
