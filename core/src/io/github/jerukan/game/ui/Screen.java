@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public abstract class Screen {
 
     private Stage stage;
-    Menu[] menus;
+    private Menu[] menus;
 
     /** Classes that extend Screen have their buttons and tables initialized in the constructor
      * @param stage retrieved from UIRenderer */

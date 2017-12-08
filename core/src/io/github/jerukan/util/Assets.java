@@ -20,6 +20,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> hill1 = new AssetDescriptor<>("tiles/hill_tile1.png", Texture.class);
     public static final AssetDescriptor<Texture> highland1 = new AssetDescriptor<>("tiles/highland_tile1.png", Texture.class);
     public static final AssetDescriptor<Texture> mountain1 = new AssetDescriptor<>("tiles/mountain_tile1.png", Texture.class);
+    public static final AssetDescriptor<Texture> blimpWorkshop = new AssetDescriptor<Texture>("units/blimpworkshop.png", Texture.class);
+    public static final AssetDescriptor<Texture> blimp = new AssetDescriptor<Texture>("units/blimp.png", Texture.class);
 
     public static final AssetDescriptor<Texture> spearman = new AssetDescriptor<>("units/spearman.png", Texture.class);
     public static final AssetDescriptor<Texture> footman = new AssetDescriptor<>("units/footman_anim.png", Texture.class);
@@ -47,6 +49,8 @@ public class Assets {
         assetManager.load(armory);
         assetManager.load(goldmine);
         assetManager.load(farm);
+        assetManager.load(blimp);
+        assetManager.load(blimpWorkshop);
     }
 
     public static Texture getTexture(AssetDescriptor<Texture> asset) {

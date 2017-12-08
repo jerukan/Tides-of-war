@@ -32,16 +32,16 @@ public class BoardRenderer implements Renderer {
         this.camera = camera;
     }
 
-    public void highlightPosition(Position position, Color color) {
-        highlighter.set(ShapeRenderer.ShapeType.Filled);
+    public void highlightPosition(Position position, Color color, ShapeRenderer.ShapeType shapeType) {
+        highlighter.set(shapeType);
         highlighter.setColor(color);
         if(position.isValid()) {
             highlighter.rect(boardManager.getBoard()[position.getX()][position.getY()].getSprite().getX(), boardManager.getBoard()[position.getX()][position.getY()].getSprite().getY(), Constants.TILE_SIZE, Constants.TILE_SIZE);
         }
     }
 
-    public void highlightPositions(ArrayList<Position> positions, Color color) {
-        highlighter.set(ShapeRenderer.ShapeType.Filled);
+    public void highlightPositions(ArrayList<Position> positions, Color color, ShapeRenderer.ShapeType shapeType) {
+        highlighter.set(shapeType);
         highlighter.setColor(color);
         for(Position pos : positions) {
             if(pos.isValid()) {
@@ -70,13 +70,13 @@ public class BoardRenderer implements Renderer {
         highlighter.begin();
 
         //highlight the selected position
-        highlightPosition(boardManager.getSelectedPosition(), Colors.SELECTED_TILE_COLOR);
+        highlightPosition(boardManager.getSelectedPosition(), Colors.SELECTED_TILE_COLOR, ShapeRenderer.ShapeType.Filled);
 
         for(Unit u : GameState.instance.unitManager.getUnitlist()) {
-            highlightPosition(u.getPosition(), Util.colorNewAlpha(u.getOwner().color, 0.8f));
+            highlightPosition(u.getPosition(), Util.colorNewAlpha(u.getOwner().color, 0.8f), ShapeRenderer.ShapeType.Filled);
         }
 
-        highlightPositions(boardManager.getAvailableBuildPositions(), Colors.BUILD_POSITION_COLOR);
+        highlightPositions(boardManager.getAvailableBuildPositions(), Colors.BUILD_POSITION_COLOR, ShapeRenderer.ShapeType.Filled);
 
         float mouseposboardx = camera.getCamera().zoom * (mousex - camera.camOriginX) + camera.getCamera().position.x;
         float mouseposboardy = camera.getCamera().zoom * (Gdx.graphics.getHeight() - mousey - camera.camOriginY) + camera.getCamera().position.y;
@@ -86,12 +86,12 @@ public class BoardRenderer implements Renderer {
         boardManager.setHoveredPosition(new Position(selectx, selecty));
 
         if(boardManager.getHoveredPosition().isValid()) {
-            highlightPosition(boardManager.getHoveredPosition(), Colors.HOVERED_TILE_COLOR);
+            highlightPosition(boardManager.getHoveredPosition(), Colors.HOVERED_TILE_COLOR, ShapeRenderer.ShapeType.Line);
             Unit dude = GameState.instance.unitManager.unitFromPosition(boardManager.getHoveredPosition());
 
             // highlighting moves
             if(dude != null && dude != GameState.instance.unitManager.getSelectedUnit()) {
-                highlightPositions(dude.getAvailableTargets(), Colors.ATTACK_TILE_COLOR);
+                highlightPositions(dude.getAvailableTargets(), Colors.ATTACK_TILE_COLOR, ShapeRenderer.ShapeType.Filled);
             }
         }
 
@@ -99,11 +99,11 @@ public class BoardRenderer implements Renderer {
             if(boardManager.getSelectType() == BoardManager.SelectType.ACTION) {
                 UnitAction act = GameState.instance.unitManager.getSelectedUnit().getCurrentAction();
                 if(act.requiresTarget) {
-                    if(act.getName().equals("move")) {
-                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableTargets(), Colors.MOVE_TILE_COLOR);
+                    if(act.getName().equals("move") || act.getName().equals("fly")) {
+                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableTargets(), Colors.MOVE_TILE_COLOR, ShapeRenderer.ShapeType.Filled);
                     }
                     else if(act.getName().equals("attack")) {
-                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableTargets(), Colors.ATTACK_TILE_COLOR);
+                        highlightPositions(GameState.instance.unitManager.getSelectedUnit().getAvailableTargets(), Colors.ATTACK_TILE_COLOR, ShapeRenderer.ShapeType.Filled);
                     }
                 }
             }
