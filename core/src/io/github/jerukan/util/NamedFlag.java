@@ -15,7 +15,7 @@ public class NamedFlag {
     }
 
     public NamedFlag(String name, boolean defaultState) {
-        this.name = name;
+        this.name = name.trim();
         this.defaultState = defaultState;
         state = this.defaultState;
     }

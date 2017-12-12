@@ -17,7 +17,7 @@ public class Main extends Game {
 
 	@Override
 	public void create () {
-        //--------------------BULLSHIT START-------------------------------//
+        //--------------------RANDOM SHIT START-------------------------------//
         System.out.println("+--------------+\nenter player 1's name");
         String p1 = in.nextLine();
         System.out.println("enter player2's name");
@@ -29,7 +29,7 @@ public class Main extends Game {
                 "You will see options pop up, so click one of the buttons\n" +
                 "Take into account your money and unit upkeep\n" +
                 "Congratulations you now know the basics\n");
-        //--------------NOT BULLSHIT ANYMORE----------------------------//
+        //--------------------RANDOM SHIT END----------------------------//
 		Assets.load();
 		Assets.assetManager.finishLoading();
 		UnitRegistry.init();
