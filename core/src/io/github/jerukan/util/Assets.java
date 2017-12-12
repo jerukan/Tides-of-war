@@ -21,12 +21,12 @@ public class Assets {
     public static final AssetDescriptor<Texture> highland1 = new AssetDescriptor<>("tiles/highland_tile1.png", Texture.class);
     public static final AssetDescriptor<Texture> mountain1 = new AssetDescriptor<>("tiles/mountain_tile1.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> spearman = new AssetDescriptor<>("units/spearman.png", Texture.class);
+    public static final AssetDescriptor<Texture> spearman = new AssetDescriptor<>("units/spearman_anim.png", Texture.class);
     public static final AssetDescriptor<Texture> footman = new AssetDescriptor<>("units/footman_anim.png", Texture.class);
-    public static final AssetDescriptor<Texture> archer = new AssetDescriptor<>("units/archer.png", Texture.class);
+    public static final AssetDescriptor<Texture> archer = new AssetDescriptor<>("units/archer_anim.png", Texture.class);
     public static final AssetDescriptor<Texture> wall = new AssetDescriptor<>("units/wall.png", Texture.class);
-    public static final AssetDescriptor<Texture> village = new AssetDescriptor<>("units/village.png", Texture.class);
-    public static final AssetDescriptor<Texture> armory = new AssetDescriptor<>("units/armory.png", Texture.class);
+    public static final AssetDescriptor<Texture> village = new AssetDescriptor<>("units/village_anim.png", Texture.class);
+    public static final AssetDescriptor<Texture> armory = new AssetDescriptor<>("units/armory_anim.png", Texture.class);
     public static final AssetDescriptor<Texture> goldmine = new AssetDescriptor<>("units/goldmine.png", Texture.class);
     public static final AssetDescriptor<Texture> farm = new AssetDescriptor<>("units/farm.png", Texture.class);
     public static final AssetDescriptor<Texture> blimpWorkshop = new AssetDescriptor<Texture>("units/blimpworkshop.png", Texture.class);
@@ -57,15 +57,23 @@ public class Assets {
         return assetManager.get(asset);
     }
 
-    public static Animation<TextureRegion> getAnimation(Texture texture, int tileWidth, int tileHeight, float frameDuration) {
+    public static Animation<TextureRegion> getAnimation(Texture texture, int tileWidth, int tileHeight, float frameDuration, boolean odd) {
         int frame_cols = texture.getHeight() / tileWidth;
         int frame_rows = texture.getWidth() / tileHeight;
         TextureRegion[][] tmp = TextureRegion.split(texture, tileWidth, tileHeight);
-        TextureRegion[] walkFrames = new TextureRegion[frame_cols * frame_rows];
+        TextureRegion[] walkFrames;
+        if(odd) {
+            walkFrames = new TextureRegion[frame_cols * frame_rows - 1];
+        }
+        else {
+            walkFrames = new TextureRegion[frame_cols * frame_rows];
+        }
         int index = 0;
         for (int i = 0; i < frame_cols; i++) {
             for (int j = 0; j < frame_rows; j++) {
-                walkFrames[index++] = tmp[i][j];
+                if(index < walkFrames.length) {
+                    walkFrames[index++] = tmp[i][j];
+                }
             }
         }
         return new Animation<TextureRegion>(frameDuration, walkFrames);

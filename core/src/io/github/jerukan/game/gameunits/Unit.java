@@ -60,7 +60,7 @@ public class Unit {
 
         sprite = new Sprite(baseunit.getTexture());
         moveSprite(position);
-        animation = Assets.getAnimation(baseunit.getTexture(), Assets.UNIT_PIXEL_SIZE, Assets.UNIT_PIXEL_SIZE, 0.8f);
+        animation = Assets.getAnimation(baseunit.getTexture(), Assets.UNIT_PIXEL_SIZE, Assets.UNIT_PIXEL_SIZE, 0.8f, unit.oddAnimation);
 
         availableTargets = new ArrayList<>();
         targetSpeedConsumptions = new ArrayList<>();

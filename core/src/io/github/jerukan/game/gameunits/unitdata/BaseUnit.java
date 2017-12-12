@@ -8,6 +8,7 @@ import io.github.jerukan.game.gameunits.unitdata.unitactions.AttackAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.DismissAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.MoveAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
+import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 
@@ -39,6 +40,7 @@ public abstract class BaseUnit {
     public BaseUnit requiredUnit = null;
 
     private Texture texture;
+    public boolean oddAnimation;
 
     /** Creates a reference unit containing stats of the unit and actions it can perform
      * These are default stats */
@@ -57,6 +59,9 @@ public abstract class BaseUnit {
         description = "This is a generic unit without any love put into it";
 
         type = Type.SOLDIER;
+
+        setTexture(Assets.getTexture(Assets.wall));
+        oddAnimation = false;
     }
 
     /** Call this in the constructor of the custom unit
