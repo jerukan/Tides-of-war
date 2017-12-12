@@ -9,14 +9,31 @@ import io.github.jerukan.game.gameunits.UnitRegistry;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Colors;
 
+import java.util.Scanner;
+
 public class Main extends Game {
+
+	Scanner in = new Scanner(System.in);
 
 	@Override
 	public void create () {
 		Assets.load();
 		Assets.assetManager.finishLoading();
 		UnitRegistry.init();
-		GameState.instance = new GameState();
+
+		System.out.println("+--------------+\nenter player 1's name");
+		String p1 = in.nextLine();
+		System.out.println("enter player2's name");
+		String p2 = in.nextLine();
+		System.out.println("\nBASIC INSTRUCTIONS\n" +
+                "You will see a nice board in front of yon\n" +
+                "This is a turn based game\n" +
+                "To do anything, right click a tile on the board\n" +
+                "You will see options pop up, so click one of the buttons\n" +
+                "Take into account your money and unit upkeep" +
+                "Congratulations you now know the basics");
+
+		GameState.instance = new GameState(p1 , p2);
 		GameState.instance.init();
 		WorldRenderer.init();
 		GameState.instance.reset();

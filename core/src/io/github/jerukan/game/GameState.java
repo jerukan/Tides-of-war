@@ -20,12 +20,12 @@ public class GameState implements Manager {
     public Player[] players;
     public int currentPlayerNum;
 
-    public GameState() {
+    public GameState(String buddyboy1, String buddyboy2) {
         boardManager = new BoardManager();
         unitManager = new UnitManager();
 
-        player1 = new Player("boi", new Color(0.2f, 0.5f, 0.3f, 1f));
-        player2 = new Player("dood", new Color(0.5f, 0.2f, 0.9f, 1f));
+        player1 = new Player(buddyboy1, new Color(0.2f, 0.5f, 0.3f, 1f));
+        player2 = new Player(buddyboy2, new Color(0.5f, 0.2f, 0.9f, 1f));
         players = new Player[]{player1, player2};
         currentPlayerNum = 0;
     }
