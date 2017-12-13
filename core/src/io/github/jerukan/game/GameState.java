@@ -20,13 +20,15 @@ public class GameState implements Manager {
     public Player[] players;
     public int currentPlayerNum;
 
-    public GameState(String buddyboy1, String buddyboy2) {
+    public GameState(String ... buddyboys) {
         boardManager = new BoardManager();
         unitManager = new UnitManager();
 
-        player1 = new Player(buddyboy1, new Color(0.2f, 0.5f, 0.3f, 1f));
-        player2 = new Player(buddyboy2, new Color(0.5f, 0.2f, 0.9f, 1f));
-        players = new Player[]{player1, player2};
+        Player[] ppp = new Player[buddyboys.length];
+        for(int i = 0; i < buddyboys.length; i++) {
+            ppp[i] = new Player(buddyboys[i], new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), 1f));
+        }
+        players = ppp;
         currentPlayerNum = 0;
     }
 

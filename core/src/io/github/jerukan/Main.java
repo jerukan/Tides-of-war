@@ -18,10 +18,14 @@ public class Main extends Game {
 	@Override
 	public void create () {
         //--------------------RANDOM SHIT START-------------------------------//
-        System.out.println("+--------------+\nenter player 1's name");
-        String p1 = in.nextLine();
-        System.out.println("enter player2's name");
-        String p2 = in.nextLine();
+		System.out.println("How many players do you want?\n");
+		int numplayers = in.nextInt();
+		String[] dudes = new String[numplayers];
+		for(int i = 0; i < numplayers; i++) {
+            System.out.printf("+--------------+\nenter player %s's name\n", i + 1);
+            String p = in.next();
+            dudes[i] = p;
+        }
         System.out.println("\nBASIC INSTRUCTIONS\n" +
                 "You will see a nice board in front of yon\n" +
                 "This is a turn based game\n" +
@@ -33,7 +37,7 @@ public class Main extends Game {
 		Assets.load();
 		Assets.assetManager.finishLoading();
 		UnitRegistry.init();
-		GameState.instance = new GameState(p1 , p2);
+		GameState.instance = new GameState(dudes);
 		GameState.instance.init();
 		WorldRenderer.init();
 		GameState.instance.reset();
