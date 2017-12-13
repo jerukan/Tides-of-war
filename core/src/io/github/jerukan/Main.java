@@ -30,7 +30,9 @@ public class Main extends Game {
                 "You will see a nice board in front of yon\n" +
                 "This is a turn based game\n" +
                 "To do anything, right click a tile on the board\n" +
-                "You will see options pop up, so click one of the buttons\n" +
+                "You will see options pop up, so click one of the buttons\n\n" +
+                "The unit build buttons will have info pop up if you hold down on them\n" +
+                "Yes I know button hovering wasn't working properly so this is what you get\n\n" +
                 "Take into account your money and unit upkeep\n" +
                 "Congratulations you now know the basics\n");
         //--------------------RANDOM SHIT END----------------------------//
