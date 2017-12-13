@@ -13,17 +13,17 @@ public class UnitRegistry {
     private static int currentId = 0;
 
     public static BasicUnit footman = new BasicUnit("footman", 2, 1, 2, 1, 100,
-            null, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.footman));
+            null, BaseUnit.Type.SOLDIER, "Good ol\' reliable.", Assets.getTexture(Assets.footman), false);
     public static BasicUnit archer = new BasicUnit("archer", 1, 1, 2, 2, 100,
-            null, BaseUnit.Type.SOLDIER, "Masters of rushing, but die to a tap.", Assets.getTexture(Assets.archer));
+            null, BaseUnit.Type.SOLDIER, "Masters of rushing, but die to a tap.", Assets.getTexture(Assets.archer), false);
     public static BasicUnit armory = new BasicUnit("armory", 7, 0, 0, 0, 400,
-            null, BaseUnit.Type.BUILDING, "Allows the production of spearmen and shieldbearers", Assets.getTexture(Assets.armory));
+            null, BaseUnit.Type.BUILDING, "Allows the production of spearmen and shieldbearers", Assets.getTexture(Assets.armory), false);
     public static BasicUnit blimpWorkshop = new BasicUnit("blimp workshop", 6, 0, 0, 0, 400,
-            null, BaseUnit.Type.BUILDING, "Allows production of basic flying units", Assets.getTexture(Assets.blimpWorkshop));
+            null, BaseUnit.Type.BUILDING, "Allows production of basic flying units", Assets.getTexture(Assets.blimpWorkshop), false);
     public static BasicUnit spearman = new BasicUnit("spearman", 3, 2,  3, 1, 200,
-            armory, BaseUnit.Type.SOLDIER, "A reliable fast unit that may or may not be broken.", Assets.getTexture(Assets.spearman));
+            armory, BaseUnit.Type.SOLDIER, "A reliable fast unit that may or may not be broken.", Assets.getTexture(Assets.spearman), false);
     public static BasicUnit blimp = new BasicUnit("blimp", 3, 1,  3, 2, 300,
-            blimpWorkshop, BaseUnit.Type.FLYING, "A flying unit able to traverse terrain without penalty.", Assets.getTexture(Assets.blimp));
+            blimpWorkshop, BaseUnit.Type.FLYING, "A flying unit able to traverse terrain without penalty.", Assets.getTexture(Assets.blimp), false);
 
     public static VillageUnit village = new VillageUnit();
     public static GoldmineUnit goldmine = new GoldmineUnit();

@@ -23,6 +23,7 @@ public class VillageUnit extends BaseUnit {
 
         description = "This is your lifeline. Don\'t let it die.";
         setTexture(Assets.getTexture(Assets.village));
+        oddAnimation = true;
     }
 
     @Override

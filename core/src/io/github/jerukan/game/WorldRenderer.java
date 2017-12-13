@@ -17,6 +17,8 @@ public class WorldRenderer {
 
     public static SpriteBatch batch = new SpriteBatch();
 
+    public static float stateTime = 0;
+
     public static OrthographicCamera uiCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     public static BoardCamera boardCam = new BoardCamera(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -46,13 +48,14 @@ public class WorldRenderer {
     }
 
     public static void render() {
+        stateTime += Gdx.graphics.getDeltaTime();
         boardCam.update();
 
         batch.setProjectionMatrix(boardCam.getCamera().combined);
         uiRenderer.updateVisibility();
 
         boardRenderer.render(batch);
-        unitRenderer.render(batch);
+        unitRenderer.render(batch, stateTime);
         uiRenderer.render(batch);
     }
 

@@ -1,12 +1,15 @@
 package io.github.jerukan.game.gameunits;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.EmptyAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
+import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 
@@ -28,7 +31,9 @@ public class Unit {
 
     private UnitAction currentAction;
 
+    /** sprite is currently just for position... i guess */
     private Sprite sprite;
+    private Animation<TextureRegion> animation;
 
     private ArrayList<Position> availableTargets;
     private ArrayList<Integer> targetSpeedConsumptions;
@@ -55,13 +60,15 @@ public class Unit {
 
         sprite = new Sprite(baseunit.getTexture());
         moveSprite(position);
+        animation = Assets.getAnimation(baseunit.getTexture(), Assets.UNIT_PIXEL_SIZE, Assets.UNIT_PIXEL_SIZE, 0.8f, unit.oddAnimation);
 
         availableTargets = new ArrayList<>();
         targetSpeedConsumptions = new ArrayList<>();
     }
 
-    public void render(Batch batch) {
-        batch.draw(sprite.getTexture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+    public void render(Batch batch, float stateTime) {
+        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+        batch.draw(currentFrame, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
     public void moveSprite(Position position) {

@@ -11,7 +11,7 @@ import io.github.jerukan.game.gameunits.unitdata.unitactions.*;
 
 public class BasicUnit extends BaseUnit {
 
-    public BasicUnit(String name, int health, int attack, int speed, int range, int cost, BaseUnit requiredUnit, Type type, String description, Texture texture) {
+    public BasicUnit(String name, int health, int attack, int speed, int range, int cost, BaseUnit requiredUnit, Type type, String description, Texture texture, boolean oddAnim) {
         this.name = name;
         baseHealth = health;
         baseAttack = attack;
@@ -40,6 +40,7 @@ public class BasicUnit extends BaseUnit {
         }
 
         setTexture(texture);
+        oddAnimation = oddAnim;
     }
 
     @Override
