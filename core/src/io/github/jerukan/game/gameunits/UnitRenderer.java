@@ -23,9 +23,14 @@ public class UnitRenderer implements Renderer {
 
     @Override
     public void render(Batch batch) {
+
+    }
+
+    @Override
+    public void render(Batch batch, float stateTime) {
         batch.begin();
         for(Unit unit : unitManager.getUnitlist()) {
-            unit.render(batch);
+            unit.render(batch, stateTime);
         }
         batch.end();
     }
