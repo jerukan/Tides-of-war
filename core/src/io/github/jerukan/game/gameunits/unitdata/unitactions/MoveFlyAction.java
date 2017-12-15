@@ -25,7 +25,7 @@ public class MoveFlyAction extends UnitAction {
     @Override
     public void execute(Unit self, Position target) {
         if(target.existsInArray(availableTargets)) {
-            if(GameState.instance.unitManager.positionAvailable(target)) {
+            if(GameState.instance.unitState.positionAvailable(target)) {
                 self.setCurrentSpeed(self.getCurrentSpeed() - target.distanceToPosition(self.getPosition()));
                 self.setPosition(new Position(target));
                 self.moveSprite(target);

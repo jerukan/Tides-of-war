@@ -28,9 +28,9 @@ public class WorldRenderer {
 
     public static InputMultiplexer inputs = new InputMultiplexer();
 
-    public static BoardRenderer boardRenderer = new BoardRenderer(GameState.instance.boardManager, boardCam);
+    public static BoardRenderer boardRenderer = new BoardRenderer(GameState.instance.boardState, boardCam);
     public static UIRenderer uiRenderer = new UIRenderer(uiCam, uiStage);
-    public static UnitRenderer unitRenderer = new UnitRenderer(GameState.instance.unitManager);
+    public static UnitRenderer unitRenderer = new UnitRenderer(GameState.instance.unitState);
 
     public static void init() {
         inputs.addProcessor(uiRenderer.getStage());

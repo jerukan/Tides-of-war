@@ -33,7 +33,7 @@ public class VillageUnit extends BaseUnit {
 
     @Override
     public boolean canBuild(Player owner) {
-        return !GameState.instance.unitManager.playerHasUnit(owner, id);
+        return !GameState.instance.unitState.playerHasUnit(owner, id);
     }
 
     @Override

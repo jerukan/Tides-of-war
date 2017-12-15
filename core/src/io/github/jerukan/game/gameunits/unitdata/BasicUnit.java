@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
 import io.github.jerukan.game.gameunits.Unit;
-import io.github.jerukan.game.gameunits.UnitRegistry;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.*;
 
 /** All the units that don't have anything very special to them */
@@ -45,7 +44,7 @@ public class BasicUnit extends BaseUnit {
 
     @Override
     public boolean canBuild(Player owner) {
-        return requiredUnit == null || GameState.instance.unitManager.playerHasUnit(owner, requiredUnit.id);
+        return requiredUnit == null || GameState.instance.unitState.playerHasUnit(owner, requiredUnit.id);
     }
 
     @Override

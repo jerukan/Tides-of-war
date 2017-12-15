@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.board.BoardManager;
+import io.github.jerukan.game.board.BoardState;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.util.Assets;
@@ -22,12 +23,13 @@ public class UnitActionButton extends TextButton {
                         action.generateTargets(self);
                         self.setAvailableTargets(action.getAvailableTargets());
                         self.setTargetSpeedConsumptions(action.getTargetSpeedConsumptions());
-                        GameState.instance.boardManager.setSelectType(BoardManager.SelectType.ACTION);
+                        BoardManager.setSelectType(BoardManager.SelectType.ACTION);
                     } else {
                         action.execute(self);
                     }
                 }
                 GameState.instance.update();
+                BoardManager.updateAvailableBuildPositions();
             }
         });
     }

@@ -1,6 +1,7 @@
 package io.github.jerukan.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** Generic class for a typical x y position */
 public class Position {
@@ -128,7 +129,7 @@ public class Position {
         return Math.abs(x - other.getX()) + Math.abs(y - other.getY());
     }
 
-    public boolean existsInArray(ArrayList<Position> positions) {
+    public boolean existsInArray(List<Position> positions) {
         for(Position pos : positions) {
             if(equals(pos)) {
                 return true;

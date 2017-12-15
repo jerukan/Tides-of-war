@@ -3,6 +3,7 @@ package io.github.jerukan.game.ui.gamescreen.menus;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
+import io.github.jerukan.game.board.BoardManager;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
 import io.github.jerukan.game.ui.ButtonGroup;
@@ -35,14 +36,14 @@ public class UnitActionMenu extends ButtonGroup {
 
     @Override
     public void updateVisibility() {
-        if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
-            Unit selected = GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition());
+        if(BoardManager.getSelectedPosition().isValid()) {
+            Unit selected = GameState.instance.unitState.unitFromPosition(BoardManager.getSelectedPosition());
             if(selected != null && selected.getOwner() == GameState.instance.getCurrentPlayer()) {
                 if(actionButtons.size() == 0) {
-                    generateButtons(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()));
+                    generateButtons(GameState.instance.unitState.unitFromPosition(BoardManager.getSelectedPosition()));
                 }
                 WorldRenderer.boardCam.updateOffsets();
-                Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
+                Sprite s = GameState.instance.boardState.tileFromPosition(BoardManager.getSelectedPosition()).getSprite();
                 table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardCam.camOffsetX, s.getY() - WorldRenderer.boardCam.camOffsetY);
                 table.setVisible(true);
             } else {

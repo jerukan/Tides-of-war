@@ -1,6 +1,5 @@
 package io.github.jerukan.game.ui.gamescreen.buttons;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -22,7 +21,7 @@ public class UnitBuildButton extends TextButton {
         addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                GameState.instance.unitManager.buildUnit(baseUnit);
+                GameState.instance.unitState.buildUnit(baseUnit);
                 buildFlag.setState(false);
             }
 

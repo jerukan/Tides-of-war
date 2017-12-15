@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
+import io.github.jerukan.game.board.BoardManager;
 import io.github.jerukan.game.gameunits.UnitRegistry;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.game.ui.ButtonGroup;
@@ -35,7 +36,7 @@ public class UnitBuildMenu extends ButtonGroup {
     public void resetTable() {
         table.clear();
         for(UnitBuildButton button : unitButtons) {
-            if(button.getBaseUnit()._canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
+            if(button.getBaseUnit()._canBuild(BoardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
                 table.add(button).pad(5).row();
             }
         }
@@ -52,15 +53,15 @@ public class UnitBuildMenu extends ButtonGroup {
 
     @Override
     public void updateVisibility() {
-        if(!currentPos.equals(GameState.instance.boardManager.getSelectedPosition())) {
+        if(!currentPos.equals(BoardManager.getSelectedPosition())) {
             flagFromArray("build").setState(false);
-            currentPos.setPos(GameState.instance.boardManager.getSelectedPosition());
+            currentPos.setPos(BoardManager.getSelectedPosition());
         }
         if(flagFromArray("build").getState()) {
-            if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
-                if (GameState.instance.unitManager.positionAvailable(GameState.instance.boardManager.getSelectedPosition())) {
+            if(BoardManager.getSelectedPosition().isValid()) {
+                if (GameState.instance.unitState.positionAvailable(BoardManager.getSelectedPosition())) {
                     WorldRenderer.boardCam.updateOffsets();
-                    Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
+                    Sprite s = GameState.instance.boardState.tileFromPosition(BoardManager.getSelectedPosition()).getSprite();
                     table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardCam.camOffsetX, s.getY() - WorldRenderer.boardCam.camOffsetY);
                     table.setVisible(true);
                 }

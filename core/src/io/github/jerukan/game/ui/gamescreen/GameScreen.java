@@ -2,6 +2,7 @@ package io.github.jerukan.game.ui.gamescreen;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.github.jerukan.game.GameState;
+import io.github.jerukan.game.board.BoardManager;
 import io.github.jerukan.game.ui.Screen;
 import io.github.jerukan.game.ui.gamescreen.menus.*;
 import io.github.jerukan.util.NamedFlag;
@@ -54,7 +55,7 @@ public class GameScreen extends Screen {
     public void clearWindows() {
         building.setState(false);
         if(tileSelectMenu.getTable().isVisible() || unitBuildMenu.getTable().isVisible() || unitActionMenu.getTable().isVisible()) {
-            GameState.instance.boardManager.getSelectedPosition().reset();
+            BoardManager.getSelectedPosition().reset();
         }
         tileSelectMenu.getTable().setVisible(false);
         unitBuildMenu.getTable().setVisible(false);

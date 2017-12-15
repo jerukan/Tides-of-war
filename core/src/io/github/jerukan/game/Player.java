@@ -1,8 +1,6 @@
 package io.github.jerukan.game;
 
 import com.badlogic.gdx.graphics.Color;
-import io.github.jerukan.game.gameunits.Unit;
-import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.util.Constants;
 
 /** This will be you */
@@ -42,7 +40,7 @@ public class Player {
     }
 
     public boolean hasSufficientUpkeep(int cost) {
-        return GameState.instance.unitManager.totalUpkeepFromPlayer(this) + cost <= unitCap;
+        return GameState.instance.unitState.totalUpkeepFromPlayer(this) + cost <= unitCap;
     }
 
     public int getUnitCap() {

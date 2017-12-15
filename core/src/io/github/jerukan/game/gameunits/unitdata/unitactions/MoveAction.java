@@ -25,7 +25,7 @@ public class MoveAction extends UnitAction {
     @Override
     public void execute(Unit self, Position target) {
         if(target.existsInArray(availableTargets)) {
-            if(GameState.instance.unitManager.positionAvailable(target)) {
+            if(GameState.instance.unitState.positionAvailable(target)) {
                 int speedconsump = 0;
                 //checks the corresponding speed the tile will consume
                 for(int i = 0; i < self.getAvailableTargets().size(); i++) {
@@ -42,7 +42,7 @@ public class MoveAction extends UnitAction {
 
     @Override
     public void getTarget(Unit self, Position startpos, Position checkedpos, ArrayList<Position> moves, ArrayList<Integer> moveConsump, int aggregateConsump, int movesleft) {
-        int speedconsump = GameState.instance.boardManager.tileFromPosition(checkedpos).getSpeedConsump();
+        int speedconsump = GameState.instance.boardState.tileFromPosition(checkedpos).getSpeedConsump();
 
         if(!startpos.equals(checkedpos)) {
             if (movesleft < speedconsump) {
@@ -81,6 +81,5 @@ public class MoveAction extends UnitAction {
         availableTargets.clear();
         targetSpeedConsumptions.clear();
         getTarget(self, self.getPosition(), new Position(self.getPosition()), availableTargets, targetSpeedConsumptions, 0, self.getCurrentSpeed());
-        System.out.println(targetSpeedConsumptions);
     }
 }

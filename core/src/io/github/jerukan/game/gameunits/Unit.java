@@ -72,7 +72,7 @@ public class Unit {
     }
 
     public void moveSprite(Position position) {
-        Sprite tile = GameState.instance.boardManager.getBoard()[position.getX()][position.getY()].getSprite();
+        Sprite tile = GameState.instance.boardState.getBoard()[position.getX()][position.getY()].getSprite();
         sprite.setSize(Constants.UNIT_SIZE, Constants.UNIT_SIZE);
         float spriteoffset = (Constants.TILE_SIZE - Constants.UNIT_SIZE) / 2;
         sprite.setPosition(tile.getX() + spriteoffset, tile.getY() + spriteoffset);
