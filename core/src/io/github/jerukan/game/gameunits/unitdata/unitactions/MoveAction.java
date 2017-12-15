@@ -45,17 +45,18 @@ public class MoveAction extends UnitAction {
         int speedconsump = GameState.instance.boardManager.tileFromPosition(checkedpos).getSpeedConsump();
 
         if(!startpos.equals(checkedpos)) {
-            if (movesleft < speedconsump - 1) {
+            if (movesleft < speedconsump) {
                 return;
             }
+
+            aggregateConsump += speedconsump;
+            movesleft -= speedconsump;
 
             if (!checkedpos.existsInArray(moves)) {
                 moves.add(checkedpos);
                 moveConsump.add(aggregateConsump);
             }
         }
-        aggregateConsump += speedconsump;
-        movesleft -= speedconsump;
 
         if (checkedpos.getX() + 1 < Constants.BOARD_WIDTH) {
             Position newpos = new Position(checkedpos.getX() + 1, checkedpos.getY());
@@ -80,5 +81,6 @@ public class MoveAction extends UnitAction {
         availableTargets.clear();
         targetSpeedConsumptions.clear();
         getTarget(self, self.getPosition(), new Position(self.getPosition()), availableTargets, targetSpeedConsumptions, 0, self.getCurrentSpeed());
+        System.out.println(targetSpeedConsumptions);
     }
 }
