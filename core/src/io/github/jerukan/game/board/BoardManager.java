@@ -4,10 +4,11 @@ import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
-import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
 
 import java.util.*;
+
+/** Most client side stuff with the board is handled here */
 
 public class BoardManager {
 
