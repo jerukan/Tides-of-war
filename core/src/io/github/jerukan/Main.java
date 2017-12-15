@@ -18,7 +18,7 @@ public class Main extends Game {
 	@Override
 	public void create () {
         //--------------------RANDOM SHIT START-------------------------------//
-		System.out.println("How many players do you want?\n");
+		System.out.println("How many players do you want?");
 		int numplayers = in.nextInt();
 		String[] dudes = new String[numplayers];
 		for(int i = 0; i < numplayers; i++) {
