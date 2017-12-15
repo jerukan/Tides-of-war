@@ -1,0 +1,17 @@
+-------------------SUMMARY--------------------
+The most important class in the project is GameState, which holds all the players, game managers, and handles game logic.
+Inside the GameState is a BoardManager and UnitManager, two very important classes that stores the state of the game.
+GameState manages the overall game, passes player turns, and resets the state of the overall game.
+BoardManager store the state of the board and has all the Tiles which store good stuff. Each tile has a terrain
+and a corresponding height and sprite.
+UnitManager has all the existing units on the board. It can change the positions of the units and remove them
+from the game.
+The renderers are also pretty important for the game too.
+
+------------------SYNOPSIS----------------------
+- Difficulty: this is the biggest project I have done so far, and proved to be a challenge for me to code. There is still
+so much to code, like multiplayer and an actual good looking UI.
+- Fun: pretty cool and good. It was satisfying to see everything come together.
+- Final product evaluation: I am satisfied with the current product, though many more features could still be added.
+- What I learned: functional programming is cool and good
+- Anything good to have known?: not really
