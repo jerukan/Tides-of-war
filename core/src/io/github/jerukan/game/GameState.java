@@ -2,17 +2,18 @@ package io.github.jerukan.game;
 
 import com.badlogic.gdx.graphics.Color;
 import io.github.jerukan.game.board.BoardManager;
-import io.github.jerukan.game.gameunits.UnitManager;
+import io.github.jerukan.game.board.BoardState;
+import io.github.jerukan.game.gameunits.UnitState;
 
 /** Manages all the nitty gritty numbers and stuff of the game
  * Note to self: INDEPENDENT of the renderers */
 
-public class GameState implements Manager {
+public class GameState implements State {
 
     public static GameState instance;
 
-    public BoardManager boardManager;
-    public UnitManager unitManager;
+    public BoardState boardState;
+    public UnitState unitState;
 
     public Player player1;
     public Player player2;
@@ -21,8 +22,8 @@ public class GameState implements Manager {
     public int currentPlayerNum;
 
     public GameState() {
-        boardManager = new BoardManager();
-        unitManager = new UnitManager();
+        boardState = new BoardState();
+        unitState = new UnitState();
 
         player1 = new Player("boi", new Color(0.2f, 0.5f, 0.3f, 1f));
         player2 = new Player("dood", new Color(0.5f, 0.2f, 0.9f, 1f));
@@ -33,13 +34,13 @@ public class GameState implements Manager {
     @Override
     public void init() {
         verifyPlayers();
-        boardManager.init();
-        unitManager.init();
+        boardState.init();
+        unitState.init();
     }
 
     public void reset() {
-        boardManager.resetBoard();
-        unitManager.clearUnits();
+        boardState.resetBoard();
+        unitState.clearUnits();
         //to lazy to make it so that nothing happens on both player's first turns
         getCurrentPlayer().onNewTurn();
     }
@@ -49,15 +50,15 @@ public class GameState implements Manager {
     }
 
     public void passTurn() {
-        unitManager.onEndTurn();
+        unitState.onEndTurn();
         currentPlayerNum++;
         if(currentPlayerNum >= players.length) {
             currentPlayerNum = 0;
         }
-        boardManager.getSelectedPosition().reset();
-        unitManager.onNewTurn();
+        BoardManager.getSelectedPosition().reset();
+        unitState.onNewTurn();
         getCurrentPlayer().onNewTurn();
-        boardManager.updateAvailableBuildPositions();
+        BoardManager.updateAvailableBuildPositions();
         update();
     }
 
@@ -78,11 +79,11 @@ public class GameState implements Manager {
 
     @Override
     public void update() {
-        boardManager.update();
-        unitManager.update();
+        boardState.update();
+        unitState.update();
     }
 
     public void dispose() {
-        boardManager.dispose();
+        boardState.dispose();
     }
 }

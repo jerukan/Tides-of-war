@@ -5,7 +5,6 @@ import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
-import io.github.jerukan.util.Util;
 
 import java.util.ArrayList;
 
@@ -26,9 +25,9 @@ public class AttackAction extends UnitAction {
     @Override
     public void execute(Unit self, Position target) {
         if(target.existsInArray(availableTargets)) {
-            if(GameState.instance.unitManager.unitFromPosition(target) != null) {
-                if(GameState.instance.unitManager.unitFromPosition(target).getOwner() != self.getOwner()) {
-                    GameState.instance.unitManager.unitFromPosition(target).takeDamage(self.getCurrentAttack());
+            if(GameState.instance.unitState.unitFromPosition(target) != null) {
+                if(GameState.instance.unitState.unitFromPosition(target).getOwner() != self.getOwner()) {
+                    GameState.instance.unitState.unitFromPosition(target).takeDamage(self.getCurrentAttack());
                     self.setCurrentSpeed(self.getCurrentSpeed() - speedConsumption);
                 }
             }

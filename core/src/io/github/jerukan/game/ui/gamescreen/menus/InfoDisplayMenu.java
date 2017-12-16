@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
+import io.github.jerukan.game.board.BoardManager;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.GoldmineUnit;
 import io.github.jerukan.game.ui.Menu;
@@ -23,7 +24,7 @@ public class InfoDisplayMenu extends Menu {
     private Label unitInfo;
 
     public InfoDisplayMenu() {
-        int numofmines = GameState.instance.unitManager.unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> u.baseunit.name.equals("goldmine")).size();
+        int numofmines = GameState.instance.unitState.unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> u.baseunit.name.equals("goldmine")).size();
         tileInfo = new Label(BLANK_TILE_TEXT, Assets.uiskin, "default");
         currentPlayerInfo = new Label("$" + GameState.instance.getCurrentPlayer().getMoney() + " + $"
                 + (numofmines * GoldmineUnit.GOLDMINE_DEFAULT_PRODUCTION + Constants.DEFAULT_MONEY_PRODUCTION), Assets.uiskin, "default");
@@ -45,11 +46,11 @@ public class InfoDisplayMenu extends Menu {
     public void updateVisibility() {
         //PUT SOMEWHERE ELSE LATER
         Player currentplayer = GameState.instance.getCurrentPlayer();
-        int numofmines = GameState.instance.unitManager.unitsFromPlayer(currentplayer, (Unit u) -> u.baseunit.name.equals("goldmine")).size();
-        if(GameState.instance.boardManager.getHoveredPosition().isValid()) {
-            tileInfo.setText("Hovered tile: " + GameState.instance.boardManager.getHoveredPosition().toString()
-                    + "\nTerrain: " + GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getHoveredPosition()).getTerrain().name
-                    + "\nSpeed needed: " + GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getHoveredPosition()).getTerrain().speedConsump);
+        int numofmines = GameState.instance.unitState.unitsFromPlayer(currentplayer, (Unit u) -> u.baseunit.name.equals("goldmine")).size();
+        if(BoardManager.getHoveredPosition().isValid()) {
+            tileInfo.setText("Hovered tile: " + BoardManager.getHoveredPosition().toString()
+                    + "\nTerrain: " + GameState.instance.boardState.tileFromPosition(BoardManager.getHoveredPosition()).getTerrain().name
+                    + "\nSpeed needed: " + GameState.instance.boardState.tileFromPosition(BoardManager.getHoveredPosition()).getTerrain().speedConsump);
         }
         else {
             tileInfo.setText(BLANK_TILE_TEXT);
@@ -58,15 +59,17 @@ public class InfoDisplayMenu extends Menu {
         currentPlayerInfo.setText("$" + currentplayer.getMoney() + " + $"
                 + (numofmines * GoldmineUnit.GOLDMINE_DEFAULT_PRODUCTION + Constants.DEFAULT_MONEY_PRODUCTION)
                 + " next turn\nCurrent upkeep: "
-                + GameState.instance.unitManager.totalUpkeepFromPlayer(currentplayer) + "/"
+                + GameState.instance.unitState.totalUpkeepFromPlayer(currentplayer) + "/"
                 + currentplayer.getUnitCap());
 
-        if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition()) != null) {
-            //lmao
-            Unit u = GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getHoveredPosition());
-            unitInfo.setText("Unit: " + u.baseunit.name + "\nOwner: " + u.getOwner().name
+        if(GameState.instance.unitState.unitFromPosition(BoardManager.getHoveredPosition()) != null) {
+            Unit u = GameState.instance.unitState.unitFromPosition(BoardManager.getHoveredPosition());
+            unitInfo.setText("Unit: " + u.baseunit.name
+                    + "\nOwner: " + u.getOwner().name
                     + "\nHealth: " + u.getCurrentHealth() + "/" + u.baseunit.baseHealth
                     + "\nSpeed: " + u.getCurrentSpeed() + "/" + u.baseunit.baseSpeed
+                    + "\nAttack: " + u.getCurrentAttack()
+                    + "\nType: " + u.baseunit.type
                     + "\n" + u.baseunit.description);
         }
         else {

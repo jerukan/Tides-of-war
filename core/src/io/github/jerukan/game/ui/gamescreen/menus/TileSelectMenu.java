@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.WorldRenderer;
+import io.github.jerukan.game.board.BoardManager;
 import io.github.jerukan.game.ui.ButtonGroup;
 import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.NamedFlag;
@@ -40,10 +41,10 @@ public class TileSelectMenu extends ButtonGroup {
         if(flagFromArray("build").getState()) {
             table.setVisible(false);
         }
-        else if(GameState.instance.boardManager.getSelectedPosition().isValid()) {
-            if(GameState.instance.unitManager.unitFromPosition(GameState.instance.boardManager.getSelectedPosition()) == null) {
+        else if(BoardManager.getSelectedPosition().isValid()) {
+            if(GameState.instance.unitState.unitFromPosition(BoardManager.getSelectedPosition()) == null) {
                 WorldRenderer.boardCam.updateOffsets();
-                Sprite s = GameState.instance.boardManager.tileFromPosition(GameState.instance.boardManager.getSelectedPosition()).getSprite();
+                Sprite s = GameState.instance.boardState.tileFromPosition(BoardManager.getSelectedPosition()).getSprite();
                 table.setPosition(s.getX() + s.getWidth() + Constants.TILE_MENU_OFFSET - WorldRenderer.boardCam.camOffsetX, s.getY() - WorldRenderer.boardCam.camOffsetY);
                 table.setVisible(true);
             }

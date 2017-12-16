@@ -5,10 +5,10 @@ import io.github.jerukan.game.Renderer;
 
 public class UnitRenderer implements Renderer {
 
-    private UnitManager unitManager;
+    private UnitState unitState;
 
-    public UnitRenderer(UnitManager unitManager) {
-        this.unitManager = unitManager;
+    public UnitRenderer(UnitState unitState) {
+        this.unitState = unitState;
     }
 
     @Override
@@ -23,9 +23,14 @@ public class UnitRenderer implements Renderer {
 
     @Override
     public void render(Batch batch) {
+
+    }
+
+    @Override
+    public void render(Batch batch, float stateTime) {
         batch.begin();
-        for(Unit unit : unitManager.getUnitlist()) {
-            unit.render(batch);
+        for(Unit unit : unitState.getUnitlist()) {
+            unit.render(batch, stateTime);
         }
         batch.end();
     }

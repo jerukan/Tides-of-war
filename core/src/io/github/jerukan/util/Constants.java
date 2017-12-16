@@ -4,7 +4,7 @@ package io.github.jerukan.util;
 
 public class Constants {
 
-    public static final String GAME_NAME = "Realms of War";
+    public static final String GAME_NAME = "Tides of War";
 
     public static final int BOARD_WIDTH = 11;
     public static final int BOARD_HEIGHT = 11;

@@ -3,6 +3,7 @@ package io.github.jerukan.game;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import io.github.jerukan.game.board.BoardManager;
 import io.github.jerukan.util.Constants;
 
 public class Input implements InputProcessor {
@@ -58,10 +59,10 @@ public class Input implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(button == Buttons.RIGHT) {
-            GameState.instance.boardManager.selectedPositionActionRight();
+            BoardManager.selectedPositionActionRight();
         }
         if(button == Buttons.LEFT) {
-            GameState.instance.boardManager.selectedPositionActionLeft();
+            BoardManager.selectedPositionActionLeft();
             WorldRenderer.uiRenderer.clear();
         }
         return false;

@@ -18,7 +18,7 @@ public class DismissAction extends UnitAction {
 
     @Override
     public void execute(Unit self) {
-        GameState.instance.unitManager.removeUnit(self);
+        GameState.instance.unitState.removeUnit(self);
     }
 
     @Override

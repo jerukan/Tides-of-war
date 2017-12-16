@@ -44,6 +44,11 @@ public class UIRenderer implements Renderer {
         currentScreen.render();
     }
 
+    @Override
+    public void render(Batch batch, float stateTime) {
+
+    }
+
     public void dispose() {
         stage.dispose();
     }

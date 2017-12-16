@@ -1,47 +1,28 @@
 package io.github.jerukan.game.board;
 
 import io.github.jerukan.game.GameState;
-import io.github.jerukan.game.Manager;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
-import io.github.jerukan.util.Constants;
 import io.github.jerukan.util.Position;
-import io.github.jerukan.util.heightmaps.DiamondSquare;
-import io.github.jerukan.util.heightmaps.Perlin;
 
-import java.util.ArrayList;
+import java.util.*;
 
-/** A class managing most elements of the board, namely tiles */
+/** Most client side stuff with the board is handled here */
 
-public class BoardManager implements Manager {
+public class BoardManager {
 
-    private Tile[][] board;
+    private static Position hoveredPosition = new Position();
+    private static Position selectedPosition = new Position();
 
-    private Position hoveredPosition;
-    private Position selectedPosition;
+    private static ArrayList<Position> availableBuildPositions = new ArrayList<>();
 
-    private ArrayList<Position> availableBuildPositions;
-
-    private SelectType selectType;
-
-    public BoardManager() {
-        hoveredPosition = new Position();
-        selectedPosition = new Position();
-
-        availableBuildPositions = new ArrayList<>();
-
-        selectType = SelectType.SELECT;
-    }
-
-    public Tile[][] getBoard() {
-        return board;
-    }
+    private static SelectType selectType = SelectType.SELECT;
 
     /** Sets the board position of the currently hovered tile
      * @param pos desired position to set */
-    public void setHoveredPosition(Position pos) {
-        if(pos.getX() >= 0 && pos.getX() < Constants.BOARD_WIDTH && pos.getY() >= 0 && pos.getY() < Constants.BOARD_HEIGHT) {
+    public static void setHoveredPosition(Position pos) {
+        if(pos.isValid()) {
             hoveredPosition.setPos(pos);
         }
         else {
@@ -49,138 +30,73 @@ public class BoardManager implements Manager {
         }
     }
 
-    public Position getHoveredPosition() {
+    public static Position getHoveredPosition() {
         return hoveredPosition;
     }
 
     /** Determines what happens on the next tile selection with the left mouse button */
-    public void selectedPositionActionLeft() {
+    public static void selectedPositionActionLeft() {
         switch (selectType) {
             case ACTION:
-                Unit unit = GameState.instance.unitManager.getSelectedUnit();
+                Unit unit = GameState.instance.unitState.getSelectedUnit();
                 UnitAction act = unit.getCurrentAction();
                 if(act.requiresTarget) {
                     act.execute(unit, hoveredPosition);
                 }
                 unit.clearMoveLists();
-                GameState.instance.unitManager.killUnits();
-                GameState.instance.unitManager.resetSelectedUnit();
+                GameState.instance.unitState.killUnits();
+                GameState.instance.unitState.resetSelectedUnit();
                 selectType = SelectType.SELECT;
                 selectedPosition.reset();
                 GameState.instance.update();
+                BoardManager.updateAvailableBuildPositions();
                 break;
             case SELECT:
                 selectedPosition.reset();
-                GameState.instance.unitManager.resetSelectedUnit();
+                GameState.instance.unitState.resetSelectedUnit();
         }
     }
 
     /** Determines what happens on the next tile selection with the right mouse button */
-    public void selectedPositionActionRight() {
+    public static void selectedPositionActionRight() {
         switch (selectType) {
             case SELECT:
                 selectedPosition = new Position(hoveredPosition);
-                GameState.instance.unitManager.setSelectedUnit(GameState.instance.unitManager.unitFromPosition(selectedPosition));
+                GameState.instance.unitState.setSelectedUnit(GameState.instance.unitState.unitFromPosition(selectedPosition));
                 break;
         }
     }
 
-    public void setSelectedPosition(Position selectedPosition) {
-        this.selectedPosition = selectedPosition;
+    public static void setSelectedPosition(Position pos) {
+        selectedPosition = pos;
     }
 
-    public Position getSelectedPosition() {
+    public static Position getSelectedPosition() {
         return selectedPosition;
     }
 
-    public void setSelectType(SelectType selectType) {
-        this.selectType = selectType;
+    public static void setSelectType(SelectType type) {
+        selectType = type;
     }
 
-    public SelectType getSelectType() {
+    public static SelectType getSelectType() {
         return selectType;
     }
 
-    public Tile tileFromPosition(Position pos) {
-        if(pos.isValid()) {
-            return board[pos.getX()][pos.getY()];
-        }
-        throw new IllegalArgumentException("No tile at " + pos.toString());
-    }
-
-    public void updateAvailableBuildPositions() {
+    public static void updateAvailableBuildPositions() {
         availableBuildPositions.clear();
-        ArrayList<Unit> buildings = GameState.instance.unitManager.unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> u.baseunit.type == BaseUnit.Type.BUILDING);
+        ArrayList<Unit> buildings = GameState.instance.unitState.unitsFromPlayer(GameState.instance.getCurrentPlayer(), (Unit u) -> u.baseunit.type == BaseUnit.Type.BUILDING);
         for(Unit b : buildings) {
             for(Position p : b.getPosition().getAdjacentPositions()) {
-                if(!p.existsInArray(availableBuildPositions) && GameState.instance.unitManager.positionAvailable(p)) {
+                if(!p.existsInArray(availableBuildPositions) && GameState.instance.unitState.positionAvailable(p)) {
                     availableBuildPositions.add(p);
                 }
             }
         }
     }
 
-    public ArrayList<Position> getAvailableBuildPositions() {
+    public static List<Position> getAvailableBuildPositions() {
         return availableBuildPositions;
-    }
-
-    public void resetBoard() {
-        generateHeightsDSquare(1121956);
-        board = new Tile[Constants.BOARD_WIDTH][Constants.BOARD_HEIGHT];
-        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
-            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                Position pos = new Position(x, y);
-                board[x][y] = new Tile(pos, (float)DiamondSquare.heights[x][y]);
-                board[x][y].setSpritePosition(Constants.TILE_SIZE * x, Constants.TILE_SIZE * y);
-            }
-        }
-    }
-
-    public void generateHeightsDSquare() {
-        DiamondSquare.generateHeights();
-    }
-
-    public void generateHeightsDSquare(long seed) {
-        DiamondSquare.setSeed(seed);
-        DiamondSquare.generateHeights();
-    }
-
-    public void generateHeightsPerlin() {
-        Perlin.randomizeVectors();
-        Perlin.zeroExtrema();
-        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
-            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                double sum = 0;
-                for(int i = 0; i < Constants.PERLIN_SAMPLES; i++) {
-                    sum += Perlin.getNoise((float) (x + Math.random()), (float) (y + Math.random()));
-                }
-                sum /= Constants.PERLIN_SAMPLES;
-                //board[x][y].setHeight((float)sum);
-            }
-        }
-        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
-            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                //board[x][y].setHeight(Util.map(board[x][y].getHeight(), Perlin.min, Perlin.max, 0, 1));
-            }
-        }
-    }
-
-    public void dispose() {
-        for(int x = 0; x < Constants.BOARD_WIDTH; x++) {
-            for(int y = 0; y < Constants.BOARD_HEIGHT; y++) {
-                board[x][y].dispose();
-            }
-        }
-    }
-
-    @Override
-    public void init() {
-        resetBoard();
-    }
-
-    @Override
-    public void update() {
-        updateAvailableBuildPositions();
     }
 
     public enum SelectType {

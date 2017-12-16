@@ -10,4 +10,6 @@ public interface Renderer {
     void resize(int width, int height);
 
     void render(Batch batch);
+
+    void render(Batch batch, float stateTime);
 }

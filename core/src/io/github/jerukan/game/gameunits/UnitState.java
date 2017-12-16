@@ -1,8 +1,9 @@
 package io.github.jerukan.game.gameunits;
 
 import io.github.jerukan.game.GameState;
-import io.github.jerukan.game.Manager;
+import io.github.jerukan.game.State;
 import io.github.jerukan.game.Player;
+import io.github.jerukan.game.board.BoardManager;
 import io.github.jerukan.game.gameunits.unitdata.BaseUnit;
 import io.github.jerukan.util.Position;
 
@@ -11,13 +12,13 @@ import java.util.function.Predicate;
 
 /** A class that organizes the units into an aggregate unitList
  * Manages the logistics of the units instead of having the board do everything */
-public class UnitManager implements Manager {
+public class UnitState implements State {
 
     private ArrayList<Unit> unitlist;
 
     private Unit selectedUnit;
 
-    public UnitManager() {
+    public UnitState() {
         unitlist = new ArrayList<>();
         selectedUnit = null;
     }
@@ -39,12 +40,12 @@ public class UnitManager implements Manager {
     }
 
     public void buildUnit(BaseUnit baseUnit) {
-        if(baseUnit._canBuild(GameState.instance.boardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
-            addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(GameState.instance.boardManager.getSelectedPosition()));
+        if(baseUnit._canBuild(BoardManager.getSelectedPosition(), GameState.instance.getCurrentPlayer())) {
+            addUnit(baseUnit, GameState.instance.getCurrentPlayer(), new Position(BoardManager.getSelectedPosition()));
             setSelectedToLast();
             getSelectedUnit().onCreation();
             getSelectedUnit().setCurrentSpeed(0);
-            GameState.instance.boardManager.updateAvailableBuildPositions();
+            BoardManager.updateAvailableBuildPositions();
 
             GameState.instance.getCurrentPlayer().setMoney(GameState.instance.getCurrentPlayer().getMoney() - baseUnit.baseCost);
         }

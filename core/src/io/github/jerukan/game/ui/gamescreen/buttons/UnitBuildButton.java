@@ -1,5 +1,6 @@
 package io.github.jerukan.game.ui.gamescreen.buttons;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,17 +13,31 @@ public class UnitBuildButton extends TextButton {
 
     private BaseUnit baseUnit;
 
+    private boolean hovered;
+
     public UnitBuildButton(final BaseUnit baseUnit, final NamedFlag buildFlag) {
         super(baseUnit.buttonDisplayString(), Assets.uiskin, "default");
         this.baseUnit = baseUnit;
-        super.addListener(new ClickListener() {
+        addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //TODO: move this to a better place
-                GameState.instance.unitManager.buildUnit(baseUnit);
+                GameState.instance.unitState.buildUnit(baseUnit);
                 buildFlag.setState(false);
             }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                hovered = true;
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                hovered = false;
+            }
         });
+    }
+
+    public boolean isHovered() {
+        return isOver();
     }
 
     public BaseUnit getBaseUnit() {

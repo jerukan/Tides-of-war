@@ -3,15 +3,14 @@ package io.github.jerukan.game.gameunits.unitdata;
 import com.badlogic.gdx.graphics.Texture;
 import io.github.jerukan.game.GameState;
 import io.github.jerukan.game.Player;
+import io.github.jerukan.game.board.BoardManager;
 import io.github.jerukan.game.gameunits.Unit;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.AttackAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.DismissAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.MoveAction;
 import io.github.jerukan.game.gameunits.unitdata.unitactions.UnitAction;
-import io.github.jerukan.util.Constants;
+import io.github.jerukan.util.Assets;
 import io.github.jerukan.util.Position;
-
-import java.util.ArrayList;
 
 /** A base class for all the stats and available actions of a single type of unit
  * Not actually the object that gets placed on the board */
@@ -36,7 +35,10 @@ public abstract class BaseUnit {
 
     public String description;
 
+    public BaseUnit requiredUnit = null;
+
     private Texture texture;
+    public boolean oddAnimation;
 
     /** Creates a reference unit containing stats of the unit and actions it can perform
      * These are default stats */
@@ -55,6 +57,9 @@ public abstract class BaseUnit {
         description = "This is a generic unit without any love put into it";
 
         type = Type.SOLDIER;
+
+        setTexture(Assets.getTexture(Assets.wall));
+        oddAnimation = false;
     }
 
     /** Call this in the constructor of the custom unit
@@ -78,7 +83,7 @@ public abstract class BaseUnit {
      * @return whether the unit can be built or not */
     public boolean _canBuild(Position pos, Player owner) {
         return owner.hasSufficientMoney(baseCost)
-                && pos.existsInArray(GameState.instance.boardManager.getAvailableBuildPositions())
+                && pos.existsInArray(BoardManager.getAvailableBuildPositions())
                 && canBuild(owner) && owner.hasSufficientUpkeep(baseUpkeep);
     }
 
@@ -115,6 +120,6 @@ public abstract class BaseUnit {
     }
 
     public enum Type {
-        BUILDING, SOLDIER
+        BUILDING, SOLDIER, FLYING
     }
 }

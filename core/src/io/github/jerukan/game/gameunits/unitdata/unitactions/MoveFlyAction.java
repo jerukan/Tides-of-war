@@ -8,12 +8,12 @@ import io.github.jerukan.util.Position;
 
 import java.util.ArrayList;
 
-public class MoveAction extends UnitAction {
+public class MoveFlyAction extends UnitAction {
 
-    public MoveAction(BaseUnit baseUnit) {
+    public MoveFlyAction(BaseUnit baseUnit) {
         super(baseUnit);
-        name = "move";
-        speedConsumption = 0;   //speed is modified based on distance traveled
+        name = "fly";
+        speedConsumption = 0; //changed based on distance
         requiresTarget = true;
     }
 
@@ -26,14 +26,7 @@ public class MoveAction extends UnitAction {
     public void execute(Unit self, Position target) {
         if(target.existsInArray(availableTargets)) {
             if(GameState.instance.unitState.positionAvailable(target)) {
-                int speedconsump = 0;
-                //checks the corresponding speed the tile will consume
-                for(int i = 0; i < self.getAvailableTargets().size(); i++) {
-                    if(self.getAvailableTargets().get(i).equals(target)) {
-                        speedconsump = targetSpeedConsumptions.get(i);
-                    }
-                }
-                self.setCurrentSpeed(self.getCurrentSpeed() - speedconsump);
+                self.setCurrentSpeed(self.getCurrentSpeed() - target.distanceToPosition(self.getPosition()));
                 self.setPosition(new Position(target));
                 self.moveSprite(target);
             }
@@ -42,21 +35,16 @@ public class MoveAction extends UnitAction {
 
     @Override
     public void getTarget(Unit self, Position startpos, Position checkedpos, ArrayList<Position> moves, ArrayList<Integer> moveConsump, int aggregateConsump, int movesleft) {
-        int speedconsump = GameState.instance.boardState.tileFromPosition(checkedpos).getSpeedConsump();
-
         if(!startpos.equals(checkedpos)) {
-            if (movesleft < speedconsump) {
+            if (movesleft < 0) {
                 return;
             }
 
-            aggregateConsump += speedconsump;
-            movesleft -= speedconsump;
-
             if (!checkedpos.existsInArray(moves)) {
                 moves.add(checkedpos);
-                moveConsump.add(aggregateConsump);
             }
         }
+        movesleft -= 1;
 
         if (checkedpos.getX() + 1 < Constants.BOARD_WIDTH) {
             Position newpos = new Position(checkedpos.getX() + 1, checkedpos.getY());
@@ -79,7 +67,6 @@ public class MoveAction extends UnitAction {
     @Override
     public void generateTargets(Unit self) {
         availableTargets.clear();
-        targetSpeedConsumptions.clear();
         getTarget(self, self.getPosition(), new Position(self.getPosition()), availableTargets, targetSpeedConsumptions, 0, self.getCurrentSpeed());
     }
 }
