@@ -27,6 +27,6 @@ In here, the main classes to look at are:
 
 The driver with the main method is in desktop/src/io/github/jerukan/desktop
 
-Section 3 with the summary and stuff is in APCS_state3.text
+Section 3 with the summary and stuff is in APCS_state3.txt
 
 Loop trace diagram is looptrace.png
